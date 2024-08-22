@@ -1,0 +1,26 @@
+    /* Style untuk table */
+    .table-thick-border-pekerjaan {
+        border: 1px solid #ffffff !important;
+    }
+    
+    .table-thick-border-pekerjaan th {
+        border-top: 1px solid #000000 !important;
+        border-right: 1px solid #000000 !important;
+    }
+    
+    .table-thick-border-pekerjaan td {
+        border-right: 1px solid #000000 !important;
+    }
+    
+    th {
+        background-color: #707070;
+        color: white;
+        border-right: 1px solid #000000; /* Properti lengkap */
+        /*border-bottom: 1px solid #ffffff; /* Tambahkan border-bottom jika diperlukan */
+    }
+    
+    th, td {
+        padding: 8px;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+    }
