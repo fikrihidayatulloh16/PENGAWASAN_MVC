@@ -81,5 +81,16 @@ class Home extends Controller {
         }
     }
 
+    public function log_out()
+    {
+        // Hapus semua sesi
+        session_unset();
 
+        // Hancurkan sesi
+        session_destroy();
+        // Cek jika autentikasi berhasil
+
+        header('Location: ' . PUBLICURL ); // Ganti '/dashboard' dengan URL tujuan setelah login berhasil
+
+    }
 } 

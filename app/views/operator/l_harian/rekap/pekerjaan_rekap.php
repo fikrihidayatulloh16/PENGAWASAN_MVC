@@ -12,8 +12,6 @@
             $_SESSION['nomor'] = $nomor;
         }
     }
-
-    $id_laporan_harian = $_SESSION['id_laporan_harian'];
 ?>
 <link href="<?= PUBLICURL ?>/assets/css/pekerjaan_rekap.css" rel="stylesheet">
 

@@ -5,25 +5,24 @@ $navItems = '
     <li class="nav-item">
         <a class="nav-link nav-head" aria-current="page" href=" ' . PUBLICURL . '/operator/rekap/' . $data['id_laporan_harian'] . '/' . $data['id_projek'] . '" style="font-size: 2;">LAPORAN HARIAN</a>
     </li>
-
-    <li class="nav-item dropdown">
-          <a class="nav-link nav-head dropdown-toggle ms-lg-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            LAINNYA
-            <i class="bx bx-caret-down"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="../../page/operator/operator.pekerjaan.php">Pekerjaan</a></li>
-            <li><a class="dropdown-item" href="../../page/operator/cuaca.php">Cuaca</a></li>
-            <li><a class="dropdown-item" href="../../page/operator/operator.permasalahan.php">Permasalahan</a></li>
-            <li><a class="dropdown-item" href="../../page/operator/fotokegiatan.php">Lampiran Foto</a></li>
-            <li><a class="dropdown-item" href="../../page/operator/operator.timPengawas.php">Tim Pengawas</a></li>
-          </ul>
-        </li>
+    <li class="nav-item">
+        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN MINGGUAN</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN BULANAN</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN EKSEKUTIF</a>
+    </li>
         <li class="nav-item">
-          <a class="nav-link nav-head ms-lg-3" aria-current="page" href="' . PUBLICURL . '/printpdf/print_laporan_harian/' . $data['id_projek'] . '/' . $data['id_laporan_harian'] . '/' . $data['laporan']['tanggal'] . '" target="_blank">UNDUH
+          <a class="nav-link nav-head ms-lg-3 text-center" aria-current="page" href="' . PUBLICURL . '/printpdf/print_laporan_harian/' . $data['id_projek'] . '/' . $data['id_laporan_harian'] . '/' . $data['laporan']['tanggal'] . '" target="_blank">UNDUH
           <i class="bx bx-download"></i>
           </a>
-      </li>';
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-head ms-lg-5 text-center" href="' . PUBLICURL . '/home/log_out/"><i class="bx bxs-user-circle" style="font-size: 24px;"></i> Logout</a>
+    </li>
+      ';
     
 include '../app/views/layouts/header.php';
 ?>

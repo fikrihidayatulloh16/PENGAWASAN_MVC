@@ -3,12 +3,21 @@ $navBrands = '<a class="navbar-brand" href="../../page/operator/laporanharian.ph
 
 $navItems = '
     <li class="nav-item">
-        <a class="nav-link active nav-head" aria-current="page" href="#" style="font-size: 2;">LAPORAN HARIAN</a>
+        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN HARIAN</a>
     </li>
-
+    <li class="nav-item">
+        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN MINGGUAN</a>
+    </li>
     <li class="nav-item">
         <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN BULANAN</a>
-    </li>';
+    </li>
+    <li class="nav-item">
+        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN EKSEKUTIF</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link nav-head ms-lg-5 text-center" href="' . PUBLICURL . '/home/log_out/"><i class="bx bxs-user-circle" style="font-size: 24px;"></i> Logout</a>
+    </li>
+    ';
     
 include '../app/views/layouts/header.php';
 ?>
