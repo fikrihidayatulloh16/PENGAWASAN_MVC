@@ -17,7 +17,7 @@ include '../app/views/layouts/header.php';
 <div class="container">
     <div class="container header-laporan text-center mt-3">
         <h3 style="color : #818181;">LAPORAN HARIAN</h3>
-        <h4 class="roboto-text">Pengawasan <?= $data['projek']['nama_projek'] ?></h4>
+        <h4 class="roboto-text">PENGAWASAN <?= $data['projek']['nama_projek'] ?></h4>
         <h4 class="roboto-text">Waktu Pelaksanaan : <?= $data['tanggal_mulai_projek'] ?> - <?= $data['tanggal_selesai_projek'] ?></h4>
         <h4 class="roboto-text">Tambahan Waktu : <?= $data['tambahan_waktu_projek'] ?></h4>
         </div>

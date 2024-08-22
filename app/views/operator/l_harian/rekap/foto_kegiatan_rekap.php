@@ -52,5 +52,10 @@
         </div>
     </div>
 </div>
+<div class="container d-flex justify-content-end">
+    <a href="<?= PUBLICURL ?>/operator/laporan_harian_list/<?=$data['id_projek']?>" class="btn btn-kembali mt-2">
+        <i class='bx bxs-chevrons-left'></i>Kembali
+    </a>
+</div>
 <hr class="separator">
 </div>

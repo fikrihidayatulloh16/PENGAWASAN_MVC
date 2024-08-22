@@ -32,8 +32,8 @@ include '../app/views/layouts/header.php';
 
 <div class="container" >
       <div class="container header-laporan text-center mt-3">
-        <h3 style="color : #818181;">Laporan Harian</h3>
-        <h4 class="roboto-text">Pengawasan  <?= $data['projek']['nama_projek'] ?></h4>
+        <h3 style="color : #818181;">LAPORAN HARIAN</h3>
+        <h4 class="roboto-text">PENGAWASAN  <?= $data['projek']['nama_projek'] ?></h4>
         <h4 class="roboto-text">
             Hari ke-<?= isset($data['hari_ke']) ? $data['hari_ke'] : 'Data tidak tersedia'; ?> | <?= $data['tanggal'] ?>
         </h4>
