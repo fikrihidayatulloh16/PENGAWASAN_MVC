@@ -28,7 +28,7 @@ class Operator_crud_model {
     }
 
     public function dateConverter($data_tanggal)
-{
+    {
     $nama_hari = [
         'Sunday' => 'Minggu',
         'Monday' => 'Senin',
@@ -69,24 +69,36 @@ class Operator_crud_model {
     
     $tanggal_new = "$hari, $tanggal $bulan $tahun";
     return $tanggal_new;
-}
+    }
 
 
     public function tambahLaporanHarian($data)
     {
-        // Generate ID baru
-        $new_id = $this->newIdGenerator('id_laporan_harian', 'laporan_harian', 'L', 6);
-
         // Ambil data dari form
         $id_projek = $data['id_projek'];
         $tanggal = $data['tanggal'];
+
+        // Cek apakah sudah ada laporan harian dengan tanggal yang sama untuk proyek yang sama
+        $cek_tanggal_query = "SELECT COUNT(*) as count FROM laporan_harian WHERE id_projek = :id_projek AND tanggal = :tanggal";
+        $this->db->query($cek_tanggal_query);
+        $this->db->bind(':id_projek', $id_projek);
+        $this->db->bind(':tanggal', $tanggal);
+        $this->db->execute();
+        $result = $this->db->single();
+        
+        if ($result['count'] > 0) {
+            // Jika sudah ada tanggal yang sama, kembalikan nilai atau pesan error
+            return "Tanggal sudah ada untuk proyek ini, silakan pilih tanggal lain.";
+        }
+
+        // Generate ID baru
+        $new_id = $this->newIdGenerator('id_laporan_harian', 'laporan_harian', 'L', 6);
 
         // Insert ke tabel laporan_harian
         $laporan_harian_query = "INSERT INTO laporan_harian (id_laporan_harian, id_projek, tanggal, progress_harian) 
                         VALUES (:new_id, :id_projek, :tanggal, NULL)";
 
         $this->db->query($laporan_harian_query);
-        
         $this->db->bind(':new_id', $new_id);
         $this->db->bind(':id_projek', $id_projek);
         $this->db->bind(':tanggal', $tanggal);
@@ -108,27 +120,7 @@ class Operator_crud_model {
             ['00:00', '01:00', 'cerah'],
             ['01:00', '02:00', 'cerah'],
             ['02:00', '03:00', 'cerah'],
-            ['03:00', '04:00', 'cerah'],
-            ['04:00', '05:00', 'cerah'],
-            ['05:00', '06:00', 'cerah'],
-            ['06:00', '07:00', 'cerah'],
-            ['07:00', '08:00', 'cerah'],
-            ['08:00', '09:00', 'cerah'],
-            ['09:00', '10:00', 'cerah'],
-            ['10:00', '11:00', 'cerah'],
-            ['11:00', '12:00', 'cerah'],
-            ['12:00', '13:00', 'cerah'],
-            ['13:00', '14:00', 'cerah'],
-            ['14:00', '15:00', 'cerah'],
-            ['15:00', '16:00', 'cerah'],
-            ['16:00', '17:00', 'cerah'],
-            ['17:00', '18:00', 'cerah'],
-            ['18:00', '19:00', 'cerah'],
-            ['19:00', '20:00', 'cerah'],
-            ['20:00', '21:00', 'cerah'],
-            ['21:00', '22:00', 'cerah'],
-            ['22:00', '23:00', 'cerah'],
-            ['23:00', '00:00', 'cerah']
+            // Tambahkan data cuaca lainnya sesuai kebutuhan
         ];
 
         $sql_cuaca = "INSERT INTO cuaca (id_laporan_harian, jam_mulai, jam_selesai, kondisi) 
@@ -145,6 +137,7 @@ class Operator_crud_model {
 
         return $this->db->rowCount();
     }
+
 
     public function hapusLaporanHarian()
     {
