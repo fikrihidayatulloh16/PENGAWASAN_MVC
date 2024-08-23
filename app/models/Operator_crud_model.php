@@ -120,7 +120,27 @@ class Operator_crud_model {
             ['00:00', '01:00', 'cerah'],
             ['01:00', '02:00', 'cerah'],
             ['02:00', '03:00', 'cerah'],
-            // Tambahkan data cuaca lainnya sesuai kebutuhan
+            ['03:00', '04:00', 'cerah'],
+            ['04:00', '05:00', 'cerah'],
+            ['05:00', '06:00', 'cerah'],
+            ['06:00', '07:00', 'cerah'],
+            ['07:00', '08:00', 'cerah'],
+            ['08:00', '09:00', 'cerah'],
+            ['09:00', '10:00', 'cerah'],
+            ['10:00', '11:00', 'cerah'],
+            ['11:00', '12:00', 'cerah'],
+            ['12:00', '13:00', 'cerah'],
+            ['13:00', '14:00', 'cerah'],
+            ['14:00', '15:00', 'cerah'],
+            ['15:00', '16:00', 'cerah'],
+            ['16:00', '17:00', 'cerah'],
+            ['17:00', '18:00', 'cerah'],
+            ['18:00', '19:00', 'cerah'],
+            ['19:00', '20:00', 'cerah'],
+            ['20:00', '21:00', 'cerah'],
+            ['21:00', '22:00', 'cerah'],
+            ['22:00', '23:00', 'cerah'],
+            ['23:00', '00:00', 'cerah']
         ];
 
         $sql_cuaca = "INSERT INTO cuaca (id_laporan_harian, jam_mulai, jam_selesai, kondisi) 
