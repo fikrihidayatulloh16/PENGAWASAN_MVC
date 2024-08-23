@@ -87,66 +87,89 @@ $tambahan_waktu = $data['projek']['tambahan_waktu'];
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Validasi tanggal
-        function validateDateRange(startDate, endDate, additionalDate, inputDate, errorElement) {
-            var startDateValue = new Date(startDate);
-            var endDateValue = new Date(endDate);
-            var inputDateValue = new Date(inputDate.value);
-            var additionalDateValue = additionalDate ? new Date(additionalDate) : null;
+    // Mengambil list tanggal laporan dari PHP
+    var existingDates = <?= json_encode($list_tanggal_laporan); ?>;
+    
+    // Fungsi untuk memvalidasi tanggal
+    function validateDateRange(startDate, endDate, additionalDate, inputDate, errorElement) {
+        var startDateValue = new Date(startDate);
+        var endDateValue = new Date(endDate);
+        var inputDateValue = new Date(inputDate.value);
+        var additionalDateValue = additionalDate ? new Date(additionalDate) : null;
 
-            errorElement.style.display = 'none';
+        errorElement.style.display = 'none';
 
-            if (inputDateValue < startDateValue || (additionalDateValue ? inputDateValue > additionalDateValue : inputDateValue > endDateValue)) {
-                errorElement.style.display = 'block';
-                return false;
-            }
-
-            return true;
+        // Validasi apakah tanggal dalam rentang yang diperbolehkan
+        if (inputDateValue < startDateValue || (additionalDateValue ? inputDateValue > additionalDateValue : inputDateValue > endDateValue)) {
+            errorElement.style.display = 'block';
+            return false;
         }
 
+        return true;
+    }
 
-        document.getElementById('lh_tambah').addEventListener('submit', function(event) {
-            var startDate = "<?= $tanggal_mulai ?>";
-            var endDate = "<?= $tanggal_selesai ?>";
-            var additionalDate = "<?= $tambahan_waktu ?>";
-            var inputDate = document.getElementById('tanggal');
-            var dateErrorElement = document.getElementById('tanggalError_tambah');
-            var checkboxErrorElement = document.getElementById('checkboxError');
-            var checkboxes = document.querySelectorAll('#checkboxes input[type="checkbox"]');
+    // Fungsi untuk memvalidasi apakah tanggal sudah ada
+    function validateUniqueDate(inputDate, errorElement) {
+        var inputDateValue = inputDate.value;
 
-            // Validasi checkbox
-            let isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-            if (!isChecked) {
-                event.preventDefault();
-                checkboxErrorElement.style.display = 'block';
-            } else {
-                checkboxErrorElement.style.display = 'none';
-            }
+        errorElement.style.display = 'none';
 
-            // Validasi tanggal
-            if (!validateDateRange(startDate, endDate, additionalDate, inputDate, dateErrorElement)) {
-                event.preventDefault();
-            }
+        if (existingDates.includes(inputDateValue)) {
+            errorElement.style.display = 'block';
+            return false;
+        }
 
-        });
+        return true;
+    }
 
-        // JS Check Box
-        document.getElementById('dropdown').addEventListener('change', function() {
-            var selectedOption = this.value;
-            var checkboxes = document.getElementById('checkboxes').children;
+    document.getElementById('lh_tambah').addEventListener('submit', function(event) {
+        var startDate = "<?= $tanggal_mulai ?>";
+        var endDate = "<?= $tanggal_selesai ?>";
+        var additionalDate = "<?= $tambahan_waktu ?>";
+        var inputDate = document.getElementById('tanggal');
+        var dateErrorElement = document.getElementById('tanggalError_tambah');
+        var uniqueDateErrorElement = document.getElementById('tanggalError2_tambah');
+        var checkboxErrorElement = document.getElementById('checkboxError');
+        var checkboxes = document.querySelectorAll('#checkboxes input[type="checkbox"]');
 
-            Array.from(checkboxes).forEach(checkbox => checkbox.classList.add('hidden'));
-            if (selectedOption) {
-                document.getElementById(selectedOption).classList.remove('hidden');
-            }
-        });
+        // Validasi checkbox
+        let isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        if (!isChecked) {
+            event.preventDefault();
+            checkboxErrorElement.style.display = 'block';
+        } else {
+            checkboxErrorElement.style.display = 'none';
+        }
 
-        // Saat halaman dimuat, sembunyikan semua opsi checkbox kecuali yang pertama dipilih
-        var selectedOption = document.getElementById('dropdown').value;
+        // Validasi tanggal dalam rentang yang diperbolehkan
+        if (!validateDateRange(startDate, endDate, additionalDate, inputDate, dateErrorElement)) {
+            event.preventDefault();
+        }
+
+        // Validasi tanggal tidak duplikat
+        if (!validateUniqueDate(inputDate, uniqueDateErrorElement)) {
+            event.preventDefault();
+        }
+    });
+
+    // JS Check Box
+    document.getElementById('dropdown').addEventListener('change', function() {
+        var selectedOption = this.value;
         var checkboxes = document.getElementById('checkboxes').children;
+
         Array.from(checkboxes).forEach(checkbox => checkbox.classList.add('hidden'));
         if (selectedOption) {
             document.getElementById(selectedOption).classList.remove('hidden');
         }
     });
+
+    // Saat halaman dimuat, sembunyikan semua opsi checkbox kecuali yang pertama dipilih
+    var selectedOption = document.getElementById('dropdown').value;
+    var checkboxes = document.getElementById('checkboxes').children;
+    Array.from(checkboxes).forEach(checkbox => checkbox.classList.add('hidden'));
+    if (selectedOption) {
+        document.getElementById(selectedOption).classList.remove('hidden');
+    }
+});
+
 </script>

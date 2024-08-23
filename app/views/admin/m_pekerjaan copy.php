@@ -1,4 +1,4 @@
-
+<!-- cadangan untuk accordion tetap terbuka dengan menggunakan session -->
 <div class="pagetitle">
   <h1>Dashboard</h1>
   <nav>
@@ -16,10 +16,6 @@
     <div class="col-lg-12">
       <div class="card mprojek">
         <div class="card-body">
-          <div class="text-center">
-            <h4 class="project-title mt-3">Projek :</h4>
-            <h4 class="project-title"><?= $data['projek']['nama_projek'] ?></h4>
-          </div>
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="card-title">Data Master Pekerjaan</h5>
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#mpekerjaan-tambah">
@@ -48,10 +44,13 @@
                         <div class="accordion" id="accordionExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne<?= $data_m_pekerjaan['id_m_pekerjaan'] ?>" aria-expanded="false" aria-controls="collapseOne<?= $data_m_pekerjaan['id_m_pekerjaan'] ?>">
+                                    <button class="accordion-button <?= (isset($_SESSION['openAccordion']) && $_SESSION['openAccordion'] == $data_m_pekerjaan['id_m_pekerjaan']) ? '' : 'collapsed' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne<?= $data_m_pekerjaan['id_m_pekerjaan'] ?>" aria-expanded="<?= (isset($_SESSION['openAccordion']) && $_SESSION['openAccordion'] == $data_m_pekerjaan['id_m_pekerjaan']) ? 'true' : 'false' ?>" aria-controls="collapseOne<?= $data_m_pekerjaan['id_m_pekerjaan'] ?>">
                                         <?= $data_m_pekerjaan['nama_pekerjaan'] ?>
                                     </button>
                                 </h2>
+                                <div id="collapseOne<?= $data_m_pekerjaan['id_m_pekerjaan'] ?>" class="accordion-collapse collapse <?= (isset($_SESSION['openAccordion']) && $_SESSION['openAccordion'] == $data_m_pekerjaan['id_m_pekerjaan']) ? 'show' : '' ?>" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <!-- Content inside the accordion -->
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -79,31 +78,3 @@
     </div>
   </div>
 </section>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Simpan status accordion saat tombol diklik
-    document.querySelectorAll('.accordion-button').forEach(button => {
-        button.addEventListener('click', function() {
-            const accordionId = this.getAttribute('data-bs-target');
-            const isOpen = this.classList.contains('collapsed');
-            localStorage.setItem(accordionId, isOpen ? 'collapsed' : 'expanded');
-        });
-    });
-
-    // Baca status dari localStorage saat halaman dimuat
-    document.querySelectorAll('.accordion-collapse').forEach(accordion => {
-        const accordionId = accordion.getAttribute('id');
-        const status = localStorage.getItem('#' + accordionId);
-        if (status === 'expanded') {
-            accordion.classList.add('show');
-        }
-    });
-});
-
-$('.modal').on('hidden.bs.modal', function () {
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-});
-
-</script>

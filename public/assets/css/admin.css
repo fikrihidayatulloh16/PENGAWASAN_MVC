@@ -1,0 +1,14 @@
+@media (min-width: 1024px) {
+    .kolom-aksi {
+        columns: 5;
+    }
+}
+
+@media (max-width: 768px) {
+    .kolom-aksi {
+        width: 33.3333%; /* 4 dari 12 kolom */
+    }
+    .span-aksi {
+        display: none;
+    }
+}

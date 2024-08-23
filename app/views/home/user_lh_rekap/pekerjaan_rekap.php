@@ -1,20 +1,3 @@
-<?php
-    if (empty($_SESSION['id_laporan_harian'])) {
-        // Ambil parameter id_laporan_harian dari URL
-        if (isset($_GET['id_laporan_harian']) && isset($_GET['tanggal_laporan']) && isset($_GET['nomor'])) {
-            $id_laporan_harian = $_GET['id_laporan_harian'];
-            $tanggal_laporan = $_GET['tanggal_laporan'];
-            $nomor = $_GET['nomor'];
-    
-            // Menyimpan ke dalam session
-            $_SESSION['id_laporan_harian'] = $id_laporan_harian;
-            $_SESSION['tanggal_laporan'] = $tanggal_laporan;
-            $_SESSION['nomor'] = $nomor;
-        }
-    }
-
-    $id_laporan_harian = $_SESSION['id_laporan_harian'];
-?>
 <link href="<?= PUBLICURL ?>/assets/css/pekerjaan_rekap.css" rel="stylesheet">
 
 <div class="container">

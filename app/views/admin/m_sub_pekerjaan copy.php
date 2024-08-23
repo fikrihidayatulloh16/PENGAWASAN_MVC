@@ -1,10 +1,11 @@
+<!-- cadangan untuk accordion tetap terbuka dengan menggunakan session -->
 <!-- Daftar Sub Pekerjaan Dengan Accordion -->
 
 <?php include '../app/views/modals/modal_add/admin/sub_pekerjaan_add.php'; ?>
 
 <tr>
     <td class="p-0" colspan="3">
-        <div id="collapseOne<?= $data_m_pekerjaan['id_m_pekerjaan'] ?>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div id="collapseOne<?= $data_m_pekerjaan['id_m_pekerjaan'] ?>" class="accordion-collapse collapse <?= (isset($_SESSION['openAccordion']) && $_SESSION['openAccordion'] == $data_m_pekerjaan['id_m_pekerjaan']) ? 'show' : '' ?>" data-bs-parent="#accordionExample">
             <div class="accordion-body p-0">
                 <div class="card ">
                     <h5 class="card-header bg-info text-dark mt-0 d-flex justify-content-between align-items-center">
@@ -33,12 +34,12 @@
                                 <td class="align-middle bg-light"><?= $data_sub['id_m_sub_pekerjaan'] ?></td>
                                 <td class="align-middle bg-light"><?= $data_sub['nama_sub_pekerjaan'] ?></td>
                                 <td class="align-middle bg-light">
-                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#sub-hapus-<?= $data_sub['id_m_sub_pekerjaan']?>"><i class='bx bxs-trash-alt'></i><span class="span-aksi"> Delete</span></a>
-                                    <a href="#" class="btn btn-warning text-dark mt-1" data-bs-toggle="modal" data-bs-target="#sub-ubah-<?= $data_sub['id_m_sub_pekerjaan'] ?>"><i class='bx bxs-edit-alt'></i><span class="span-aksi"> Edit</span></a>
+                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#subHapus<?= $data_sub['id_m_sub_pekerjaan']?>"><i class='bx bxs-trash-alt'></i><span class="span-aksi"> Delete</span></a>
+                                    <a href="#" class="btn btn-warning text-dark mt-1" data-bs-toggle="modal" data-bs-target="#subUbah<?= $data_sub['id_m_sub_pekerjaan'] ?>"><i class='bx bxs-edit-alt'></i><span class="span-aksi"> Edit</span></a>
                                 </td>
                             </tr>
                             
-                            <?php include '../app/views/modals/modal_ud/admin/sub_pekerjaan_ud.php';?>
+                            <?php //include "modal.admin/modalUD_sub.php";?>
                             <?php endforeach; ?>
                             <tr><td class="bg-info" colspan="3"></td></tr>
                         </tbody>

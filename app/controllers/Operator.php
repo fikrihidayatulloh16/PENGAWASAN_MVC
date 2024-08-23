@@ -10,8 +10,8 @@ class Operator extends Controller{
     }
     /*
     echo '<pre>';
-        print_r($data['bahan']);
-        echo '</pre>';
+    print_r($data['bahan']);
+    echo '</pre>';
     */
 
     public function index() {

@@ -6,28 +6,15 @@
                         <h5 class="modal-title" id="exampleModalLabel">Tambah Proyek</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="form_tambah" action="<?= PUBLICURL ?>/operator/tambah_projek/" method="POST" enctype="multipart/form-data">
+                    <form id="form_tambah" action="<?= PUBLICURL ?>/admin/tambah_projek/" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <?php 
-                                /*
-                                // Ambil nilai terakhir id_m_pekerja dari database
-                                $sql_get_last_id = "SELECT MAX(id_projek) AS last_id FROM m_projek";
-                                $result = $conn->query($sql_get_last_id);
-                                $row = $result->fetch_assoc();
-                                $last_id = $row['last_id'];
-
-                                // Menghasilkan id_m_pekerja baru dengan format PJM001, PJM002, ...
-                                if ($last_id) {
-                                    $num = intval(substr($last_id, 3)) + 1;
-                                } else {
-                                    $num = 1;
-                                }
-                                $new_id_m_projek = 'PRJ' . str_pad($num, 3, '0', STR_PAD_LEFT); //str_pad($num, 3, '0', STR_PAD_LEFT); <-- untuk 5 karakter contoh PJM001
-                                */
+                                $id_projek = $this->model('Admin_crud_model')->newIdGenerator('id_projek', 'm_projek', 'PRJ', 3);
                                 ?>
-                                <label for="nama_projek" class="form-label">ID(tidak bisa diubah)</label>
-                                <h5 for="id_m_pekerjaan" class="form-label"><?=$new_id_m_projek?></h5>
+                                <label for="id_projek" class="form-label">ID(tidak bisa diubah)</label>
+                                <h5 for="id_projek" class="form-label"><?=$id_projek?></h5>
+                                <input type="hidden" name="id_projek" value="<?= $id_projek?>">
                                 <label for="nama_projek" class="form-label">Nama Proyek</label>
                                 <input type="text" class="form-control" id="nama_projek" name="nama_projek" required>
                             </div>

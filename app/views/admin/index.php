@@ -52,13 +52,16 @@
                     <td><?= $projek['pengawas'] ?></td>
                     <td><?= $projek['kontraktor'] ?></td>
                     <td><?= $projek['tambahan_waktu'] ?></td>
-                    <td class="kolom-aksi">
-                      <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $projek['id_projek'] ?>"><i class='bx bxs-trash-alt'></i><span>Hapus</span></a>
-                      <a href="#" class="btn btn-warning rounded-pill text-dark mt-1" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $projek['id_projek'] ?>"><i class='bx bxs-edit-alt'></i><span>Ubah</span></a>
-                      <a href="<?= PUBLICURL ?>/admin/m_pekerjaan/<?=$projek['id_projek']?>" class="btn btn-primary rounded-pill text-white" id="projek_pilih_op" name="projek_pilih_op"><i class='bx bxs-right-arrow-circle'></i><span>Pilih</span></button>
+                    <td>
+                      <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#projek-hapus-<?= $projek['id_projek'] ?>"><i class='bx bxs-trash-alt'></i><span class="span-aksi">Hapus</span></a>
+                      <a href="#" class="btn btn-warning rounded-pill text-dark mt-1" data-bs-toggle="modal" data-bs-target="#projek-ubah<?= $projek['id_projek'] ?>"><i class='bx bxs-edit-alt'></i><span class="span-aksi">Ubah</span></a>
+                      <a href="<?= PUBLICURL ?>/admin/m_pekerjaan/<?=$projek['id_projek']?>" class="btn btn-primary rounded-pill text-white mt-1" id="projek_pilih_op" name="projek_pilih_op"><i class='bx bxs-right-arrow-circle'></i><span class="span-aksi">Pilih</span></button>
                     </td>
                   </tr>
-                <?php endforeach; ?>
+                <?php 
+                include '../app/views/modals/modal_ud/admin/projek_ud.php';
+                endforeach; 
+                ?>
               </tbody>
             </table>
           </div>
