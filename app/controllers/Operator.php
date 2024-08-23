@@ -66,7 +66,7 @@ class Operator extends Controller{
         $this->view('operator/l_harian/rekap/pekerjaan_rekap', $data);
         $this->view('operator/l_harian/rekap/permasalahan_rekap', $data);
         $this->view('operator/l_harian/rekap/foto_kegiatan_rekap', $data);
-        $this->view('operator/l_harian/rekap/tim_pengawas_rekap', $data);
+        
         $this->view('layouts/footer_a');
     }
 

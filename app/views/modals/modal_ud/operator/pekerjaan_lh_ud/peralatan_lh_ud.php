@@ -14,8 +14,7 @@
                     <div class="container-fluid px-4">
                         <div class="mb-3">
                             <label class="form-label">Projek:</label>
-                            <p class="mb-0"><?= $_SESSION['nama_projek_op']?></p>
-                            <p class="mb-0"><?= $_SESSION['id_projek_op']?></p>
+                            <p class="mb-0"><?= $data['projek']['nama_projek']?></p>
                         </div>
                         <div class="mb-3">
                             <label for="dropdown-peralatan" class="form-label">Nama Peralatan:</label>

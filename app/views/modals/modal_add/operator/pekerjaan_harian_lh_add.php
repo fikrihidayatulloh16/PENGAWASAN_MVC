@@ -11,8 +11,7 @@
                     <div class="container-fluid px-4">
                         <div class="mb-3">
                             <label class="form-label">Projek:</label>
-                            <p class="mb-0"><?= $_SESSION['nama_projek_op']?></p>
-                            <p class="mb-0"><?= $_SESSION['id_projek_op']?></p>
+                            <p class="mb-0"><?= $data['projek']['nama_projek']?></p>
                         </div>
                         <div class="mb-3">
                             <label for="dropdown-pekerja" class="form-label">Pekerja:</label>
@@ -73,8 +72,7 @@
                     <div class="container-fluid px-4">
                         <div class="mb-3">
                             <label class="form-label">Projek:</label>
-                            <p class="mb-0"><?= $_SESSION['nama_projek_op']?></p>
-                            <p class="mb-0"><?= $_SESSION['id_projek_op']?></p>
+                            <p class="mb-0"><?= $data['projek']['nama_projek']?></p>
                         </div>
                         <div class="mb-3">
                             <label for="dropdown-peralatan" class="form-label">Nama Peralatan:</label>
@@ -129,6 +127,10 @@
             <form action="<?= PUBLICURL ?>/operator/tambah_bahan_harian/<?= $data['id_laporan_harian'] ?>/<?= $data['id_projek'] ?>" method="POST">
                 <div class="modal-body">
                     <div class="container-fluid px-4">
+                        <div class="mb-3">
+                            <label class="form-label">Projek:</label>
+                            <p class="mb-0"><?= $data['projek']['nama_projek']?></p>
+                        </div>
                         <div class="mb-3">
                             <label for="dropdown-bahan" class="form-label">Nama Bahan:</label>
                             <select id="dropdown-bahan" name="id_m_bahan" class="form-select" aria-label="Pilih Bahan" required>

@@ -119,8 +119,9 @@ Ubah Laporan Harian
 
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="id_laporan_harian" class="form-label">ID</label>
-                        <h5 for="id_laporan_harian" class="form-label" id="id_laporan_harian" name="id_laporan_harian" value="<?=$laporan['id_laporan_harian']?>"><?=$laporan['id_laporan_harian']?></h5>
+                        <strong>Peringatan!!</strong><br>
+                        <p>Semua data yang di dalam <strong>laporan Hari ke-<?= $hari_ke ?> </strong> akan terhapus. </p>
+                        <p>Apakah anda yakin ingin menghapus? </p><br>
                         <label for="tanggal_laporan" class="form-label">Tanggal</label>
                         <h5 for="tanggal_laporan" class="form-label text-danger"><?=$laporan['tanggal_laporan']?></h5>
                     </div>

@@ -183,6 +183,7 @@ function sortTable(columnIndex) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    sortTable(1); // Mengurutkan tabel berdasarkan "Hari Ke" secara default
     displayTable(currentPage);
     generatePagination();
 });

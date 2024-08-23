@@ -44,7 +44,7 @@
             $hari_ke = $interval->days + 1;
         ?>
         <tr>
-            <td class="text-center align-middle"><?= $nomor ?></td>
+            <td class="text-center align-middle nomor"></td>
             <td class="text-center align-middle" style="color: #464F60;">
                 <a href="<?= PUBLICURL ?>/operator/rekap/<?= $laporan['id_laporan_harian'] ?>/<?= $data['projek']['id_projek']?>/<?= $hari_ke?>">Hari ke-<?= $hari_ke ?></a>
             </td>
@@ -55,9 +55,9 @@
                     <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#lh-hapus-<?= $laporan['id_laporan_harian'] ?>">
                         <i class='bx bx-trash'></i>
                     </a>
-                    <a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lh-ubah-<?= $laporan['id_laporan_harian'] ?>">
+                    <!--<a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lh-ubah-?= $laporan['id_laporan_harian'] ?>">
                         <i class='bx bx-edit-alt'></i>
-                    </a>
+                    </a>-->
                     <a href="<?= PUBLICURL ?>/printpdf/print_laporan_harian/<?= $data['projek']['id_projek'] ?>/<?= $laporan['id_laporan_harian'] ?>/<?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>
                     <input type="hidden" name="id_laporan" value="<?= $laporan['id_laporan_harian'] ?>">
                 </form>
@@ -86,105 +86,4 @@ include "../app/views/modals/modal_add/operator/laporan_harian_add.php";
 // include "../../public/alert/successAlert.php";
 ?>
 
-<script>
-       let currentPage = 1;
-let rowsPerPage = 15;
-let sortDirection = {};
-
-function updateTable() {
-    let selectedValue = document.getElementById('row_count').value;
-    let tableBody = document.getElementById('table-body');
-    let totalRows = tableBody.rows.length;
-
-    if (selectedValue === "all") {
-        rowsPerPage = totalRows; // Show all rows
-    } else {
-        rowsPerPage = parseInt(selectedValue);
-    }
-
-    displayTable(currentPage);
-    generatePagination();
-}
-
-function displayTable(page) {
-    let tableBody = document.getElementById('table-body');
-    let rows = tableBody.rows;
-    let start = (page - 1) * rowsPerPage;
-    let end = start + rowsPerPage;
-    
-    for (let i = 0; i < rows.length; i++) {
-        rows[i].style.display = (i >= start && i < end) ? '' : 'none';
-    }
-}
-
-function generatePagination() {
-    let tableBody = document.getElementById('table-body');
-    let rows = tableBody.rows.length;
-    let pages = Math.ceil(rows / rowsPerPage);
-    let pagination = document.getElementById('pagination');
-    
-    pagination.innerHTML = '';
-    
-    for (let i = 1; i <= pages; i++) {
-        let li = document.createElement('li');
-        li.className = 'page-item' + (i === currentPage ? ' active' : '');
-        li.innerHTML = `<a class="page-link" href="#" onclick="gotoPage(${i})">${i}</a>`;
-        pagination.appendChild(li);
-    }
-}
-
-function gotoPage(page) {
-    currentPage = page;
-    displayTable(page);
-    generatePagination();
-}
-
-function sortTable(columnIndex) {
-    let table = document.getElementById("myTable");
-    let rows = Array.from(table.querySelector('tbody').rows); 
-
-    if (!sortDirection[columnIndex]) {
-        sortDirection[columnIndex] = 'asc';
-    } else if (sortDirection[columnIndex] === 'asc') {
-        sortDirection[columnIndex] = 'desc';
-    } else {
-        sortDirection[columnIndex] = 'asc';
-    }
-
-    let direction = sortDirection[columnIndex];
-
-    let sortedRows = rows.sort((a, b) => {
-        let cellA = a.cells[columnIndex].innerText.trim();
-        let cellB = b.cells[columnIndex].innerText.trim();
-        
-        if (direction === 'asc') {
-            return cellA.localeCompare(cellB, undefined, { numeric: true });
-        } else {
-            return cellB.localeCompare(cellA, undefined, { numeric: true });
-        }
-    });
-
-    let tbody = table.querySelector('tbody');
-    sortedRows.forEach(row => tbody.appendChild(row));
-
-    document.querySelectorAll('.sort-icon').forEach(icon => {
-        icon.classList.remove('fa-sort-up', 'fa-sort-down');
-        icon.classList.add('fa-sort');
-    });
-
-    let icon = document.getElementById(`icon${columnIndex}`);
-    if (direction === 'asc') {
-        icon.classList.remove('fa-sort', 'fa-sort-down');
-        icon.classList.add('fa-sort-up');
-    } else {
-        icon.classList.remove('fa-sort', 'fa-sort-up');
-        icon.classList.add('fa-sort-down');
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    displayTable(currentPage);
-    generatePagination();
-});
-
-    </script>
+<script src="<?= PUBLICURL ?>/assets/js/laporan_harian_list.js"></script>

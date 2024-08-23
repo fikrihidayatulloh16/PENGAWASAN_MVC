@@ -15,8 +15,7 @@
                         <div class="container-fluid px-4">
                             <div class="form-group">
                                 <label for="id_projek">Projek:</label>
-                                <h5><?= $_SESSION['nama_projek_op']?></h5>
-                                <h5><?= $_SESSION['id_projek_op']?></h5>
+                                <p class="mb-0"><?= $data['projek']['nama_projek']?></p>
                             </div>
                             <br>
                             <div class="form-group">
