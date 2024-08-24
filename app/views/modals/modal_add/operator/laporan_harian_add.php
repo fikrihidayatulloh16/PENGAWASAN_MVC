@@ -69,8 +69,8 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-secondary">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </form>
         </div>
@@ -82,6 +82,7 @@ $list_tanggal_laporan = $data['all_tanggal_laporan'];
 $tanggal_mulai = $data['projek']['tanggal_mulai'];
 $tanggal_selesai = $data['projek']['tanggal_selesai'];
 $tambahan_waktu = $data['projek']['tambahan_waktu'];
+
 
 ?>
 

@@ -88,7 +88,7 @@ class Operator_crud_model {
         
         if ($result['count'] > 0) {
             // Jika sudah ada tanggal yang sama, kembalikan nilai atau pesan error
-            return "Tanggal sudah ada untuk proyek ini, silakan pilih tanggal lain.";
+            return "Peringatan!! Tanggal sudah ada untuk proyek ini, silakan pilih tanggal lain.";
         }
 
         // Generate ID baru
@@ -155,7 +155,7 @@ class Operator_crud_model {
             $this->db->execute();
         }
 
-        return $this->db->rowCount();
+        return true;
     }
 
 
@@ -372,81 +372,82 @@ class Operator_crud_model {
 
     public function tambahFotoKegiatan()
     {
-            // Generate id baru
-            $new_id = $this->newIdGenerator('id_foto_kegiatan', 'foto_kegiatan', 'FTO', 6);
-            
-            // Menyimpan post ke variabel
-            $id_laporan_harian = $_POST['id_laporan_harian'];
-            $keterangan = $_POST['keterangan'];
-        
-              // Handling file upload
-            $foto_temp = $_FILES['foto']['tmp_name'];
-            $foto_error = $_FILES['foto']['error'];
-            
-            // Mendapatkan ekstensi file asli
-            $foto_ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
-            
-            // Menentukan nama file baru dengan id yang dihasilkan
-            $foto_name = $new_id . '.' . $foto_ext;
-            $foto_path = '../public/assets/img/uploads/foto_kegiatan/' . $foto_name;
-        
-            // Periksa apakah tidak ada error saat upload
-            if ($foto_error === UPLOAD_ERR_OK) {
-                // Pindahkan file dari temporary location ke lokasi yang ditentukan
-                if (move_uploaded_file($foto_temp, $foto_path)) {
-                    // Menyimpan ke database
-                    $sql_foto = "INSERT INTO foto_kegiatan (id_foto_kegiatan, id_laporan_harian, foto, keterangan) 
-                                VALUES (:new_id, :id_laporan_harian, :foto_name, :keterangan)";
-        
-                    $this->db->query($sql_foto);
-                    $this->db->bind('new_id', $new_id);
-                    $this->db->bind('id_laporan_harian', $id_laporan_harian);
-                    $this->db->bind('foto_name', $foto_name);
-                    $this->db->bind('keterangan', $keterangan);
+    // Generate id baru
+    $new_id = $this->newIdGenerator('id_foto_kegiatan', 'foto_kegiatan', 'FTO', 6);
+    
+    // Menyimpan post ke variabel
+    $id_laporan_harian = $_POST['id_laporan_harian'];
+    $keterangan = $_POST['keterangan'];
 
-        
-                    if ($this->db->execute()) {
-                            return;
-                        } else {
-                            echo "Error: Gagal memperbarui database.";
-                        }
-                } else {
-                    echo "Error: File tidak dapat dipindahkan.";
-                    // Error tambahan untuk membantu troubleshooting
-                    if (!file_exists('D:/xampp/htdocs/pengawasan_me/page/operator/uploads/')) {
-                        echo "Error: Direktori tujuan tidak ditemukan.";
-                    } else if (!is_writable('D:/xampp/htdocs/pengawasan/page/operator/uploads/')) {
-                        echo "Error: Direktori tujuan tidak memiliki izin tulis.";
-                    }
-                }
+    // Handling file upload
+    $foto_temp = $_FILES['foto']['tmp_name'];
+    $foto_error = $_FILES['foto']['error'];
+    
+    // Mendapatkan ekstensi file asli
+    $foto_ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
+    
+    // Menentukan nama file baru dengan id yang dihasilkan
+    $foto_name = $new_id . '.' . $foto_ext;
+    $foto_path = '../public/assets/img/uploads/foto_kegiatan/' . $foto_name;
+
+    // Periksa apakah tidak ada error saat upload
+    if ($foto_error === UPLOAD_ERR_OK) {
+        // Pindahkan file dari temporary location ke lokasi yang ditentukan
+        if (move_uploaded_file($foto_temp, $foto_path)) {
+            // Menyimpan ke database
+            $sql_foto = "INSERT INTO foto_kegiatan (id_foto_kegiatan, id_laporan_harian, foto, keterangan) 
+                        VALUES (:new_id, :id_laporan_harian, :foto_name, :keterangan)";
+
+            $this->db->query($sql_foto);
+            $this->db->bind('new_id', $new_id);
+            $this->db->bind('id_laporan_harian', $id_laporan_harian);
+            $this->db->bind('foto_name', $foto_name);
+            $this->db->bind('keterangan', $keterangan);
+
+            if ($this->db->execute()) {
+                return  $this->db->rowCount();
             } else {
-                // Menangani berbagai kesalahan upload file
-                switch ($foto_error) {
-                    case UPLOAD_ERR_INI_SIZE:
-                    case UPLOAD_ERR_FORM_SIZE:
-                        echo "Error: Ukuran file terlalu besar.";
-                        break;
-                    case UPLOAD_ERR_PARTIAL:
-                        echo "Error: File hanya ter-upload sebagian.";
-                        break;
-                    case UPLOAD_ERR_NO_FILE:
-                        echo "Error: Tidak ada file yang di-upload.";
-                        break;
-                    case UPLOAD_ERR_NO_TMP_DIR:
-                        echo "Error: Folder temporary tidak ditemukan.";
-                        break;
-                    case UPLOAD_ERR_CANT_WRITE:
-                        echo "Error: Gagal menulis file ke disk.";
-                        break;
-                    case UPLOAD_ERR_EXTENSION:
-                        echo "Error: Upload file dihentikan oleh ekstensi PHP.";
-                        break;
-                    default:
-                        echo "Error: Terjadi kesalahan yang tidak diketahui.";
-                        break;
-                }
+                echo "Error: Gagal memperbarui database.";
             }
+
+        } else {
+            echo "Error: File tidak dapat dipindahkan.";
+            // Error tambahan untuk membantu troubleshooting
+            if (!file_exists('../public/assets/img/uploads/foto_kegiatan/')) {
+                echo "Error: Direktori tujuan tidak ditemukan.";
+            } else if (!is_writable('../public/assets/img/uploads/foto_kegiatan/')) {
+                echo "Error: Direktori tujuan tidak memiliki izin tulis.";
+            }
+        }
+    } else {
+        // Menangani berbagai kesalahan upload file
+        switch ($foto_error) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                echo "Error: Ukuran file terlalu besar.";
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                echo "Error: File hanya ter-upload sebagian.";
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                echo "Error: Tidak ada file yang di-upload.";
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+                echo "Error: Folder temporary tidak ditemukan.";
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                echo "Error: Gagal menulis file ke disk.";
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                echo "Error: Upload file dihentikan oleh ekstensi PHP.";
+                break;
+            default:
+                echo "Error: Terjadi kesalahan yang tidak diketahui.";
+                break;
+        }
     }
+}
+
     
     public function ubahFotoKegiatan()
     {

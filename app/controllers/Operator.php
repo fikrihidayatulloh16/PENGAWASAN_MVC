@@ -151,10 +151,19 @@ class Operator extends Controller{
     public function tambah_laporan_harian($id_projek) 
     {
         $data['id_projek'] = $id_projek;
-        if ($this->model('Operator_crud_model')->tambahLaporanHarian($_POST) > 0) {
-            header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek']);
-            exit;
-        }
+    $result = $this->model('Operator_crud_model')->tambahLaporanHarian($_POST);
+
+    if ($result === true) {
+        header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek']);
+        exit;
+    } else {
+        // Menghasilkan alert JavaScript dengan pesan kesalahan
+        echo "<script>
+        alert('" . addslashes($result) . "');
+        window.location.href = '" . PUBLICURL . "/operator/laporan_harian_list/" . $data['id_projek'] . "';
+    </script>";
+    exit;
+    }
     }
 
     public function ubah_laporan_harian($id_projek)
@@ -175,7 +184,7 @@ class Operator extends Controller{
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $this->model('Operator_crud_model')->ubahCuaca($_POST);
         
-        header('Location: ' . PUBLICURL . '/operator/cuaca_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+        header('Location: ' . PUBLICURL . '/operator/rekap/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
     }
 
     public function tambah_pekerja_harian($id_laporan_harian, $id_projek)
@@ -286,10 +295,15 @@ class Operator extends Controller{
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);
 
+        $this->model('Operator_crud_model')->tambahFotoKegiatan($_POST);
+        header('Location: ' . PUBLICURL . '/operator/foto_kegiatan/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+            exit;
+        /*
         if ($this->model('Operator_crud_model')->tambahFotoKegiatan($_POST) > 0) {
             header('Location: ' . PUBLICURL . '/operator/foto_kegiatan/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
             exit;
         }
+            */
     }
 
     public function ubah_foto_kegiatan($id_laporan_harian, $id_projek)

@@ -2,12 +2,12 @@
 
 <div class="container mt-5">
 
-
+<?php include "../app/views/modals/modal_add/operator/permasalahan_lh_add.php"; ?>
     
     <div class="card mt-3">
         <h5 class="card-header">
             Data Permasalahan Harian
-            <button type="button-center" class="btn btn-tambah ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#masalah_tambah">
+            <button type="button-center" class="btn btn-tambah ms-3 mt-3" data-bs-toggle="modal" data-bs-target="#ph-tambah">
                 <i class='bx bx-plus-medical' style="margin-right: 5px;" name="masalah_tambah"></i><span>ADD</span>
             </button>
         </h5>
@@ -45,7 +45,7 @@
             <?php 
                 include "../app/views/modals/modal_ud/operator/permasalahan_lh_ud.php";
                 $nomor_masalah++; 
-                include "../app/views/modals/modal_add/operator/permasalahan_lh_add.php";
+                
                 endforeach;
                 } else { 
             ?>
@@ -55,12 +55,10 @@
             <?php } ?>
         </table>
     </div>
+</div>
 
-    <?php
-    
-    ?>
-
-    <a href="<?= PUBLICURL ?>/operator/rekap/<?= $data['id_laporan_harian'] ?>/<?= $data['id_projek'] ?>" class="btn btn-kembali mt-2">
+<div class="container d-flex justify-content-end">
+    <a href="<?= PUBLICURL ?>/operator/rekap/<?=$data['id_laporan_harian']?>/<?=$data['id_projek']?>" class="btn btn-kembali mt-2">
         <i class='bx bxs-chevrons-left'></i>Kembali
     </a>
 </div>

@@ -1,25 +1,4 @@
 <?php
-// Inisialisasi session
-
-
-// Mengecek apakah session 'id_laporan_harian' sudah diset
-if (empty($_SESSION['id_laporan_harian'])) {
-    // Ambil parameter dari URL jika ada
-    if (isset($_GET['id_laporan_harian'], $_GET['tanggal_laporan'], $_GET['nomor'])) {
-        $id_laporan_harian = $_GET['id_laporan_harian'];
-        $tanggal_laporan = $_GET['tanggal_laporan'];
-        $nomor = $_GET['nomor'];
-
-        // Menyimpan ke dalam session
-        $_SESSION['id_laporan_harian'] = $id_laporan_harian;
-        $_SESSION['tanggal_laporan'] = $tanggal_laporan;
-        $_SESSION['nomor'] = $nomor;
-    }
-}
-
-// Mengambil id_laporan_harian dari session
-$id_laporan_harian = $_SESSION['id_laporan_harian'] ?? null;
-
 // Mengambil data pekerjaan harian
 $nomor = 1;
 $id_sub = array_column($data['pekerjaan_harian'], null);
@@ -193,9 +172,11 @@ $id_sub = array_column($data['pekerjaan_harian'], null);
             </div>
         <?php endforeach; ?>
     </div>
+</div>
 
-    <a href="pekerjaan.php" class="btn btn-kembali mt-2">
-        <i class='bx bxs-chevrons-left'></i> Kembali
+<div class="container d-flex justify-content-end">
+    <a href="<?= PUBLICURL ?>/operator/rekap/<?=$data['id_laporan_harian']?>/<?=$data['id_projek']?>" class="btn btn-kembali mt-2">
+        <i class='bx bxs-chevrons-left'></i>Kembali
     </a>
 </div>
 

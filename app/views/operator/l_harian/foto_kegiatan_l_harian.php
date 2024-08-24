@@ -77,8 +77,10 @@ if (empty($_SESSION['id_laporan_harian'])) {
             </table>
         </div>
     </div>
+</div>
 
-    <a href="<?= PUBLICURL ?>/operator/rekap/<?= $data['id_laporan_harian'] ?>/<?= $data['id_projek'] ?>" class="btn btn-kembali mt-2">
-        <i class='bx bxs-chevrons-left'></i>Kembali 
+<div class="container d-flex justify-content-end">
+    <a href="<?= PUBLICURL ?>/operator/rekap/<?=$data['id_laporan_harian']?>/<?=$data['id_projek']?>" class="btn btn-kembali mt-2">
+        <i class='bx bxs-chevrons-left'></i>Kembali
     </a>
 </div>

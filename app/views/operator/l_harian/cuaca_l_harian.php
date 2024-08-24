@@ -1,21 +1,4 @@
 
-<?php
-/*
-//mengambil nilai sesi
-if (empty($_SESSION['id_laporan_harian'])) {
-    if (isset($_GET['id_laporan_harian']) && isset($_GET['tanggal_laporan']) && isset($_GET['nomor'])) {
-        $id_laporan_harian = $_GET['id_laporan_harian'];
-        $tanggal_laporan = $_GET['tanggal_laporan'];
-        $nomor = $_GET['nomor'];
-
-        $_SESSION['id_laporan_harian'] = $id_laporan_harian;
-        $_SESSION['tanggal_laporan'] = $tanggal_laporan;
-        $_SESSION['nomor'] = $nomor;
-    }
-}
-    */
-?>
-
 <div class="container mt-5">
     <div class="card">
         <form method="POST" action="<?= PUBLICURL ?>/operator/ubah_cuaca/<?= $data['id_laporan_harian'] ?>/<?= $data['id_projek'] ?>">
@@ -55,8 +38,8 @@ if (empty($_SESSION['id_laporan_harian'])) {
             </div>
 </div>
 
-<div class="container">
-        <a href="<?= PUBLICURL ?>/operator/rekap/<?= $data['id_laporan_harian'] ?>/<?= $data['id_projek'] ?>" class="btn btn-kembali mt-2">
+<div class="container d-flex justify-content-end">
+    <a href="<?= PUBLICURL ?>/operator/rekap/<?=$data['id_laporan_harian']?>/<?=$data['id_projek']?>" class="btn btn-kembali mt-2">
         <i class='bx bxs-chevrons-left'></i>Kembali
     </a>
 </div>

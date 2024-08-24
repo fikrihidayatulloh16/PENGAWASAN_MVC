@@ -3,6 +3,8 @@
 <!-- Menampilkan alert -->
  <?php Flasher::flash() ?>
 
+ 
+
 <div class="container mt-5">
     <div class="card mt-100">
         <h5 class="card-header text-white d-flex align-items-center justify-content-between">
@@ -58,7 +60,7 @@
                     <!--<a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lh-ubah-?= $laporan['id_laporan_harian'] ?>">
                         <i class='bx bx-edit-alt'></i>
                     </a>-->
-                    <a href="<?= PUBLICURL ?>/printpdf/print_laporan_harian/<?= $data['projek']['id_projek'] ?>/<?= $laporan['id_laporan_harian'] ?>/<?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>
+                    <a href="<?= PUBLICURL ?>/printpdf/mpdf/<?= $data['projek']['id_projek'] ?>/<?= $laporan['id_laporan_harian'] ?>/<?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>
                     <input type="hidden" name="id_laporan" value="<?= $laporan['id_laporan_harian'] ?>">
                 </form>
             </td>
@@ -82,8 +84,6 @@
 include "../app/views/modals/modal_add/operator/laporan_harian_add.php";
 ?>
 
-<?php
-// include "../../public/alert/successAlert.php";
-?>
+
 
 <script src="<?= PUBLICURL ?>/assets/js/laporan_harian_list.js"></script>

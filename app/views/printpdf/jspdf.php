@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--  jQuery dan DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Font From Google -->
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Inter:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CDN Link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Boxiocns CDN Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="../../css/general.css" rel="stylesheet">
+    <!-- Include jsPDF and html2canvas -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; /* Margin ditangani oleh mPDF atau DomPDF */
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.header, .footer {
+    border: 1px solid #333; /* Uniform border thickness for all sections */
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.custom-img {
+        width: 100px; /* Sesuaikan dengan ukuran yang diinginkan */
+        height: 100px;
+    }
+
+.section-title {
+    font-size: 18px;
+    color: #333;
+    text-transform: uppercase;
+    padding: 10px;
+    background-color: #f4f4f4;
+    margin-bottom: 0; /* Remove extra margin */
+    border-left: 1px solid #333; /* Uniform border thickness */
+    border-right: 1px solid #333;
+}
+
+.table-container {
+    padding: 0; /* Remove extra padding */
+    border: 1px solid #333; /* Uniform border thickness */
+}
+
+table {
+    width: 100%;
+    border-spacing: 0; /* No space between borders */
+    border: 1px solid #333; /* Uniform border thickness for the table */
+    border-collapse: collapse; /* Collapse borders into one */
+    margin-bottom: 0px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    font-size: 16px;
+    border: 1px solid #333; /* Uniform border thickness for table cells */
+}
+
+th {
+    font-size: 18px;
+    font-weight: normal;
+    color: #333;
+    text-transform: uppercase;
+    padding: 10px;
+    background-color: #e9ecef;
+    margin-bottom: 0; /* Remove extra margin */
+}
+
+.image-container {
+        max-width: 100%; /* Batas maksimum lebar gambar sesuai dengan kontainer */
+        height: auto; /* Menjaga rasio aspek gambar */
+    }
+
+.image-container img {
+        width: 100%; /* Gambar akan menyesuaikan dengan lebar kontainer */
+        height: auto; /* Menjaga rasio aspek gambar */
+    }
+
+.chart-container {
+    width: max-content;
+    height: 300px;
+    margin: 1% auto;
+}
+
+.legend-container {
+    text-align: center;
+    margin-top: 50px;
+}
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+}
+.legend-color {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.legend-label {
+    font-size: 14px;
+}
+
+.card-header{
+    display: none;
+}
+
+.card, .mt-3 {
+    margin-top: 0px;
+}
+
+.footer {
+    font-size: 16px;
+    padding: 20px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+.rincian-pekerjaan-header {
+    border: 1px solid #333;
+    background-color: #e9ecef;
+    text-align: center;
+    padding: 8px;
+}
+</style>
+<body>
+    <div class="container">
+    <table>
+        <tr>
+            <td class="text-center" style="border-right: 0px;">
+                <img src="<?= PUBLICURL ?>/assets/img/uploads/logo/<?= $data['logo']['logo_pemilik'] ?>" alt="logo_pemilik" class="img-fluid custom-img">
+            </td>
+            <td class="text-center">
+                <?= $data['logo']['pemilik_pekerjaan'] ?>
+            </td>
+            <td class="text-center">
+                Konsultan Pengawas
+                <br>
+                <img src="<?= PUBLICURL ?>/assets/img/uploads/logo/<?= $data['logo']['logo_pengawas'] ?>" alt="logo_pengawas" class="img-fluid custom-img">
+                <br>
+                <?= $data['logo']['pengawas'] ?>
+            </td>
+            <td class="text-center"> 
+                Kontraktor Pelaksana
+                <br>
+                <img src="<?= PUBLICURL ?>/assets/img/uploads/logo/<?= $data['logo']['logo_kontraktor'] ?>" alt="logo_kontrakor" class="img-fluid custom-img">
+                <br>
+                <?= $data['logo']['kontraktor'] ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="2" rowspan="4">
+            <?= $data['projek']['nama_projek'] ?>
+            </td>
+            <td class="text-center">
+                TANGGAL
+            </td>
+            <td>
+                <?= $data['tanggal'] ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center" rowspan="4">LAMPIRAN</td>
+            <td>1. Dokumentasi</td>
+        </tr>
+        <tr>
+        <td>2. Site Instruction</td>
+        </tr>
+        <tr>
+        <td>3. Lain-lain</td>
+        </tr>
+    </table>
+
+    <div class="section-title text-center" style="border-bottom: 1px solid #333;">Laporan Harian PENGAWAS</div>
+    
+    <div class="section-title">A. Cuaca</div>
+    <div class="table-container">
+        
+        <?php $this->view('operator/l_harian/rekap/cuaca_rekap', $data); ?>
+    </div>
+
+    <div class="section-title">B. Rincian Pekerjaan</div>
+    <div>
+    <table class="table table-thick-border-pekerjaan table-bordered" style="margin-bottom: 0px;">
+            <thead>
+                <tr class="text-center">
+                    <th class="text-center align-middle rincian-pekerjaan-header" rowspan="2" style="background-color: #e9ecef; border-bottom: 1px solid ; border-top: 1px solid">Sub Pekerjaan</th>
+                    <th class="text-center align-middle rincian-pekerjaan-header" colspan="2" style="background-color: #e9ecef; border-bottom: 1px solid; border-top: 1px solid">Pekerja</th>
+                    <th class="text-center align-middle rincian-pekerjaan-header" colspan="2" style="background-color: #e9ecef; border-bottom: 1px solid; border-top: 1px solid">Peralatan</th>
+                    <th class="text-center align-middle rincian-pekerjaan-header" colspan="2" style="background-color: #e9ecef; border-bottom: 1px solid; border-top: 1px solid">Bahan</th>
+                </tr>
+                <tr class="text-center">
+                    <th class="text-center align-middle rincian-pekerjaan-header" style="background-color: #e9ecef; border-bottom: 1px solid">Jenis Pekerja</th>
+                    <th class="text-center align-middle rincian-pekerjaan-header" style="background-color: #e9ecef; border-bottom: 1px solid">Jumlah Pekerja</th>
+                    <th class="text-center align-middle rincian-pekerjaan-header" style="background-color: #e9ecef; border-bottom: 1px solid">Nama Alat</th>
+                    <th class="text-center align-middle rincian-pekerjaan-header" style="background-color: #e9ecef; border-bottom: 1px solid">Jumlah Peralatan</th>
+                    <th class="text-center align-middle rincian-pekerjaan-header" style="background-color: #e9ecef; border-bottom: 1px solid">Nama Bahan</th>
+                    <th class="text-center align-middle rincian-pekerjaan-header" style="background-color: #e9ecef; border-bottom: 1px solid">Jumlah Bahan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($data['sub_pekerjaan'])): 
+                    $id_laporan_harian = $data['id_laporan_harian'];
+                    foreach ($data['sub_pekerjaan'] as $sub_pekerjaan): 
+                        $id_m_sub_pekerjaan = $sub_pekerjaan['id_m_sub_pekerjaan'];
+                        // Filter data berdasarkan ID sub_pekerjaan
+                        $pekerja_rekap = $this->model('Rekap_db_model')->getPekerjaByIdLaporanMSub($id_laporan_harian, $id_m_sub_pekerjaan);
+                        $peralatan_rekap = $this->model('Rekap_db_model')->getPeralatanByIdLaporanMSub($id_laporan_harian, $id_m_sub_pekerjaan);
+                        $bahan_rekap = $this->model('Rekap_db_model')->getBahanByIdLaporanMSub($id_laporan_harian, $id_m_sub_pekerjaan);
+
+                        // Cari jumlah baris maksimum di antara ketiga data
+                        $max_rows = max(count($pekerja_rekap), count($peralatan_rekap), count($bahan_rekap));
+
+                        for ($i = 0; $i < $max_rows; $i++): 
+                            $bottom_border = ($i == $max_rows - 1) ? '1px solid black' : '0px solid black';
+
+                            // Cek apakah baris saat ini kosong
+                            $isEmptyRow = empty($pekerja_rekap[$i]) && empty($peralatan_rekap[$i]) && empty($bahan_rekap[$i]);
+                            ?>
+                            <tr class="text-center align-middle">
+                                <?php if ($i == 0): ?>
+                                    <td rowspan="<?= $max_rows ?>" class="text-center kolom-sub" style="border-bottom: 1px solid black;"><?= htmlspecialchars($sub_pekerjaan['nama_sub_pekerjaan']) ?></td>
+                                <?php endif; ?>
+                                
+                                <?php if ($isEmptyRow): ?>
+                                    <td colspan="6" class="text-center" style="border-bottom: <?= $bottom_border ?>;">Tidak ada data</td>
+                                <?php else: ?>
+                                    <!-- Pekerja -->
+                                    <td class="text-center kolom-pekerja" style="border-bottom: <?= $bottom_border ?>;">
+                                        <?= isset($pekerja_rekap[$i]['jenis_pekerja']) ? htmlspecialchars($pekerja_rekap[$i]['jenis_pekerja']) : '-' ?>
+                                    </td>
+                                    <td class="text-center kolom-pekerja" style="border-bottom: <?= $bottom_border ?>;">
+                                        <?= isset($pekerja_rekap[$i]['jumlah_pekerja']) ? htmlspecialchars($pekerja_rekap[$i]['jumlah_pekerja']) : '-' ?>
+                                    </td>
+
+                                    <!-- Peralatan -->
+                                    <td class="text-center kolom-alat" style="border-bottom: <?= $bottom_border ?>;">
+                                        <?= isset($peralatan_rekap[$i]['nama_alat']) ? htmlspecialchars($peralatan_rekap[$i]['nama_alat']) : '-' ?>
+                                    </td>
+                                    <td class="text-center kolom-alat" style="border-bottom: <?= $bottom_border ?>;">
+                                        <?= isset($peralatan_rekap[$i]['jumlah_peralatan']) ? htmlspecialchars($peralatan_rekap[$i]['jumlah_peralatan']) : '-' ?> <?= isset($peralatan_rekap[$i]['satuan']) ? htmlspecialchars($peralatan_rekap[$i]['satuan']) : '' ?>
+                                    </td>
+
+                                    <!-- Bahan -->
+                                    <td class="text-center kolom-bahan" style="border-bottom: <?= $bottom_border ?>;">
+                                        <?= isset($bahan_rekap[$i]['nama_bahan']) ? htmlspecialchars($bahan_rekap[$i]['nama_bahan']) : '-' ?>
+                                    </td>
+                                    <td class="text-center kolom-bahan" style="border-bottom: <?= $bottom_border ?>;">
+                                        <?= isset($bahan_rekap[$i]['jumlah_bahan']) ? htmlspecialchars($bahan_rekap[$i]['jumlah_bahan']) : '-' ?> <?= isset($bahan_rekap[$i]['satuan']) ? htmlspecialchars($bahan_rekap[$i]['satuan']) : '' ?>
+                                    </td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endfor; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="section-title">C. Permasalahan dan Tindak Lanjut</div>
+    <div>
+    <table>
+            <tr>
+                <th class="col-1 text-center">No.</th>
+                <th class="col-5 text-center">Permasalahan</th>
+                <th class="col-5 text-center">Saran</th>
+            </tr>
+            <?php
+                $nomor_masalah = 1;
+                if (count($data['permasalahan']) > 0) {
+                    foreach ($data['permasalahan'] as $permasalahan) : 
+            ?>
+            <tr>
+                <td class="text-center"><?= $nomor_masalah ?></td>
+                <td style="text-align: justify;"><?= $permasalahan['permasalahan'] ?></td>
+                <td style="text-align: justify;"><?= $permasalahan['saran'] ?></td>
+            </tr>
+            <?php 
+                $nomor_masalah++; 
+                endforeach;
+                } else { 
+            ?>
+            <tr>
+                <td colspan="4" class="text-center">Tidak ada data permasalahan.</td>
+            </tr>
+            <?php } ?>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <?php
+                $nomor_masalah = 1;
+                if (count( $data['tim_pengawas']) > 0) {
+                    foreach ($data['tim_pengawas'] as $tim_pengawas) : 
+            ?>
+            <tr>
+                <td class="text-center col-6" style="border-right: none;">
+                    Disusun/ Dibuat Oleh
+                    <br>
+                    <?= $data['logo']['pengawas'] ?>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <?= $tim_pengawas['tim_pengawas'] ?>
+                    <br>
+                    Tim Pengawas
+                </td>
+                <td class="text-center col-6" style="border-left: none;">
+                    Diperiksa
+                    <br>
+                    <?= $data['logo']['pengawas'] ?>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <?= $tim_pengawas['tim_leader'] ?>
+                    <br>
+                    Tim Leader
+                </td>
+            </tr>
+
+            <?php 
+                endforeach;
+                } else { 
+            ?>
+            <tr>
+                <td colspan="4" class="text-center">Tidak ada data Tim Pengawas .</td>
+            </tr>
+            <?php } ?>
+        </table>
+        </div>
+
+    <div class="section-title text-center">Dokumentasi Harian</div>
+    <div class="table-container">
+    <div class="container">
+            <?php
+                if (count($data['foto_kegiatan']) > 0) {
+                    $num_row = 0;
+                    foreach ($data['foto_kegiatan'] as $foto) {
+                        if ($num_row % 2 == 0) {
+                            // Mulai baris baru untuk setiap dua gambar
+                            echo '<div class="row mt-lg-3">';
+                        }
+            ?>
+            <div class="image-container text-center col-lg-6 col-sm-12">
+                <img src="<?= PUBLICURL ?>/assets/img/uploads/foto_kegiatan/<?= $foto['foto'] ?>" alt="Foto Kegiatan" class="img-fluid image-rekap mt-3">
+                <br>
+                <?= $foto['keterangan'] ?>
+            </div>
+            <?php
+                        $num_row++;
+                        if ($num_row % 2 == 0) {
+                            // Tutup baris setelah dua gambar
+                            echo '</div>';
+                        }
+                    }
+                    if ($num_row % 2 != 0) {
+                        // Tutup baris jika ada gambar ganjil
+                        echo '</div>';
+                    }
+                } else {
+            ?>
+            <div class="row">
+                <div class="col-12 text-center">Tidak ada data Foto Kegiatan.</div>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+    <button id="generatePdf" class="btn btn-primary">Generate PDF</button>
+</div>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const { jsPDF } = window.jspdf;
+
+            document.getElementById('generatePdf').addEventListener('click', () => {
+                html2canvas(document.body).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    
+                    // Menambahkan gambar ke PDF
+                    pdf.addImage(imgData, 'PNG', 0, 0, 0, 0); // Adjust the position and size as needed
+                    pdf.save('document.pdf');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<div class="modal fade" id="masalah_tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ph-tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-secondary text-white">
@@ -12,7 +12,7 @@
                         <div class="container-fluid px-4">
                             <div class="form-group">
                                 <label for="id_projek">Projek:</label>
-                                <h5><?= $data['id_laporan_harian'] ?></h5>
+                                <p class="mb-0"><?= $data['projek']['nama_projek']?></p>
                             </div>
                             <br>
                             <div class="form-group">

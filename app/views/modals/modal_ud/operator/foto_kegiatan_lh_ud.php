@@ -48,7 +48,7 @@
                         <label for="id_foto_kegiatan" class="form-label">ID</label>
                         <h5 for="id_foto_kegiatan" class="form-label" id="id_foto_kegiatan" name="id_foto_kegiatan" value="<?= $foto_kegiatan['id_foto_kegiatan']?>"><?=$foto_kegiatan['id_foto_kegiatan']?></h5>
                         <label for="foto" class="form-label">Foto</label>
-                        <img id="foto" src="http://localhost/pengawasan_me/public/asset/img/uploads/foto_kegiatan/<?= $foto_kegiatan['foto'] ?>" alt="Preview Foto" style="max-width: 100%; height: auto;">
+                        <img id="foto" src="<?= PUBLICURL ?>/assets/img/uploads/foto_kegiatan/<?= $foto_kegiatan['foto'] ?>" alt="Preview Foto" style="max-width: 100%; height: auto;">
                         <br>
                         <label for="keterangan" class="form-label mt-3">Keterangan</label>
                         <p for="keterangan" class="form-label text-danger"><?=$foto_kegiatan['keterangan']?></p>
