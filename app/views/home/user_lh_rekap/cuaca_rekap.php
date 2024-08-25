@@ -116,7 +116,7 @@ foreach ($chunksArray['chunk_2'] as $row) {
     <div class="row">
         <div class="col-lg-6">
             <div class="title text-center chart-container">
-                <h3>00:00 AM - 12:00 PM</h3>
+                <h4>AM</h4>
                 <canvas id="chart1" width="400" height="400"></canvas>
             </div>
             <!--
@@ -152,7 +152,7 @@ foreach ($chunksArray['chunk_2'] as $row) {
 
         <div class="col-lg-6">
         <div class="title text-center chart-container">
-                <h3 class="">12:00 PM - 00:00 AM</h3>
+                <h4 class="">PM</h4>
                 <canvas id="chart2" width="400" height="400"></canvas>
             </div>
 <!--
