@@ -25,7 +25,7 @@
             <th>No. <i id="icon0" class="fas fa-sort sort-icon" onclick="sortTable(0)"></i></th>
             <th>Hari Ke- <i id="icon1" class="fas fa-sort sort-icon" onclick="sortTable(1)"></i></th>
             <th>Tanggal <i id="icon2" class="fas fa-sort sort-icon" onclick="sortTable(2)"></i></th>
-            
+            <th class="col-1">Est. Progres <i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(3)"></i></th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -46,7 +46,7 @@
                 <a href="<?= PUBLICURL ?>/home/rekap_user/<?= $laporan['id_laporan_harian'] ?>/<?= $data['projek']['id_projek']?>/<?= $hari_ke?>">Hari ke-<?= $hari_ke ?></a>
             </td>
             <td class="text-center align-middle" style="color: #464F60;"><?= $tanggal_laporan ?></td>
-            
+            <td class="text-center align-middle" style="color: #464F60;"><?= $laporan['progress_harian'] ?>%</td>
             <td>
                 <form action="../../script/projek_pilih.php" method="POST">
                     <a href="<?= PUBLICURL ?>/printpdf/print_laporan_harian/<?= $data['projek']['id_projek'] ?>/<?= $laporan['id_laporan_harian'] ?>/<?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>

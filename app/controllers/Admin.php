@@ -23,8 +23,11 @@ class Admin extends Controller {
         $data['id_projek'] = $id_projek;
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
         $data['m_pekerjaan'] = $this->model('Admin_db_model')->getAllMpekerjaanByIdProjek($id_projek);
+        $data['m_pekerjaan2'] = $this->model('Admin_db_model')->getAllPekerjaanNSubByIdProjek($id_projek);
+        
 
         $this->view('layouts/layout_admin/header_admin', $data);
+        
         $this->view('admin/m_pekerjaan', $data);
         $this->view('layouts/layout_admin/footer_admin');
     
@@ -136,19 +139,19 @@ class Admin extends Controller {
     public function ubah_sub_pekerjaan($id_projek)
     {
         $data['id_projek'] = $id_projek;
-        if ($this->model('Admin_crud_model')->ubahSubPekerjaan($_POST) > 0) {
-            // Redirect ke halaman pekerjaan
-            header('Location: ' . PUBLICURL . '/admin/m_pekerjaan/' . $data['id_projek']);
-            exit;
-        }
-    }public function hapus_sub_pekerjaan($id_projek)
+        $this->model('Admin_crud_model')->ubahSubPekerjaan($_POST);
+        // Redirect ke halaman pekerjaan
+        header('Location: ' . PUBLICURL . '/admin/m_pekerjaan/' . $data['id_projek']);
+        exit;
+    }
+    
+    public function hapus_sub_pekerjaan($id_projek)
     {
         $data['id_projek'] = $id_projek;
-        if ($this->model('Admin_crud_model')->hapusSubPekerjaan($_POST) > 0) {
-            // Redirect ke halaman pekerjaan
-            header('Location: ' . PUBLICURL . '/admin/m_pekerjaan/' . $data['id_projek']);
-            exit;
-        }
+        $this->model('Admin_crud_model')->hapusSubPekerjaan($_POST);
+        // Redirect ke halaman pekerjaan
+        header('Location: ' . PUBLICURL . '/admin/m_pekerjaan/' . $data['id_projek']);
+        exit;
     }
 
     public function tambah_m_pekerja($id_projek)

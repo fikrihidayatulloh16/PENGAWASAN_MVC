@@ -1,5 +1,5 @@
 <!-- Tambah Modal -->
-<div class="modal fade" id="sub-tambah-<?= $data_m_pekerjaan['id_m_pekerjaan'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="sub-tambah-<?= $item['id_m_pekerjaan'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -7,7 +7,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= PUBLICURL ?>/admin/tambah_sub_pekerjaan/<?= $data['id_projek'] ?>" method="POST">
-            <input type="hidden" name="id_m_pekerjaan" value="<?= $data_m_pekerjaan['id_m_pekerjaan']?>">
+            <input type="hidden" name="id_m_pekerjaan" value="<?= $item['id_m_pekerjaan']?>">
                 <div class="modal-body">
                     <div class="mb-3">
                         <?php
@@ -18,7 +18,7 @@
                         <h5 for="id_m_sub_pekerjaan" class="form-label"><?= $new_id ?></h5>
                         <input type="hidden" name="id_m_sub_pekerjaan" value="<?= $new_id?>">
                         <label for="nama_pekerjaan" class="form-label">Nama Pekerjaan</label>
-                        <h5 for="nama_pekerjaan" class="form-label">Sub <?= $data_m_pekerjaan['nama_pekerjaan'] ?></h5>
+                        <h5 for="nama_pekerjaan" class="form-label">Sub <?= $item['nama_pekerjaan'] ?></h5>
                         <label for="nama_sub_pekerjaan" class="form-label">Nama Sub Pekerjaan</label>
                         <input type="text" class="form-control" id="nama_sub_pekerjaan" name="nama_sub_pekerjaan" placeholder="Masukkan Nama Sub Pekerjaan"required><br><br>
                     </div>

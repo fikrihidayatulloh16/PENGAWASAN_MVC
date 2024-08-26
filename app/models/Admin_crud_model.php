@@ -105,6 +105,128 @@ class Admin_crud_model {
         return $this->db->rowCount();
     }
 
+    public function ubahProjek()
+{
+    $id_projek = $_POST['id_projek'];
+    $nama_projek = $_POST['nama_projek'];
+    $tanggal_mulai = $_POST['tanggal_mulai_ubah'];
+    $tanggal_selesai = $_POST['tanggal_selesai_ubah'];
+    $pemilik_pekerjaan = $_POST['pemilik_pekerjaan'];
+    $pengawas = $_POST['pengawas'];
+    $kontraktor = $_POST['kontraktor'];
+    $tambahan_waktu = !empty($_POST['tambahan_waktu_ubah']) ? $_POST['tambahan_waktu_ubah'] : NULL;
+
+    // Handling file upload
+    $logo1_name = $_FILES['logo1']['name'];
+    $logo2_name = $_FILES['logo2']['name'];
+    $logo3_name = $_FILES['logo3']['name'];
+
+    $logo1_new_name = NULL;
+    $logo2_new_name = NULL;
+    $logo3_new_name = NULL;
+
+    try {
+        // Kondisi untuk logo1
+        if (!empty($logo1_name)) {
+            $logo1_ext = pathinfo($logo1_name, PATHINFO_EXTENSION);
+            $logo1_new_name = $id_projek . '_logo1.' . $logo1_ext;
+            $logo1_temp = $_FILES['logo1']['tmp_name'];
+            $logo1_path = '../public/assets/img/uploads/logo/' . $logo1_new_name;
+            if (!move_uploaded_file($logo1_temp, $logo1_path)) {
+                return "Error uploading logo1.";
+            }
+        }
+
+        // Kondisi untuk logo2
+        if (!empty($logo2_name)) {
+            $logo2_ext = pathinfo($logo2_name, PATHINFO_EXTENSION);
+            $logo2_new_name = $id_projek . '_logo2.' . $logo2_ext;
+            $logo2_temp = $_FILES['logo2']['tmp_name'];
+            $logo2_path = '../public/assets/img/uploads/logo/' . $logo2_new_name;
+            if (!move_uploaded_file($logo2_temp, $logo2_path)) {
+                return "Error uploading logo2.";
+            }
+        }
+
+        // Kondisi untuk logo3
+        if (!empty($logo3_name)) {
+            $logo3_ext = pathinfo($logo3_name, PATHINFO_EXTENSION);
+            $logo3_new_name = $id_projek . '_logo3.' . $logo3_ext;
+            $logo3_temp = $_FILES['logo3']['tmp_name'];
+            $logo3_path = '../public/assets/img/uploads/logo/' . $logo3_new_name;
+            if (!move_uploaded_file($logo3_temp, $logo3_path)) {
+                return "Error uploading logo3.";
+            }
+        }
+
+        // Inisialisasi SQL untuk memperbarui data di tabel m_projek
+        $sql_m_projek = "UPDATE m_projek SET 
+                            nama_projek = :nama_projek,
+                            tanggal_mulai = :tanggal_mulai,
+                            tanggal_selesai = :tanggal_selesai,
+                            pemilik_pekerjaan = :pemilik_pekerjaan,
+                            pengawas = :pengawas,
+                            kontraktor = :kontraktor";
+
+        // Update logo jika ada
+        if (!empty($logo1_new_name)) {
+            $sql_m_projek .= ", logo_pemilik = :logo1_new_name";
+        }
+        if (!empty($logo2_new_name)) {
+            $sql_m_projek .= ", logo_pengawas = :logo2_new_name";
+        }
+        if (!empty($logo3_new_name)) {
+            $sql_m_projek .= ", logo_kontraktor = :logo3_new_name";
+        }
+
+        // Tambahkan nilai tambahan_waktu jika ada
+        if ($tambahan_waktu !== NULL) {
+            $sql_m_projek .= ", tambahan_waktu = :tambahan_waktu";
+        } else {
+            $sql_m_projek .= ", tambahan_waktu = NULL";
+        }
+
+        $sql_m_projek .= " WHERE id_projek = :id_projek";
+
+        // Query preparation
+        $this->db->query($sql_m_projek);
+
+        // Bind parameters
+        $this->db->bind('nama_projek', $nama_projek);
+        $this->db->bind('tanggal_mulai', $tanggal_mulai);
+        $this->db->bind('tanggal_selesai', $tanggal_selesai);
+        $this->db->bind('pemilik_pekerjaan', $pemilik_pekerjaan);
+        $this->db->bind('pengawas', $pengawas);
+        $this->db->bind('kontraktor', $kontraktor);
+        $this->db->bind('id_projek', $id_projek);
+
+        if (!empty($logo1_new_name)) {
+            $this->db->bind('logo1_new_name', $logo1_new_name);
+        }
+        if (!empty($logo2_new_name)) {
+            $this->db->bind('logo2_new_name', $logo2_new_name);
+        }
+        if (!empty($logo3_new_name)) {
+            $this->db->bind('logo3_new_name', $logo3_new_name);
+        }
+        if ($tambahan_waktu !== NULL) {
+            $this->db->bind('tambahan_waktu', $tambahan_waktu);
+        }
+
+        // Eksekusi query untuk m_projek
+        $projek_update = $this->db->execute();
+        if ($projek_update) {
+            return "Update successful!";
+        } else {
+            return "Update failed. No changes were made.";
+        }
+    } catch (Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+}
+
+
+
     public function hapusProjek()
     {
         // Menyimpan data baru

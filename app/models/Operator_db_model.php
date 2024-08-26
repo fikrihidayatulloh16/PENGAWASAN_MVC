@@ -20,7 +20,7 @@ class Operator_db_model {
 
     public function getAllLaporanByIdProjek($id_projek)
     {
-        $this->db->query('SELECT lp.id_laporan_harian , lp.tanggal AS tanggal_laporan, lp.progress_harian, pj.tanggal_mulai, pj.tanggal_selesai
+        $this->db->query('SELECT lp.id_laporan_harian , lp.tanggal AS tanggal_laporan, lp.progress_harian, pj.tanggal_mulai, pj.tanggal_selesai, lp.total_progres
                                                                     FROM ' . $this->tablelaporan . ' AS lp
                                                                     JOIN ' . $this->tableprojek . '  AS pj ON lp.id_projek = pj.id_projek
                                                                     WHERE lp.id_projek=:id_projek

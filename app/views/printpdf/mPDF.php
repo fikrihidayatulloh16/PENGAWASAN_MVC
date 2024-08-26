@@ -158,6 +158,18 @@ h3 {
     padding: 8px;
     border-bottom: 1px solid #333; /* Pastikan semua header memiliki border bottom */
 }
+
+.masalah-table th, .masalah-table td {
+    width: 50%;
+}
+
+.masalah-table th.col-1, .masalah-table td.col-1 {
+    width: 10%;
+}
+
+.masalah-table th.col-5, .masalah-table td.col-5 {
+    width: 45%;
+}
 </style>
 
 <body>
@@ -302,11 +314,11 @@ $html .= '
 
     <div class="section-title">C. Permasalahan dan Tindak Lanjut</div>
     <div>
-    <table>
+    <table class="table masalah-table">
             <tr>
-                <th class="col-1 text-center">No.</th>
-                <th class="col-5 text-center">Permasalahan</th>
-                <th class="col-5 text-center">Saran</th>
+                <th class="col-1 text-center" style="width: 10%;">No.</th>
+                <th class="col-5 text-center" style="width: 45%;">Permasalahan</th>
+                <th class="col-5 text-center" style="width: 45%;">Saran</th>
             </tr>';
             
                 $nomor_masalah = 1;

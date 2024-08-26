@@ -64,8 +64,8 @@
                         <td><?= $data_m_bahan['nama_bahan']?></td>
                         <td><?= $data_m_bahan['satuan']?></td>
                         <td>
-                            <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data_m_bahan['id_m_bahan']?>"><i class='bx bxs-trash-alt'> Hapus</i></a>
-                            <a href="#" class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data_m_bahan['id_m_bahan']?>"><i class='bx bxs-edit-alt'> Ubah</i></a>
+                            <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$data_m_bahan['id_m_bahan']?>"><i class='bx bxs-trash-alt'></i><span class="span-aksi"> Delete</span></a>
+                            <a href="#" class="btn btn-warning text-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$data_m_bahan['id_m_bahan']?>"><i class='bx bxs-edit-alt'></i><span class="span-aksi">Edit</span></a>
                         </td>
                     </tr>
                 <?php 

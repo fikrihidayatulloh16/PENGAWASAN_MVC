@@ -51,7 +51,7 @@
                 <a href="<?= PUBLICURL ?>/operator/rekap/<?= $laporan['id_laporan_harian'] ?>/<?= $data['projek']['id_projek']?>/<?= $hari_ke?>">Hari ke-<?= $hari_ke ?></a>
             </td>
             <td class="text-center align-middle" style="color: #464F60;"><?= $tanggal_laporan ?></td>
-            <td class="text-center align-middle"><?= $laporan['progress_harian'] ?></td>
+            <td class="text-center align-middle"><?= $laporan['total_progres'] ?>%</td>
             <td>
                 <form action="../../script/projek_pilih.php" method="POST">
                     <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#lh-hapus-<?= $laporan['id_laporan_harian'] ?>">

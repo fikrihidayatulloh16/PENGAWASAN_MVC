@@ -1,12 +1,12 @@
                                 <!-- Ubah Modal -->
-                                <div class="modal fade" id="projek-ubah-<?=$projek['id_projek']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="projek-ubah<?= $projek['id_projek'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header bg-primary text-white">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Ubah Master Projek</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form id="form_ubah" action="../../script/insert.php" method="POST" enctype="multipart/form-data">
+                                        <form id="form_ubah_<?= $projek['id_projek'] ?>" action="<?= PUBLICURL ?>/admin/ubah_projek/" method="POST" enctype="multipart/form-data">
                                             <input type="hidden" name="id_projek" value="<?=$projek['id_projek']?>">
                                             <div class="modal-body">
                                                 <div class="mb-3">
@@ -35,7 +35,7 @@
                                                     <label for="logo1" class="form-label">Logo Pemilik</label>
                                                     <input type="file" class="form-control" id="logo1-ubah-<?=$projek['logo_pemilik']?>" name="logo1" accept="image/*" onchange="previewImageUbah(this, 'logo1-preview-ubah-<?=$projek['logo_pemilik']?>')">
                                                     <div class="mb-3 mt-3 d-flex justify-content-center">
-                                                        <img id="logo1-preview-ubah-<?=$data['logo_pemilik']?>" src="http://localhost/pengawasan_me/public/asset/img/uploads/logo/<?=$data['logo_pemilik']?>" alt="Preview Logo" style="max-width: 100%; height: auto;">
+                                                        <img id="logo1-preview-ubah-<?=$projek['logo_pemilik']?>" src="<?= PUBLICURL ?>/assets/img/uploads/logo/<?=$projek['logo_pemilik']?>" alt="Preview Logo" style="max-width: 100%; height: 225px;">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
@@ -46,7 +46,7 @@
                                                     <label for="logo2" class="form-label">Logo Pengawas</label>
                                                     <input type="file" class="form-control" id="logo2-ubah-<?=$projek['logo_pengawas']?>" name="logo2" accept="image/*" onchange="previewImageUbah(this, 'logo2-preview-ubah-<?=$projek['logo_pengawas']?>')">
                                                     <div class="mb-3 mt-3 d-flex justify-content-center">
-                                                        <img id="logo2-preview-ubah-<?=$projek['logo_pengawas']?>" src="http://localhost/pengawasan_me/public/asset/img/uploads/logo/<?=$projek['logo_pengawas']?>" alt="Preview Logo" style="max-width: 100%; height: auto;">
+                                                        <img id="logo2-preview-ubah-<?=$projek['logo_pengawas']?>" src="<?= PUBLICURL ?>/assets/img/uploads/logo/<?=$projek['logo_pengawas']?>" alt="Preview Logo" style="max-width: 100%; height: 225px;">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
@@ -57,7 +57,7 @@
                                                     <label for="logo3" class="form-label">Logo Kontraktor</label>
                                                     <input type="file" class="form-control" id="logo3-ubah-<?=$projek['logo_kontraktor']?>" name="logo3" accept="image/*" onchange="previewImageUbah(this, 'logo3-preview-ubah-<?=$projek['logo_kontraktor']?>')">
                                                     <div class="mb-3 mt-3 d-flex justify-content-center">
-                                                        <img id="logo3-preview-ubah-<?=$projek['logo_kontraktor']?>" src="http://localhost/pengawasan_me/public/asset/img/uploads/logo/<?=$projek['logo_kontraktor']?>" alt="Preview Logo" style="max-width: 100%; height: auto;">
+                                                        <img id="logo3-preview-ubah-<?=$projek['logo_kontraktor']?>" src="<?= PUBLICURL ?>/assets/img/uploads/logo/<?=$projek['logo_kontraktor']?>" alt="Preview Logo" style="max-width: 100%; height: 225px;">
                                                     </div>
                                                 </div>
                                                 

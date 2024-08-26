@@ -39,7 +39,7 @@
                                 <label for="logo1" class="form-label">Logo Pemilik</label>
                                 <input type="file" class="form-control" id="logo1" name="logo1" accept="image/*">
                                 <div class="mb-3 mt-3 d-flex justify-content-center">
-                                    <img id="logo1-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: auto;">
+                                    <img id="logo1-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: 225px;">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -50,7 +50,7 @@
                                 <label for="logo2" class="form-label">Logo Pengawas</label>
                                 <input type="file" class="form-control" id="logo2" name="logo2" accept="image/*">
                                 <div class="mb-3 mt-3 d-flex justify-content-center">
-                                    <img id="logo2-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: auto;">
+                                    <img id="logo2-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: 225px;">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -61,7 +61,7 @@
                                 <label for="logo3" class="form-label">Logo Kontraktor</label>
                                 <input type="file" class="form-control" id="logo3" name="logo3" accept="image/*">
                                 <div class="mb-3 mt-3 d-flex justify-content-center">
-                                    <img id="logo3-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: auto;">
+                                    <img id="logo3-preview" src="#" alt="Preview Logo" style="display: none; max-width: 100%; height: 225px;">
                                 </div>
                             </div>
                             <div class="mb-3">

@@ -29,8 +29,8 @@
                 </div>
                                     
                     <div class="modal-footer bg-secondary">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success text-light" name="masalah_ubah">Ubah</button>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success text-light" name="masalah_ubah">Submit</button>
                     </div>
             </form>
         </div>

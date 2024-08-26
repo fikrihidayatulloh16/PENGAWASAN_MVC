@@ -96,7 +96,7 @@ class Operator_crud_model {
 
         // Insert ke tabel laporan_harian
         $laporan_harian_query = "INSERT INTO laporan_harian (id_laporan_harian, id_projek, tanggal, progress_harian) 
-                        VALUES (:new_id, :id_projek, :tanggal, NULL)";
+                        VALUES (:new_id, :id_projek, :tanggal, 0)";
 
         $this->db->query($laporan_harian_query);
         $this->db->bind(':new_id', $new_id);
@@ -167,6 +167,52 @@ class Operator_crud_model {
         $this->db->execute();
 
     }
+
+    public function ubahProgresLH()
+{
+    $id_projek = $_POST['id_projek'];
+    $id_laporan_harian = $_POST['id_laporan_harian'];
+    $progress_harian = $_POST['progress_harian'];
+    $tanggal = $_POST['tanggal'];
+
+    // Query to get the total progress up to the specified date
+    $sumQuery = "SELECT SUM(progress_harian) as total_progress 
+                 FROM laporan_harian 
+                 WHERE id_projek = :id_projek 
+                 AND tanggal < :tanggal";
+
+    // Prepare and execute the sum query
+    $this->db->query($sumQuery);
+    $this->db->bind(':id_projek', $id_projek);
+    $this->db->bind(':tanggal', $tanggal);
+    $this->db->execute();
+
+    // Fetch the result from the SUM query
+    $result = $this->db->single();
+    $total_progress_before_today = $result['total_progress'] ?? 0;
+
+    // Calculate new total progress
+    $new_total_progres = $total_progress_before_today + $progress_harian;
+
+    // Update the report with new progress values
+    $updateQuery = "UPDATE laporan_harian 
+                    SET progress_harian = :progress_harian, 
+                        total_progres = :total_progres 
+                    WHERE id_laporan_harian = :id_laporan_harian
+                    AND tanggal = :tanggal";
+
+    // Prepare, bind, and execute the update query
+    $this->db->query($updateQuery);
+    $this->db->bind(':id_laporan_harian', $id_laporan_harian);
+    $this->db->bind(':progress_harian', $progress_harian);
+    $this->db->bind(':total_progres', $new_total_progres);
+    $this->db->bind(':tanggal', $tanggal);
+
+    $this->db->execute();
+
+    return;
+}
+
 
     public function ubahCuaca()
     {

@@ -293,9 +293,9 @@ $html .= '
     <div>
     <table>
             <tr>
-                <th class="col-1 text-center">No.</th>
-                <th class="col-5 text-center">Permasalahan</th>
-                <th class="col-5 text-center">Saran</th>
+                <th class="col-1 text-center" style="width: 8%;">No.</th>
+                <th class="col-5 text-center" style="width: 50%;">Permasalahan</th>
+                <th class="col-5 text-center" style="width: 45%;">Saran</th>
             </tr>';
             
                 $nomor_masalah = 1;

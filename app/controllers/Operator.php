@@ -62,6 +62,7 @@ class Operator extends Controller{
 
         $this->view('layouts/layout_operator/layout_operator_pekerjaan', $data);
         $this->view('operator/l_harian/rekap/logo_rekap', $data);
+        $this->view('operator/l_harian/rekap/progres_rekap', $data);
         $this->view('operator/l_harian/rekap/cuaca_rekap', $data);
         $this->view('operator/l_harian/rekap/pekerjaan_rekap', $data);
         $this->view('operator/l_harian/rekap/permasalahan_rekap', $data);
@@ -179,6 +180,15 @@ class Operator extends Controller{
 
     }
 
+    public function ubah_progres_lh($id_laporan_harian, $id_projek)
+    {
+        $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $this->model('Operator_crud_model')->ubahProgresLH($_POST);
+        header('Location: ' . PUBLICURL . '/operator/rekap/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+        
+    }
+
     public function ubah_cuaca($id_laporan_harian, $id_projek)
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);
@@ -235,7 +245,7 @@ class Operator extends Controller{
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);
 
-        $this->model('Operator_crud_model')->hapusBahanLH($_POST);
+        $this->model('Operator_crud_model')->hapusPeralatanLH($_POST);
         header('Location: ' . PUBLICURL . '/operator/pekerjaan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
     }
 

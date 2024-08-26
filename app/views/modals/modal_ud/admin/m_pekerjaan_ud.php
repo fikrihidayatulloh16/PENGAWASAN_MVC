@@ -1,5 +1,5 @@
 <!-- Ubah Modal -->
-<div class="modal fade" id="mpekerjaan-ubah-<?=$data_m_pekerjaan['id_m_pekerjaan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="mpekerjaan-ubah-<?=$item['id_m_pekerjaan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary text-white">
@@ -7,14 +7,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form action="<?= PUBLICURL ?>/admin/ubah_m_pekerjaan/<?= $data['id_projek'] ?>" method="POST">
-                                        <input type="hidden" name="id_m_pekerjaan" value="<?=$data_m_pekerjaan['id_m_pekerjaan']?>">
+                                        <input type="hidden" name="id_m_pekerjaan" value="<?=$item['id_m_pekerjaan']?>">
                                         <div class="modal-body">
                                             
                                             <div class="mb-3">
                                                 <label for="id_m_pekerjaan" class="form-label">ID (Tidak Bisa Diubah)</label>
-                                                <h5 for="id_m_pekerjaan" class="form-label"><?=$data_m_pekerjaan['id_m_pekerjaan']?></h5>
+                                                <h5 for="id_m_pekerjaan" class="form-label"><?=$item['id_m_pekerjaan']?></h5>
                                                 <label for="nama_pekerjaan" class="form-label">Nama Pekerjaan</label>
-                                                <input type="text" class="form-control" id="nama_pekerjaan" name="nama_pekerjaan" value="<?= $data_m_pekerjaan['nama_pekerjaan']?>" placeholder="Masukkan Nama Pekerjaan" required><br><br>
+                                                <input type="text" class="form-control" id="nama_pekerjaan" name="nama_pekerjaan" value="<?= $item['nama_pekerjaan']?>" placeholder="Masukkan Nama Pekerjaan" required><br><br>
                                             </div>
                                         </div>
                                     
@@ -28,7 +28,7 @@
                             </div>
 
                             <!-- Hapus Modal -->
-                            <div class="modal fade" id="mpekerjaan-hapus-<?=$data_m_pekerjaan['id_m_pekerjaan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="mpekerjaan-hapus-<?=$item['id_m_pekerjaan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header bg-danger text-dark">
@@ -36,14 +36,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form action="<?= PUBLICURL ?>/admin/hapus_m_pekerjaan/<?= $data['id_projek'] ?>" method="POST">
-                                    <input type="hidden" name="id_m_pekerjaan" value="<?=$data_m_pekerjaan['id_m_pekerjaan']?>">
+                                    <input type="hidden" name="id_m_pekerjaan" value="<?=$item['id_m_pekerjaan']?>">
                                         <div class="modal-body">
                                             
                                             <div class="mb-3">
                                                 <label for="id_m_pekerjaan" class="form-label">ID</label>
-                                                <h5 for="id_m_pekerjaan" class="form-label" id="id_m_pekerjaan" name="id_m_pekerjaan" value="<?= $data_m_pekerjaan['id_m_pekerjaan']?>"><?=$data_m_pekerjaan['id_m_pekerjaan']?></h5>
+                                                <h5 for="id_m_pekerjaan" class="form-label" id="id_m_pekerjaan" name="id_m_pekerjaan" value="<?= $item['id_m_pekerjaan']?>"><?=$item['id_m_pekerjaan']?></h5>
                                                 <label for="jenis_pekerja" class="form-label">Jenis Pekerja</label>
-                                                <h5 for="id_m_pekerjaan" class="form-label text-danger"><?=$data_m_pekerjaan['nama_pekerjaan']?></h5>
+                                                <h5 for="id_m_pekerjaan" class="form-label text-danger"><?=$item['nama_pekerjaan']?></h5>
                                             </div>
                                         </div>
                                     

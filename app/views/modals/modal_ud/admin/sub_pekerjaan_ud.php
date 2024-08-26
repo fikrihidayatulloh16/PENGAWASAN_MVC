@@ -1,6 +1,6 @@
 
 <!-- Ubah Modal -->
-<div class="modal fade" id="sub-ubah-<?=$data_sub['id_m_sub_pekerjaan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="sub-ubah-<?=$subtask['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -9,13 +9,13 @@
             </div>
 
             <form action="<?= PUBLICURL ?>/admin/ubah_sub_pekerjaan/<?= $data['id_projek'] ?>" method="POST">
-                <input type="hidden" name="id_m_sub_pekerjaan" value="<?=$data_sub['id_m_sub_pekerjaan']?>">
+                <input type="hidden" name="id_m_sub_pekerjaan" value="<?=$subtask['id']?>">
                 <div class="modal-body ">                    
                     <div class="mb-3">
                         <label for="id_m_sub_pekerjaan" class="form-label">ID (Tidak Bisa Diubah)</label>
-                        <p class="form-label"><?=$data_sub['id_m_sub_pekerjaan']?></p>
+                        <p class="form-label"><?=$subtask['id']?></p>
                         <label for="nama_sub_pekerjaan" class="form-label">Nama Sub Pekerjaan</label>
-                        <input type="text" class="form-control" id="nama_sub_pekerjaan" name="nama_sub_pekerjaan" value="<?= $data_sub['nama_sub_pekerjaan']?>" placeholder="Masukkan Nama Sub Pekerjaan" required>
+                        <input type="text" class="form-control" id="nama_sub_pekerjaan" name="nama_sub_pekerjaan" value="<?= $subtask['name']?>" placeholder="Masukkan Nama Sub Pekerjaan" required>
                     </div>
                 </div>
 
@@ -30,7 +30,7 @@
 
 
         <!-- Hapus Modal -->
-                            <div class="modal fade" id="sub-hapus-<?=$data_sub['id_m_sub_pekerjaan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="sub-hapus-<?= $subtask['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header bg-danger text-dark">
@@ -38,14 +38,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form action="<?= PUBLICURL ?>/admin/hapus_sub_pekerjaan/<?= $data['id_projek'] ?>" method="POST">
-                                    <input type="hidden" name="id_m_sub_pekerjaan" value="<?=$data_sub['id_m_sub_pekerjaan']?>">
+                                    <input type="hidden" name="id_m_sub_pekerjaan" value="<?=$subtask['id']?>">
                                         <div class="modal-body">
                                             
                                             <div class="mb-3">
                                                 <label for="id_m_sub_pekerjaan" class="form-label">ID</label>
-                                                <h5 for="id_m_sub_pekerjaan" class="form-label" id="id_m_sub_pekerjaan" name="id_m_sub_pekerjaan" value="<?= $data_sub['id_m_sub_pekerjaan']?>"><?=$data_sub['id_m_sub_pekerjaan']?></h5>
+                                                <h5 for="id_m_sub_pekerjaan" class="form-label" id="id_m_sub_pekerjaan" name="id_m_sub_pekerjaan" value="<?= $subtask['id']?>"><?=$subtask['id']?></h5>
                                                 <label for="jenis_pekerja" class="form-label">Jenis Pekerja</label>
-                                                <h5 for="nama_sub_pekerjaan" class="form-label text-danger"><?=$data_sub['nama_sub_pekerjaan']?></h5>
+                                                <h5 for="nama_sub_pekerjaan" class="form-label text-danger"><?=$subtask['id']?></h5>
                                             </div>
                                         </div>
                                     
