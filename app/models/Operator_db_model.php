@@ -292,6 +292,15 @@ class Operator_db_model {
         return $this->db->resultSet();
     }
 
+    public function getAllFotoMasalahByIDMasalah($id_permasalahan)
+    {
+        $this->db->query("SELECT * FROM foto_masalah WHERE id_permasalahan = :id_permasalahan");
+
+        $this->db->bind('id_permasalahan', $id_permasalahan);
+
+        return $this->db->resultSet();
+    }
+
     public function getHariKeByLaporanId($id_laporan_harian, $id_projek)
     {
         $projek = $this->getProjekById($id_projek);

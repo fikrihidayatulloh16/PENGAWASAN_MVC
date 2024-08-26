@@ -113,11 +113,13 @@ class Operator extends Controller{
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
         $data['permasalahan'] = $this->model('Rekap_db_model')->getPermasalahanByLaporanID($id_laporan_harian);
+        
         $data['hari_ke'] = $this->model('Operator_db_model')->getHariKeByLaporanId($id_laporan_harian, $id_projek);
 
         $this->view('layouts/layout_operator/layout_operator_pekerjaan', $data);
+        
         $this->view('operator/l_harian/permasalahan_l_harian', $data);
-        $this->view('layouts/footer_b');
+        $this->view('layouts/footer_c');
     }
 
     public function foto_kegiatan($id_laporan_harian, $id_projek)
@@ -183,8 +185,9 @@ class Operator extends Controller{
     public function ubah_progres_lh($id_laporan_harian, $id_projek)
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);
+        $data['laporan'] = $this->model('Operator_db_model')->getAllLaporanByIdProjek($id_projek);
 
-        $this->model('Operator_crud_model')->ubahProgresLH($_POST);
+        $this->model('Operator_crud_model')->ubahProgresLH($_POST, $data['laporan']);
         header('Location: ' . PUBLICURL . '/operator/rekap/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
         
     }
@@ -299,6 +302,35 @@ class Operator extends Controller{
 
         $this->model('Operator_crud_model')->hapusPermasalahan($_POST);
         header('Location: ' . PUBLICURL . '/operator/permasalahan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+    }
+
+    public function tambah_foto_masalah($id_laporan_harian, $id_projek)
+    {
+        $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $this->model('Operator_crud_model')->tambahFotoMasalah($_POST);
+        header('Location: ' . PUBLICURL . '/operator/permasalahan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+        exit;
+    }
+
+    public function ubah_foto_masalah($id_laporan_harian, $id_projek)
+    {
+        $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $this->model('Operator_crud_model')->ubahFotoMasalah($_POST);
+        header('Location: ' . PUBLICURL . '/operator/permasalahan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+        exit;
+
+    }
+
+    public function hapus_foto_masalah($id_laporan_harian, $id_projek)
+    {
+        $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $this->model('Operator_crud_model')->hapusFotoMasalah($_POST);
+        header('Location: ' . PUBLICURL . '/operator/permasalahan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+        exit;
+
     }
 
     public function tambah_foto_kegiatan($id_laporan_harian, $id_projek)

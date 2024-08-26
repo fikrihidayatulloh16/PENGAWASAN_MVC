@@ -2,7 +2,7 @@
 <div class="card mt-3">
     <h5 class="card-header">
         <div>
-            Estimasi Progres : <?=$data['laporan']['progress_harian']?>
+            Estimasi Progres : <?=$data['laporan']['progress_harian']?>%
 
         </div>
             
@@ -29,10 +29,14 @@
                 <div class="modal-body">                    
                     <div class="mb-3">
                         <div class="form-group">
-                            <label for="progres_harian">Estimasi Prores :</label>
-                            <input type="decimal" id="progress_harian" name="progress_harian" class="form-control"  rows="3" placeholder="Masukkan Persentase" required></input>
+                            <label for="progress_harian">Estimasi Progres:</label>
+                            <div class="input-group">
+                                <input type="number" id="progress_harian" name="progress_harian" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
+                                <span class="input-group-text">%</span>
+                            </div>
                         </div>
                     </div>
+
                 </div>
                                     
                     <div class="modal-footer bg-secondary">

@@ -168,50 +168,61 @@ class Operator_crud_model {
 
     }
 
-    public function ubahProgresLH()
-{
-    $id_projek = $_POST['id_projek'];
-    $id_laporan_harian = $_POST['id_laporan_harian'];
-    $progress_harian = $_POST['progress_harian'];
-    $tanggal = $_POST['tanggal'];
+    public function ubahProgresLH($postData, $laporanData)
+    {
+        $id_projek = $postData['id_projek'];
+        $id_laporan_harian = $postData['id_laporan_harian'];
+        $progress_harian = $postData['progress_harian'];
+        $tanggal = $postData['tanggal'];
 
-    // Query to get the total progress up to the specified date
-    $sumQuery = "SELECT SUM(progress_harian) as total_progress 
-                 FROM laporan_harian 
-                 WHERE id_projek = :id_projek 
-                 AND tanggal < :tanggal";
+        // Update the report with new progress values
+        $updateQuery = "UPDATE laporan_harian 
+                        SET progress_harian = :progress_harian
+                        WHERE id_laporan_harian = :id_laporan_harian
+                        AND tanggal = :tanggal";
 
-    // Prepare and execute the sum query
-    $this->db->query($sumQuery);
-    $this->db->bind(':id_projek', $id_projek);
-    $this->db->bind(':tanggal', $tanggal);
-    $this->db->execute();
+        // Prepare, bind, and execute the update query
+        $this->db->query($updateQuery);
+        $this->db->bind(':id_laporan_harian', $id_laporan_harian);
+        $this->db->bind(':progress_harian', $progress_harian);
+        $this->db->bind(':tanggal', $tanggal);
 
-    // Fetch the result from the SUM query
-    $result = $this->db->single();
-    $total_progress_before_today = $result['total_progress'] ?? 0;
+        $this->db->execute();
 
-    // Calculate new total progress
-    $new_total_progres = $total_progress_before_today + $progress_harian;
 
-    // Update the report with new progress values
-    $updateQuery = "UPDATE laporan_harian 
-                    SET progress_harian = :progress_harian, 
-                        total_progres = :total_progres 
-                    WHERE id_laporan_harian = :id_laporan_harian
-                    AND tanggal = :tanggal";
+        // Update semua total progress
+        foreach ($laporanData as $laporan) {
+            // Query to get the total progress up to the specified date
+            $sumQuery = "SELECT SUM(progress_harian) as total_progress 
+                        FROM laporan_harian 
+                        WHERE id_projek = :id_projek 
+                        AND tanggal <= :tanggal";
 
-    // Prepare, bind, and execute the update query
-    $this->db->query($updateQuery);
-    $this->db->bind(':id_laporan_harian', $id_laporan_harian);
-    $this->db->bind(':progress_harian', $progress_harian);
-    $this->db->bind(':total_progres', $new_total_progres);
-    $this->db->bind(':tanggal', $tanggal);
+            // Prepare and execute the sum query
+            $this->db->query($sumQuery);
+            $this->db->bind(':id_projek', $id_projek);
+            $this->db->bind(':tanggal', $laporan['tanggal_laporan']);
+            $result = $this->db->single();
 
-    $this->db->execute();
+            // Use null coalescing operator to handle cases where the result might be null
+            $total_progress_before_today = $result['total_progress'] ?? 0;
 
-    return;
-}
+            // Calculate new total progress and update it
+            $updateTotalProgressQuery = "UPDATE laporan_harian
+                                        SET total_progres = :total_progress_before_today
+                                        WHERE id_laporan_harian = :id_laporan_harian";
+
+            $this->db->query($updateTotalProgressQuery);
+            $this->db->bind(':total_progress_before_today', $total_progress_before_today);
+            $this->db->bind(':id_laporan_harian', $laporan['id_laporan_harian']);
+
+            $this->db->execute();
+
+        }
+
+        return true; // Indicate success
+    }
+
 
 
     public function ubahCuaca()
@@ -413,7 +424,202 @@ class Operator_crud_model {
 
         $this->db->query($hapus);
         $this->db->execute();
+    }
 
+    public function tambahFotoMasalah()
+    {
+        // Menyimpan post ke variabel
+        $id_permasalahan = $_POST['id_permasalahan'];
+
+        // Handling file upload
+        $foto_temp = $_FILES['foto']['tmp_name'];
+        $foto_error = $_FILES['foto']['error'];
+
+        // Mendapatkan ekstensi file asli
+        $foto_ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
+
+        $foto_name = uniqid() . '.' . $foto_ext;
+        $foto_path = '../public/assets/img/uploads/foto_masalah/' . $foto_name;
+
+        // Periksa apakah tidak ada error saat upload
+        if ($foto_error === UPLOAD_ERR_OK) {
+            // Pindahkan file dari temporary location ke lokasi yang ditentukan
+            if (move_uploaded_file($foto_temp, $foto_path)) {
+                // Menyimpan ke database
+                $sql_foto_masalah = "INSERT INTO foto_masalah (id_permasalahan, foto_masalah) 
+                                    VALUES (:id_permasalahan, :foto)";
+
+                $this->db->query($sql_foto_masalah);
+                $this->db->bind('id_permasalahan', $id_permasalahan);
+                $this->db->bind('foto', $foto_name); // Changed 'foto_name' to 'foto'
+
+                if ($this->db->execute()) {
+                    return $this->db->rowCount(); // Return the number of affected rows
+                } else {
+                    echo "Error: Gagal memperbarui database.";
+                    return false; // Return false to indicate failure
+                }
+
+            } else {
+                echo "Error: File tidak dapat dipindahkan.";
+                // Error tambahan untuk membantu troubleshooting
+                if (!file_exists('../public/assets/img/uploads/foto_masalah/')) {
+                    echo "Error: Direktori tujuan tidak ditemukan.";
+                } else if (!is_writable('../public/assets/img/uploads/foto_masalah/')) {
+                    echo "Error: Direktori tujuan tidak memiliki izin tulis.";
+                }
+                return false; // Return false to indicate failure
+            }
+        } else {
+            // Menangani berbagai kesalahan upload file
+            switch ($foto_error) {
+                case UPLOAD_ERR_INI_SIZE:
+                case UPLOAD_ERR_FORM_SIZE:
+                    echo "Error: Ukuran file terlalu besar.";
+                    break;
+                case UPLOAD_ERR_PARTIAL:
+                    echo "Error: File hanya ter-upload sebagian.";
+                    break;
+                case UPLOAD_ERR_NO_FILE:
+                    echo "Error: Tidak ada file yang di-upload.";
+                    break;
+                case UPLOAD_ERR_NO_TMP_DIR:
+                    echo "Error: Folder temporary tidak ditemukan.";
+                    break;
+                case UPLOAD_ERR_CANT_WRITE:
+                    echo "Error: Gagal menulis file ke disk.";
+                    break;
+                case UPLOAD_ERR_EXTENSION:
+                    echo "Error: Upload file dihentikan oleh ekstensi PHP.";
+                    break;
+                default:
+                    echo "Error: Terjadi kesalahan yang tidak diketahui.";
+                    break;
+            }
+            return false; // Return false to indicate failure
+        }
+    }
+
+    public function ubahFotoMasalah()
+    {
+        // Dapatkan nilai dari form
+        $id = $_POST['id'];
+
+        // Mengambil nama file lama dari database
+        $sql_get_foto = "SELECT foto_masalah FROM foto_masalah WHERE id = :id";
+        $this->db->query($sql_get_foto);
+        $this->db->bind('id', $id);
+        $result = $this->db->single();
+
+        if ($result) {
+            $old_foto_name = $result['foto'];
+            $old_foto_path = '../public/assets/img/uploads/foto_masalah/' . $old_foto_name;
+
+            // Periksa apakah ada file baru yang diupload
+            if (isset($_FILES['foto']) && $_FILES['foto']['error'] !== UPLOAD_ERR_NO_FILE) {
+                $foto_error = $_FILES['foto']['error'];
+                $foto_name = $_FILES['foto']['name'];
+                $foto_temp = $_FILES['foto']['tmp_name'];
+
+                if ($foto_error === UPLOAD_ERR_OK) {
+                    // Menghapus file lama dari server
+                    if (file_exists($old_foto_path)) {
+                        unlink($old_foto_path);
+                    }
+
+                    // Menentukan nama file baru
+                    $foto_ext = pathinfo($foto_name, PATHINFO_EXTENSION);
+                    $foto_new_name = uniqid() . '.' . $foto_ext;
+                    $foto_path = '../public/assets/img/uploads/foto_masalah/' . $foto_new_name;
+
+                    // Pindahkan file dari temporary location ke lokasi yang ditentukan
+                    if (move_uploaded_file($foto_temp, $foto_path)) {
+                        // Update database dengan nama file baru
+                        $sql_update_foto = "UPDATE foto_masalah SET foto_masalah = :foto_masalah WHERE id = :id";
+                        $this->db->query($sql_update_foto);
+                        $this->db->bind('foto_masalah', $foto_new_name);
+                        $this->db->bind('id', $id);
+
+                        if ($this->db->execute()) {
+                            return;
+                        } else {
+                            echo "Error: Gagal memperbarui database.";
+                        }
+                    } else {
+                        echo "Error: File tidak dapat dipindahkan.";
+                        if (!file_exists('../public/assets/img/uploads/foto_masalah/')) {
+                            echo "Error: Direktori tujuan tidak ditemukan.";
+                        } else if (!is_writable('../public/assets/img/uploads/foto_masalah/')) {
+                            echo "Error: Direktori tujuan tidak memiliki izin tulis.";
+                        }
+                    }
+                } else {
+                    switch ($foto_error) {
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            echo "Error: Ukuran file terlalu besar.";
+                            break;
+                        case UPLOAD_ERR_PARTIAL:
+                            echo "Error: File hanya ter-upload sebagian.";
+                            break;
+                        case UPLOAD_ERR_NO_FILE:
+                            echo "Error: Tidak ada file yang di-upload.";
+                            break;
+                        case UPLOAD_ERR_NO_TMP_DIR:
+                            echo "Error: Folder temporary tidak ditemukan.";
+                            break;
+                        case UPLOAD_ERR_CANT_WRITE:
+                            echo "Error: Gagal menulis file ke disk.";
+                            break;
+                        case UPLOAD_ERR_EXTENSION:
+                            echo "Error: Upload file dihentikan oleh ekstensi PHP.";
+                            break;
+                        default:
+                            echo "Error: Terjadi kesalahan yang tidak diketahui.";
+                            break;
+                    }
+                }
+            } 
+        } else {
+            echo "Error: Foto tidak ditemukan.";
+        }
+    }
+
+    public function hapusFotoMasalah()
+    {
+        $id = $_POST['id'];
+        
+            // Mengambil nama file dari database
+            $sql_get_foto = "SELECT foto_masalah FROM foto_masalah WHERE id = :id";
+            $this->db->query($sql_get_foto);
+            $this->db->bind('id', $id);
+        
+            $row = $this->db->single();
+        
+            if ($row) {
+                $foto_name = $row['foto_masalah'];
+                $foto_path = '../public/assets/img/uploads/foto_masalah/' . $foto_name;
+        
+                // Menghapus file dari server
+                if (file_exists($foto_path)) {
+                    unlink($foto_path);
+                } else {
+                    echo "Error: File tidak ditemukan di server.";
+                }
+        
+                // Menghapus entri dari database
+                $sql_delete_foto = "DELETE FROM foto_masalah WHERE id = :id";
+                $this->db->query($sql_delete_foto);
+                $this->db->bind('id', $id);
+        
+                if ($this->db->execute()) {
+                    return;
+                } else {
+                    echo "Error: Gagal menghapus entri dari database.";
+                }
+            } else {
+                echo "Error: Foto tidak ditemukan di database.";
+            }
     }
 
     public function tambahFotoKegiatan()
@@ -630,6 +836,8 @@ class Operator_crud_model {
                 echo "Error: Foto tidak ditemukan di database.";
             }
     }
+
+    
 
     public function tambahTimPengawas()
     {
