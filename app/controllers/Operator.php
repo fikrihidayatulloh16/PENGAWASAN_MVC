@@ -8,21 +8,9 @@ class Operator extends Controller{
             'id_projek' => $id_projek
         ];
     }
-    /*
-    echo '<pre>';
-    print_r($data['bahan']);
-    echo '</pre>';
-    */
 
-    public function index() {
-        $data['judul'] = '(temp) Pilih projek untuk operator';
-        $data['projek'] = $this->model('Operator_db_model')->getAllProjek();
-        $this->view('layouts/layout_admin/layout_admin_projek', $data);
-        $this->view('operator/index', $data);
-        $this->view('layouts/footer_a');
-    }
 
-    public function laporan_harian_list($id_projek) {
+    public function index($id_projek) {
         
         //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
         $data['id_projek'] = $id_projek;
@@ -421,3 +409,19 @@ class Operator extends Controller{
 
     }
 }
+
+
+    /* Backup
+    echo '<pre>';
+    print_r($data['bahan']);
+    echo '</pre>';
+    
+
+    public function index() {
+        $data['judul'] = '(temp) Pilih projek untuk operator';
+        $data['projek'] = $this->model('Operator_db_model')->getAllProjek();
+        $this->view('layouts/layout_admin/layout_admin_projek', $data);
+        $this->view('operator/index', $data);
+        $this->view('layouts/footer_a');
+    }
+    */

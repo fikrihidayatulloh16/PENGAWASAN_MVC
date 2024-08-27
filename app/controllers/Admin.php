@@ -83,6 +83,17 @@ class Admin extends Controller {
         $this->view('layouts/layout_admin/footer_admin');
     }
 
+    public function user($id_projek)
+    {
+        $data['id_projek'] = $id_projek;
+        $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
+        $data['user'] = $this->model('Rekap_db_model')->getTimPengawasByProjekId($id_projek);
+
+        $this->view('layouts/layout_admin/header_admin', $data);
+        $this->view('admin/user', $data);
+        $this->view('layouts/layout_admin/footer_admin');
+    }
+
     //crud controller
     public function tambah_projek()
     {
