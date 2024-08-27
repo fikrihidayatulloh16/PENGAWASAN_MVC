@@ -440,48 +440,90 @@ $html .= '
         </div>
 
     <div class="section-title text-center">Dokumentasi Harian</div>
-<div >
-    <div class="container">';
-        if (count($data['foto_kegiatan']) > 0) {
-            $html .= '<table style="width: 100%; border-collapse: collapse;">';
-            $html .= '<tbody>';
-            $num_row = 0;
-            foreach ($data['foto_kegiatan'] as $foto) {
-                if ($num_row % 2 == 0) {
-                    // Mulai baris baru setiap dua gambar
-                    $html .= '<tr>';
-                }
+    <div >
+        <div class="container">';
+            if (count($data['foto_kegiatan']) > 0) {
+                $html .= '<table style="width: 100%; border-collapse: collapse;">';
+                $html .= '<tbody>';
+                $num_row = 0;
+                foreach ($data['foto_kegiatan'] as $foto) {
+                    if ($num_row % 2 == 0) {
+                        // Mulai baris baru setiap dua gambar
+                        $html .= '<tr>';
+                    }
 
-                // Tambahkan gambar dalam kolom
+                    // Tambahkan gambar dalam kolom
+                    $html .= '
+                    <td style="width: 50%; text-align: center; vertical-align: top; padding: 10px;">
+                        <img src="' . PUBLICURL . '/assets/img/uploads/foto_kegiatan/' . $foto['foto'] . '" alt="Foto Kegiatan" class="image-rekap">
+                        <br>
+                        <div class="image-caption" style="font: size 11px;">' . $foto['keterangan'] . '</div>
+                    </td>';
+                    
+                    $num_row++;
+                    if ($num_row % 2 == 0) {
+                        // Tutup baris setelah dua gambar
+                        $html .= '</tr>';
+                    }
+                }
+                if ($num_row % 2 != 0) {
+                    // Jika jumlah gambar ganjil, tambahkan satu kolom kosong
+                    $html .= '<td style="width: 50%;"></td></tr>';
+                }
+                $html .= '</tbody>';
+                $html .= '</table>';
+            } else {
                 $html .= '
-                <td style="width: 50%; text-align: center; vertical-align: top; padding: 10px;">
-                    <img src="' . PUBLICURL . '/assets/img/uploads/foto_kegiatan/' . $foto['foto'] . '" alt="Foto Kegiatan" class="image-rekap">
-                    <br>
-                    <div class="image-caption" style="font: size 11px;">' . $foto['keterangan'] . '</div>
-                </td>';
-                
-                $num_row++;
-                if ($num_row % 2 == 0) {
-                    // Tutup baris setelah dua gambar
-                    $html .= '</tr>';
-                }
+                <div class="row">
+                    <div class="col-12 text-center">Tidak ada data Foto Kegiatan.</div>
+                </div>';
             }
-            if ($num_row % 2 != 0) {
-                // Jika jumlah gambar ganjil, tambahkan satu kolom kosong
-                $html .= '<td style="width: 50%;"></td></tr>';
-            }
-            $html .= '</tbody>';
-            $html .= '</table>';
-        } else {
             $html .= '
-            <div class="row">
-                <div class="col-12 text-center">Tidak ada data Foto Kegiatan.</div>
-            </div>';
-        }
-        $html .= '
+        </div>
     </div>
-</div>
 
+    <div class="section-title text-center">Lampiran Foto Permasalahan</div>
+    <div >
+        <div class="container">';
+            if (count($data['foto_masalah']) > 0) {
+                $html .= '<table style="width: 100%; border-collapse: collapse;">';
+                $html .= '<tbody>';
+                $num_row = 0;
+                foreach ($data['foto_masalah'] as $foto_masalah) {
+                    if ($num_row % 2 == 0) {
+                        // Mulai baris baru setiap dua gambar
+                        $html .= '<tr>';
+                    }
+
+                    // Tambahkan gambar dalam kolom
+                    $html .= '
+                    <td style="width: 50%; text-align: center; vertical-align: top; padding: 10px;">
+                        <img src="' . PUBLICURL . '/assets/img/uploads/foto_masalah/' . $foto_masalah['foto_masalah'] . '" alt="Foto Masalah" class="image-rekap">
+                        <br>
+                        <div class="image-caption" style="font: size 11px;">' . $foto_masalah['permasalahan'] . '</div>
+                    </td>';
+                    
+                    $num_row++;
+                    if ($num_row % 2 == 0) {
+                        // Tutup baris setelah dua gambar
+                        $html .= '</tr>';
+                    }
+                }
+                if ($num_row % 2 != 0) {
+                    // Jika jumlah gambar ganjil, tambahkan satu kolom kosong
+                    $html .= '<td style="width: 50%;"></td></tr>';
+                }
+                $html .= '</tbody>';
+                $html .= '</table>';
+            } else {
+                $html .= '
+                <div class="row">
+                    <div class="col-12 text-center">Tidak ada data Foto Kegiatan.</div>
+                </div>';
+            }
+            $html .= '
+        </div>
+    </div>
 </body>
 </html>';
 
