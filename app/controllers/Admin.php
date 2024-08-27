@@ -72,17 +72,14 @@ class Admin extends Controller {
         $this->view('layouts/layout_admin/footer_admin');
     }
 
-    public function tim_pengawas($id_laporan_harian, $id_projek)
+    public function tim_pengawas($id_projek)
     {
-        $data = $this->prepareData($id_laporan_harian, $id_projek);
-        $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
-        $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
+        $data['id_projek'] = $id_projek;
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
-        $data['tim_pengawas'] = $this->model('Rekap_db_model')->getTimPengawasByLaporanId($id_projek);
-        $data['hari_ke'] = $this->model('Operator_db_model')->getHariKeByLaporanId($id_laporan_harian, $id_projek);
+        $data['tim_pengawas'] = $this->model('Rekap_db_model')->getTimPengawasByProjekId($id_projek);
 
         $this->view('layouts/layout_admin/header_admin', $data);
-        $this->view('operator/l_harian/tim_pengawas_l_harian', $data);
+        $this->view('admin/tim_pengawas_admin', $data);
         $this->view('layouts/layout_admin/footer_admin');
     }
 

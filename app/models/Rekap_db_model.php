@@ -120,7 +120,7 @@ class Rekap_db_model{
         return $this->db->resultSet();
     }
 
-    public function getTimPengawasByLaporanId($id_projek)
+    public function getTimPengawasByProjekId($id_projek)
     {
         $this->db->query("SELECT tp.id_tim_pengawas, tp.tim_pengawas , tp.tim_leader
                                                FROM tim_pengawas AS tp

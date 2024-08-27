@@ -58,6 +58,7 @@ class Operator extends Controller{
         //$data['tim_pengawas'] = $this->model('Rekap_db_model')->getTimPengawasByLaporanId($id_projek);
         $data['hari_ke'] = $this->model('Operator_db_model')->getHariKeByLaporanId($id_laporan_harian, $id_projek);
         $data['pekerjaan_rekap'] = $this->model('Rekap_db_model')->rekapPekerjaan($id_laporan_harian);
+        $data['foto_masalah'] = $this->model('Operator_db_model')->getAllFotoMasalahByIDLaporan($id_laporan_harian);
         
 
         $this->view('layouts/layout_operator/layout_operator_pekerjaan', $data);
@@ -67,6 +68,7 @@ class Operator extends Controller{
         $this->view('operator/l_harian/rekap/pekerjaan_rekap', $data);
         $this->view('operator/l_harian/rekap/permasalahan_rekap', $data);
         $this->view('operator/l_harian/rekap/foto_kegiatan_rekap', $data);
+        $this->view('operator/l_harian/rekap/foto_masalah_rekap', $data);
         
         $this->view('layouts/footer_a');
     }
@@ -218,7 +220,13 @@ class Operator extends Controller{
     public function ubah_cuaca($id_laporan_harian, $id_projek)
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);
-        $this->model('Operator_crud_model')->ubahCuaca($_POST);
+        $result = $this->model('Operator_crud_model')->ubahCuaca($_POST);
+        
+        if ($result === true) {
+            Flasher::setFlash('Sukses', 'Cuaca berhasil Diperbarui', 'success');
+        } else {
+            Flasher::setFlash('Gagal', 'Cuaca gagal Diperbarui', 'danger');
+        }
         
         header('Location: ' . PUBLICURL . '/operator/rekap/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
     }
@@ -390,31 +398,25 @@ class Operator extends Controller{
         exit;
     }
 
-    public function tambah_tim_pengawas($id_laporan_harian, $id_projek)
+    public function tambah_tim_pengawas($id_projek)
     {
-        $data = $this->prepareData($id_laporan_harian, $id_projek);
-
         if ($this->model('Operator_crud_model')->tambahTimPengawas($_POST) > 0) {
-            header('Location: ' . PUBLICURL . '/operator/tim_pengawas/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+            header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
             exit;
         }
     }
 
-    public function ubah_tim_pengawas($id_laporan_harian, $id_projek)
+    public function ubah_tim_pengawas($id_projek)
     {
-        $data = $this->prepareData($id_laporan_harian, $id_projek);
-
         $this->model('Operator_crud_model')->ubahTimPengawas($_POST);
-        header('Location: ' . PUBLICURL . '/operator/tim_pengawas/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+        header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
         exit;
     }
 
-    public function hapus_tim_pengawas($id_laporan_harian, $id_projek)
+    public function hapus_tim_pengawas($id_projek)
     {
-        $data = $this->prepareData($id_laporan_harian, $id_projek);
-
         $this->model('Operator_crud_model')->hapusTimPengawas($_POST);
-        header('Location: ' . PUBLICURL . '/operator/tim_pengawas/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+        header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
         exit;
 
     }

@@ -271,6 +271,8 @@ class Operator_crud_model {
 
                 $this->db->execute();
             }
+
+        return TRUE;
     }
 
     public function tambahPekerjaLH()
