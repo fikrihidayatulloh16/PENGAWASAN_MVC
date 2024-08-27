@@ -27,6 +27,7 @@ class Printpdf extends Controller {
     public function mpdf($id_projek, $id_laporan_harian, $tanggal_laporan)
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);
+        $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($tanggal_laporan);
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
         $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);

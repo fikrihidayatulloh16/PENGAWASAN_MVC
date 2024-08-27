@@ -215,7 +215,9 @@ h3 {
         </tr>
     </table>
 
-    <div class="section-title text-center" style="border-bottom: 1px solid #333;">Laporan Harian PENGAWAS</div>
+    <div class="cuaca-title text-center" style="border-bottom: 1px solid #333;">Laporan Harian PENGAWAS</div>
+
+    <div class="section-title text-center" style="border-bottom: 1px solid #333;">Progres : ' . $data['laporan']['progress_harian'] .'%</div>
     
     <div class="section-title">A. Cuaca</div>
     <div class="table-container">

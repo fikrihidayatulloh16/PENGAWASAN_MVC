@@ -311,6 +311,20 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="<?= PUBLICURL ?>/admin/tim_pengawas/<?= $data['id_projek'] ?>">
+          <i class="bi bi-person"></i>
+          <span>Tim Pengawas</span>
+        </a>
+      </li><!-- End User Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>User</span>
+        </a>
+      </li><!-- End User Page Nav -->
+
+      <!--<li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-person"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -331,7 +345,7 @@
             </a>
           </li>
         </ul>
-      </li><!-- End User Nav -->
+      </li> End User Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->
