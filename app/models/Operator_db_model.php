@@ -292,6 +292,19 @@ class Operator_db_model {
         return $this->db->resultSet();
     }
 
+    public function getAllFotoMasalahByIDLaporan($id_laporan_harian)
+    {
+        $this->db->query("SELECT lh.id_laporan_harian, ps.id_permasalahan, fm.id, fm.foto_masalah
+                        FROM foto_masalah AS fm
+                        JOIN permasalahan AS ps ON fm.id_permasalahan = ps.id_permasalahan
+                        JOIN laporan_harian AS lh ON lh.id_laporan_harian = ps.id_laporan_harian
+                        WHERE lh.id_laporan_harian = :id_laporan_harian");
+
+        $this->db->bind('id_laporan_harian', $id_laporan_harian);
+
+        return $this->db->resultSet();
+    }
+    
     public function getAllFotoMasalahByIDMasalah($id_permasalahan)
     {
         $this->db->query("SELECT * FROM foto_masalah WHERE id_permasalahan = :id_permasalahan");

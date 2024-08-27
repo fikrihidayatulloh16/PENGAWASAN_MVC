@@ -5,5 +5,6 @@ if(!session_id()) {
 }
 
 require_once '../app/init.php';
+require_once 'assets/vendor/autoload.php';
 
 $app = new App;

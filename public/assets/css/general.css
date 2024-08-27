@@ -122,6 +122,15 @@ h4 {
 
 }
 
+.fixed-top {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%; /* Adjust width as needed */
+    z-index: 1050; /* Ensure it appears above other elements */
+}
+
 @media (max-width: 576px) {
     .kolom-aksi {
         width: 50%; /* 4 dari 12 kolom */

@@ -1,3 +1,6 @@
+<!-- Menampilkan flash -->
+<?php Flasher::flash() ?>
+
 <div class="container">
 <div class="card mt-3">
     <h5 class="card-header">

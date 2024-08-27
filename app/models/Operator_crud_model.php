@@ -71,6 +71,32 @@ class Operator_crud_model {
     return $tanggal_new;
     }
 
+    // Function to convert images to WebP format
+    private function convertToWebP($filePath, $originalExt, $quality = 75)
+    {
+        switch ($originalExt) {
+            case 'jpg':
+            case 'jpeg':
+                $image = imagecreatefromjpeg($filePath);
+                break;
+            case 'png':
+                $image = imagecreatefrompng($filePath);
+                break;
+            case 'gif':
+                $image = imagecreatefromgif($filePath);
+                break;
+            default:
+                echo "Error: Format file tidak didukung untuk konversi ke WebP.";
+                return false;
+        }
+
+        // Save the image as WebP
+        imagewebp($image, $filePath, $quality);
+        imagedestroy($image);
+
+        return true;
+    }
+
 
     public function tambahLaporanHarian($data)
     {
@@ -88,7 +114,7 @@ class Operator_crud_model {
         
         if ($result['count'] > 0) {
             // Jika sudah ada tanggal yang sama, kembalikan nilai atau pesan error
-            return "Peringatan!! Tanggal sudah ada untuk proyek ini, silakan pilih tanggal lain.";
+            return FALSE;
         }
 
         // Generate ID baru
@@ -166,6 +192,7 @@ class Operator_crud_model {
         $this->db->query($hapus);
         $this->db->execute();
 
+        return TRUE;
     }
 
     public function ubahProgresLH($postData, $laporanData)
@@ -220,7 +247,7 @@ class Operator_crud_model {
 
         }
 
-        return true; // Indicate success
+        return TRUE; // Indicate success
     }
 
 
@@ -427,78 +454,83 @@ class Operator_crud_model {
     }
 
     public function tambahFotoMasalah()
-    {
-        // Menyimpan post ke variabel
-        $id_permasalahan = $_POST['id_permasalahan'];
+{
+    // Menyimpan post ke variabel
+    $id_permasalahan = $_POST['id_permasalahan'];
 
-        // Handling file upload
-        $foto_temp = $_FILES['foto']['tmp_name'];
-        $foto_error = $_FILES['foto']['error'];
+    // Handling file upload
+    $foto_temp = $_FILES['foto']['tmp_name'];
+    $foto_error = $_FILES['foto']['error'];
 
-        // Mendapatkan ekstensi file asli
-        $foto_ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
+    // Mendapatkan ekstensi file asli
+    $foto_ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
+    $foto_name = uniqid() . '.webp'; // Ubah ekstensi menjadi .webp
+    $foto_path = '../public/assets/img/uploads/foto_masalah/' . $foto_name;
 
-        $foto_name = uniqid() . '.' . $foto_ext;
-        $foto_path = '../public/assets/img/uploads/foto_masalah/' . $foto_name;
+    // Periksa apakah tidak ada error saat upload
+    if ($foto_error === UPLOAD_ERR_OK) {
+        // Pindahkan file dari temporary location ke lokasi yang ditentukan
+        if (move_uploaded_file($foto_temp, $foto_path)) {
+            // Mengubah dan mengompres gambar ke format WebP
+            $this->convertToWebP($foto_path, $foto_ext);
 
-        // Periksa apakah tidak ada error saat upload
-        if ($foto_error === UPLOAD_ERR_OK) {
-            // Pindahkan file dari temporary location ke lokasi yang ditentukan
-            if (move_uploaded_file($foto_temp, $foto_path)) {
-                // Menyimpan ke database
-                $sql_foto_masalah = "INSERT INTO foto_masalah (id_permasalahan, foto_masalah) 
-                                    VALUES (:id_permasalahan, :foto)";
+            // Menyimpan ke database
+            $sql_foto_masalah = "INSERT INTO foto_masalah (id_permasalahan, foto_masalah) 
+                                VALUES (:id_permasalahan, :foto)";
 
-                $this->db->query($sql_foto_masalah);
-                $this->db->bind('id_permasalahan', $id_permasalahan);
-                $this->db->bind('foto', $foto_name); // Changed 'foto_name' to 'foto'
+            $this->db->query($sql_foto_masalah);
+            $this->db->bind('id_permasalahan', $id_permasalahan);
+            $this->db->bind('foto', $foto_name); // Changed 'foto_name' to 'foto'
 
-                if ($this->db->execute()) {
-                    return $this->db->rowCount(); // Return the number of affected rows
-                } else {
-                    echo "Error: Gagal memperbarui database.";
-                    return false; // Return false to indicate failure
-                }
-
+            if ($this->db->execute()) {
+                return $this->db->rowCount(); // Return the number of affected rows
             } else {
-                echo "Error: File tidak dapat dipindahkan.";
-                // Error tambahan untuk membantu troubleshooting
-                if (!file_exists('../public/assets/img/uploads/foto_masalah/')) {
-                    echo "Error: Direktori tujuan tidak ditemukan.";
-                } else if (!is_writable('../public/assets/img/uploads/foto_masalah/')) {
-                    echo "Error: Direktori tujuan tidak memiliki izin tulis.";
-                }
+                echo "Error: Gagal memperbarui database.";
                 return false; // Return false to indicate failure
             }
+
         } else {
-            // Menangani berbagai kesalahan upload file
-            switch ($foto_error) {
-                case UPLOAD_ERR_INI_SIZE:
-                case UPLOAD_ERR_FORM_SIZE:
-                    echo "Error: Ukuran file terlalu besar.";
-                    break;
-                case UPLOAD_ERR_PARTIAL:
-                    echo "Error: File hanya ter-upload sebagian.";
-                    break;
-                case UPLOAD_ERR_NO_FILE:
-                    echo "Error: Tidak ada file yang di-upload.";
-                    break;
-                case UPLOAD_ERR_NO_TMP_DIR:
-                    echo "Error: Folder temporary tidak ditemukan.";
-                    break;
-                case UPLOAD_ERR_CANT_WRITE:
-                    echo "Error: Gagal menulis file ke disk.";
-                    break;
-                case UPLOAD_ERR_EXTENSION:
-                    echo "Error: Upload file dihentikan oleh ekstensi PHP.";
-                    break;
-                default:
-                    echo "Error: Terjadi kesalahan yang tidak diketahui.";
-                    break;
+            echo "Error: File tidak dapat dipindahkan.";
+            // Error tambahan untuk membantu troubleshooting
+            if (!file_exists('../public/assets/img/uploads/foto_masalah/')) {
+                echo "Error: Direktori tujuan tidak ditemukan.";
+            } else if (!is_writable('../public/assets/img/uploads/foto_masalah/')) {
+                echo "Error: Direktori tujuan tidak memiliki izin tulis.";
             }
             return false; // Return false to indicate failure
         }
+    } else {
+        // Menangani berbagai kesalahan upload file
+        switch ($foto_error) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                echo "Error: Ukuran file terlalu besar.";
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                echo "Error: File hanya ter-upload sebagian.";
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                echo "Error: Tidak ada file yang di-upload.";
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+                echo "Error: Folder temporary tidak ditemukan.";
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                echo "Error: Gagal menulis file ke disk.";
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                echo "Error: Upload file dihentikan oleh ekstensi PHP.";
+                break;
+            default:
+                echo "Error: Terjadi kesalahan yang tidak diketahui.";
+                break;
+        }
+        return false; // Return false to indicate failure
     }
+}
+
+
+
 
     public function ubahFotoMasalah()
     {
@@ -512,7 +544,7 @@ class Operator_crud_model {
         $result = $this->db->single();
 
         if ($result) {
-            $old_foto_name = $result['foto'];
+            $old_foto_name = $result['foto_masalah'];
             $old_foto_path = '../public/assets/img/uploads/foto_masalah/' . $old_foto_name;
 
             // Periksa apakah ada file baru yang diupload
@@ -528,12 +560,15 @@ class Operator_crud_model {
                     }
 
                     // Menentukan nama file baru
-                    $foto_ext = pathinfo($foto_name, PATHINFO_EXTENSION);
+                    $foto_ext = strtolower(pathinfo($foto_name, PATHINFO_EXTENSION));
                     $foto_new_name = uniqid() . '.' . $foto_ext;
                     $foto_path = '../public/assets/img/uploads/foto_masalah/' . $foto_new_name;
 
                     // Pindahkan file dari temporary location ke lokasi yang ditentukan
                     if (move_uploaded_file($foto_temp, $foto_path)) {
+                        // Mengubah dan mengompres gambar ke format WebP
+                        $this->convertToWebP($foto_path, $foto_ext);
+
                         // Update database dengan nama file baru
                         $sql_update_foto = "UPDATE foto_masalah SET foto_masalah = :foto_masalah WHERE id = :id";
                         $this->db->query($sql_update_foto);
@@ -646,6 +681,9 @@ class Operator_crud_model {
     if ($foto_error === UPLOAD_ERR_OK) {
         // Pindahkan file dari temporary location ke lokasi yang ditentukan
         if (move_uploaded_file($foto_temp, $foto_path)) {
+            // Mengubah dan mengompres gambar ke format WebP
+            $this->convertToWebP($foto_path, $foto_ext);
+
             // Menyimpan ke database
             $sql_foto = "INSERT INTO foto_kegiatan (id_foto_kegiatan, id_laporan_harian, foto, keterangan) 
                         VALUES (:new_id, :id_laporan_harian, :foto_name, :keterangan)";
@@ -736,6 +774,9 @@ class Operator_crud_model {
 
                     // Pindahkan file dari temporary location ke lokasi yang ditentukan
                     if (move_uploaded_file($foto_temp, $foto_path)) {
+                        // Mengubah dan mengompres gambar ke format WebP
+                        $this->convertToWebP($foto_path, $foto_ext);
+
                         // Update database dengan nama file baru
                         $sql_update_foto = "UPDATE foto_kegiatan SET foto = :foto, keterangan = :keterangan WHERE id_foto_kegiatan = :id_foto_kegiatan";
                         $this->db->query($sql_update_foto);

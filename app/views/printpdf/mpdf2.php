@@ -3,7 +3,16 @@
 require_once __DIR__ . '../../../../public/assets/vendor/autoload.php';
 
 // Di server, setelah mendapatkan gambar dari canvas
-$chartImage = 'data:image/png;base64,' . base64_encode($blobContent);
+$index = 0; // Inisialisasi indeks untuk array timeIntervals
+
+// Bagi data menjadi 6 kelompok, setiap kelompok berisi 4 baris data
+$chunks = array_chunk($data['cuaca'], 12);
+
+// Menyimpan setiap chunk dalam array
+$chunksArray = [];
+foreach ($chunks as $index => $chunk) {
+    $chunksArray["chunk_" . ($index + 1)] = $chunk;
+}
 
 $html = '
 <!DOCTYPE html>
@@ -145,6 +154,18 @@ h3 {
     padding: 8px;
 }
 
+.cuaca-title {
+    font-size: 12px;
+    text-align: center;
+    color: #333;
+    text-transform: uppercase;
+    padding: 10px;
+    background-color: #f4f4f4;
+    margin-bottom: 0; /* Remove extra margin */
+    border-left: 1px solid #333; /* Uniform border thickness */
+    border-right: 1px solid #333;
+}
+
 </style>
 
 <body>
@@ -199,8 +220,61 @@ h3 {
     <div class="section-title">A. Cuaca</div>
     <div class="table-container">
 
-    <img src="' . $chartImage . '" />
+    <div class="card mt-5">
+        <h5 class="card-header">Data Cuaca</h5>
+            <div class="cuaca-title" style="text-align: center;">AM (Malam s/d Siang)</div>
+                <table class="table table-striped tabel-cuaca">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="weather-column align-middle" >Jam</th>';
+                                 foreach ($chunksArray['chunk_1'] as $row) : ;$html .= '
+                                    <th class="text-center align-middle" style="border-right: black solid;">' . $row['jam_mulai'] . ' - ' . $row['jam_selesai'] . '</th>';
+                                 endforeach; $html .= '
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr class="text-center align-middle">
+                            <th class="weather-column">Cuaca</th>';
+                            foreach ($chunksArray['chunk_1'] as $row) : ;$html .= '
+                                <td class="text-center align-middle' . $row['kondisi'] . '" style="border-right: black solid;">'
+                                    . $row['kondisi'] .
+                                '</td>';
+                            endforeach ;$html .= '
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         
+        <div class="card mt-5">
+            <div class="cuaca-title" style="text-align: center;">PM (Siang s/d Malam)</div>
+            <div class="table-responsive" style="overflow-x: auto;">
+                <table class="table table-striped tabel-cuaca">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="weather-column" >Jam</th>';
+                            foreach ($chunksArray['chunk_1'] as $row) : ;$html .= '
+                                <!-- Menampilkan jam_mulai di baris pertama dan jam_selesai di baris kedua dalam kolom yang sama -->
+                                <th class="text-center align-middle" style="border-right: black solid;">'
+                                    . $row['jam_mulai'] . ' - ' . $row['jam_selesai'] .
+                                '</th>';
+                            endforeach ;$html .= '
+                        </tr>
+
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr class="text-center align-middle">
+                            <th class="weather-column">Cuaca</th>';
+                            foreach ($chunksArray['chunk_2'] as $row) : ; $html .= '
+                                <td class="text-center align-middle' . $row['kondisi'] . '" style="border-right: black solid;">'
+                                    . $row['kondisi'] .
+                                '</td>';
+                            endforeach; 
+                        $html .= '</tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div class="section-title">B. Rincian Pekerjaan</div>

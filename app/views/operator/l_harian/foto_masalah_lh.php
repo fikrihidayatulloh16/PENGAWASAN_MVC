@@ -1,7 +1,7 @@
 <style>
         .image {
             max-width: 638px; /* Batas maksimum lebar gambar sesuai dengan kontainer */
-            height: 358.875px; /* Menjaga rasio aspek gambar */
+            height: 300px; /* Menjaga rasio aspek gambar */
         
         }
 </style>

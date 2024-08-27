@@ -186,7 +186,7 @@ foreach ($chunksArray['chunk_2'] as $row) {
         </div>
     </div>
 
-<!--
+
         <div class="card mt-5">
                 <h5 class="card-header">Data Cuaca</h5>
                 <div class="tabel-cuaca-container">
@@ -200,7 +200,7 @@ foreach ($chunksArray['chunk_2'] as $row) {
                             </tr>
                             <tr class="text-center">
                                 <?php foreach ($chunksArray['chunk_1'] as $row) { ?>
-                                     Menampilkan jam_mulai di baris pertama dan jam_selesai di baris kedua dalam kolom yang sama 
+                                    <!-- Menampilkan jam_mulai di baris pertama dan jam_selesai di baris kedua dalam kolom yang sama -->
                                     <th class="text-center align-middle" style="border-right: black solid;">
                                         <?= $row['jam_selesai'] ?>
                                     </th>
@@ -231,7 +231,7 @@ foreach ($chunksArray['chunk_2'] as $row) {
                 <tr class="text-center">
                     <th class="weather-column" rowspan="2">Jam</th>
                     <?php foreach ($chunksArray['chunk_1'] as $row) { ?>
-                        Menampilkan jam_mulai di baris pertama dan jam_selesai di baris kedua dalam kolom yang sama 
+                        <!-- Menampilkan jam_mulai di baris pertama dan jam_selesai di baris kedua dalam kolom yang sama -->
                         <th class="text-center align-middle" style="border-right: black solid;">
                             <?= $row['jam_mulai'] ?>-
                         </th>
@@ -239,7 +239,7 @@ foreach ($chunksArray['chunk_2'] as $row) {
                 </tr>
                 <tr class="text-center">
                     <?php foreach ($chunksArray['chunk_1'] as $row) { ?>
-                        Menampilkan jam_mulai di baris pertama dan jam_selesai di baris kedua dalam kolom yang sama 
+                        <!-- Menampilkan jam_mulai di baris pertama dan jam_selesai di baris kedua dalam kolom yang sama -->
                         <th class="text-center align-middle" style="border-right: black solid;">
                             <?= $row['jam_selesai'] ?>
                         </th>
@@ -259,7 +259,7 @@ foreach ($chunksArray['chunk_2'] as $row) {
         </table>
     </div>
 </div>
--->
+
 
 
      <!-- Custom Legend -->

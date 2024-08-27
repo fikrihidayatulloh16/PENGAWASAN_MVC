@@ -1,9 +1,7 @@
 <div class="container">
 
-<!-- Menampilkan alert -->
- <?php Flasher::flash() ?>
-
- 
+<!-- Menampilkan flash -->
+<?php Flasher::flash() ?>
 
 <div class="container mt-5">
     <div class="card mt-100">
@@ -83,6 +81,18 @@
 <?php
 include "../app/views/modals/modal_add/operator/laporan_harian_add.php";
 ?>
+
+<?php if (isset($_SESSION['flash'])): ?>
+    <script>
+        Swal.fire({
+            title: '<?php echo $_SESSION['flash']['type'] === 'error' ? 'Error!' : 'Success!'; ?>',
+            text: '<?php echo addslashes($_SESSION['flash']['message']); ?>',
+            icon: '<?php echo $_SESSION['flash']['type']; ?>',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    <?php unset($_SESSION['flash']); ?>
+<?php endif; ?>
 
 
 

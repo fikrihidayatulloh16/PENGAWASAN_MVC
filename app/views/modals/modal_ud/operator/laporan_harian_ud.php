@@ -114,7 +114,7 @@ Ubah Laporan Harian
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="<?= PUBLICURL ?>/operator/hapus_laporan_harian/<?= $data['id_projek'] ?>" method="POST">
+            <form action="<?= PUBLICURL ?>/operator/hapus_laporan_harian/<?= $data['id_projek'] ?>/<?= $laporan['id_laporan_harian'] ?>" method="POST">
                 <input type="hidden" name="id_laporan_harian" value="<?=$laporan['id_laporan_harian']?>">
 
                 <div class="modal-body">

@@ -24,7 +24,7 @@ class Operator extends Controller{
 
     public function laporan_harian_list($id_projek) {
         
-        Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
+        //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
         $data['id_projek'] = $id_projek;
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
         $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
@@ -107,7 +107,7 @@ class Operator extends Controller{
 
     public function permasalahan_l_harian($id_laporan_harian, $id_projek)
     {
-        Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
+        //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
@@ -119,12 +119,12 @@ class Operator extends Controller{
         $this->view('layouts/layout_operator/layout_operator_pekerjaan', $data);
         
         $this->view('operator/l_harian/permasalahan_l_harian', $data);
-        $this->view('layouts/footer_c');
+        $this->view('layouts/footer_a');
     }
 
     public function foto_kegiatan($id_laporan_harian, $id_projek)
     {
-        Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
+        //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
@@ -154,19 +154,18 @@ class Operator extends Controller{
     public function tambah_laporan_harian($id_projek) 
     {
         $data['id_projek'] = $id_projek;
-    $result = $this->model('Operator_crud_model')->tambahLaporanHarian($_POST);
+        $result = $this->model('Operator_crud_model')->tambahLaporanHarian($_POST);
 
-    if ($result === true) {
+        if ($result === true) {
+            Flasher::setFlash('Sukses', 'Tanggal berhasil ditambahkan', 'success');
+        } else {
+            Flasher::setFlash('Gagal', 'Tanggal yang dipilih sudah ada, pilih tanggal yang berbeda', 'danger');
+        }
+
+        
         header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek']);
         exit;
-    } else {
-        // Menghasilkan alert JavaScript dengan pesan kesalahan
-        echo "<script>
-        alert('" . addslashes($result) . "');
-        window.location.href = '" . PUBLICURL . "/operator/laporan_harian_list/" . $data['id_projek'] . "';
-    </script>";
-    exit;
-    }
+
     }
 
     public function ubah_laporan_harian($id_projek)
@@ -174,10 +173,28 @@ class Operator extends Controller{
         //pending
     }
 
-    public function hapus_laporan_harian($id_projek)
+    public function hapus_laporan_harian($id_projek, $id_laporan_harian)
     {
         $data['id_projek'] = $id_projek;
-        $this->model('Operator_crud_model')->hapusLaporanHarian($_POST);
+        $data['foto_kegiatan'] = $this->model('Rekap_db_model')->getFotoKegiatanByLaporanId($id_laporan_harian);
+        $data['foto_masalah'] = $this->model('Operator_db_model')->getAllFotoMasalahByIDLaporan($id_laporan_harian);
+
+        foreach ($data['foto_kegiatan'] as $foto_kegiatan) {
+            $_POST['id_foto_kegiatan'] = $foto_kegiatan['id_foto_kegiatan'];
+            $this->model('Operator_crud_model')->hapusFotoKegiatan($_POST);
+        }
+
+        foreach ($data['foto_masalah'] as $foto_masalah) {
+            $_POST['id'] = $foto_masalah['id'];
+            $this->model('Operator_crud_model')->hapusFotoMasalah($_POST);;
+        }
+
+        $result = $this->model('Operator_crud_model')->hapusLaporanHarian($_POST);
+        if ($result === true) {
+            Flasher::setFlash('Sukses', 'Laporan berhasil Dihapus', 'success');
+        } else {
+            Flasher::setFlash('Gagal', 'Laporan gagal Dihapus', 'danger');
+        }
         header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek']);
 
     }
@@ -186,8 +203,14 @@ class Operator extends Controller{
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $data['laporan'] = $this->model('Operator_db_model')->getAllLaporanByIdProjek($id_projek);
+        $result = $this->model('Operator_crud_model')->ubahProgresLH($_POST, $data['laporan']);
 
-        $this->model('Operator_crud_model')->ubahProgresLH($_POST, $data['laporan']);
+        if ($result === true) {
+            Flasher::setFlash('Sukses', 'Progres Laporan Harian berhasil Diperbarui', 'success');
+        } else {
+            Flasher::setFlash('Gagal', 'Progres Laporan Harian gagal Diperbarui', 'danger');
+        }
+
         header('Location: ' . PUBLICURL . '/operator/rekap/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
         
     }

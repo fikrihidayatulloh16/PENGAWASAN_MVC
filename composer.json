@@ -1,6 +1,7 @@
 {
     "require": {
-        "mpdf/mpdf": "^8.2"
+        "mpdf/mpdf": "^8.2",
+        "intervention/image": "^3.8"
     },
     "config": {
         "vendor-dir": "public/assets/vendor"
