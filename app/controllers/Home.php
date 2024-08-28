@@ -39,6 +39,7 @@ class Home extends Controller {
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
         $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
         $data['cuaca'] = $this->model('Rekap_db_model')->getCuacaByLaporanId($id_laporan_harian);
+        //$data['m_pekerjaan'] = $this->model('Operator_db_model')->getMPekerjaanByIdLaporanProjek($id_laporan_harian);
         $data['sub_pekerjaan'] = $this->model('Rekap_db_model')->getSubPekerjaanByLaporanId($id_laporan_harian);
         $data['permasalahan'] = $this->model('Rekap_db_model')->getPermasalahanByLaporanId($id_laporan_harian);
         $data['foto_kegiatan'] = $this->model('Rekap_db_model')->getFotoKegiatanByLaporanId($id_laporan_harian);

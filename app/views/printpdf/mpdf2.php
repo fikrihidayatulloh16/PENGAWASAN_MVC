@@ -380,8 +380,8 @@ $html .= '
             ; $html .= '
             <tr>
                 <td class="text-center">' . $nomor_masalah . '</td>
-                <td style="text-align: justify;">' . $permasalahan['permasalahan'] . '</td>
-                <td style="text-align: justify;">' . $permasalahan['saran'] . '</td>
+                <td style="text-align: justify;">' . (!empty($permasalahan['permasalahan']) ? $permasalahan['permasalahan'] : '-') . '</td>
+                <td style="text-align: justify;">' . (!empty($permasalahan['saran']) ? $permasalahan['saran'] : '-')  . '</td>
             </tr>';
             
                 $nomor_masalah++; 

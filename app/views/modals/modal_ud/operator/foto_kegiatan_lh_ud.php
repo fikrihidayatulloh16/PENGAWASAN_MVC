@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="fk_tambahLabel">Ubah Foto Kegiatan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= PUBLICURL ?>/operator/ubah_foto_kegiatan/<?= $data['id_laporan_harian'] ?>/<?= $data['id_projek'] ?>" method="POST" enctype="multipart/form-data">
+            <form class="spinner-form" action="<?= PUBLICURL ?>/operator/ubah_foto_kegiatan/<?= $data['id_laporan_harian'] ?>/<?= $data['id_projek'] ?>" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id_foto_kegiatan" value="<?= $foto_kegiatan['id_foto_kegiatan'] ?>">
                 <div class="modal-body">
                     <div class="mb-3">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-footer bg-secondary">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" name="foto-ubah">Submit</button>
+                    <button type="submit" class="btn btn-success spinner-button" name="foto-ubah">Submit</button>
                 </div>
             </form>
         </div>

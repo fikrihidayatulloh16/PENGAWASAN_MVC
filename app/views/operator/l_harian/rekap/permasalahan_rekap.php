@@ -18,9 +18,10 @@
             ?>
             <tr>
                 <td class="text-center"><?= $nomor_masalah ?></td>
-                <td style="text-align: justify; vertical-align: top;"><?= $permasalahan['permasalahan'] ?></td>
-                <td style="text-align: justify; vertical-align: top;"><?= $permasalahan['saran'] ?></td>
+                <td style="text-align: justify; vertical-align: top;"><?= !empty($permasalahan['permasalahan']) ? $permasalahan['permasalahan'] : '-' ?></td>
+                <td style="text-align: justify; vertical-align: top;"><?= !empty($permasalahan['saran']) ? $permasalahan['saran'] : '-' ?></td>
             </tr>
+            
             <?php 
                 $nomor_masalah++; 
                 //include "operator.modal/modalUD.permasalahan.php";

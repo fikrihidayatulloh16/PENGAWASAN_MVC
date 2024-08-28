@@ -86,6 +86,18 @@ class Operator_db_model {
         return $this->db->resultSet();
     }
 
+    public function getMPekerjaanByIdLaporanProjek($id_laporan_harian)
+    {
+        $this->db->query("SELECT lh.id_projek, lh.id_laporan_harian, mp.id_projek, mp.nama_pekerjaan
+                                            FROM m_pekerjaan AS mp
+                                            JOIN laporan_harian AS lh ON lh.id_projek  = mp.id_projek 
+                                            WHERE lh.id_laporan_harian = :id_laporan_harian");
+
+        $this->db->bind('id_laporan_harian', $id_laporan_harian);
+
+        return $this->db->single();
+    }
+
     public function getMSPFromPekerjaanHarianByIdLaporan($id_laporan_harian)
     {
         $this->db->query("SELECT ph.id_laporan_harian, ph.id_m_sub_pekerjaan, ms.nama_sub_pekerjaan

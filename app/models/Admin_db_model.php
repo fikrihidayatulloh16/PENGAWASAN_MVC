@@ -108,7 +108,16 @@
         $this->db->bind('id_projek', $id_projek);
 
         return $this->db->resultSet();
-    } 
+    }
+
+    public function getAllUserByIdProjek($id_projek)
+    {
+        $this->db->query("SELECT * FROM user WHERE id_projek = :id_projek");
+
+        $this->db->bind('id_projek', $id_projek);
+
+        return $this->db->resultSet();
+    }
  }
 
 ?>

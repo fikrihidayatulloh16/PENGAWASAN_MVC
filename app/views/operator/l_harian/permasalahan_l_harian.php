@@ -1,3 +1,13 @@
+<style>
+    .permasalahan-header {
+    padding-right: 5px; /* Sesuaikan nilai ini untuk menggeser ke kiri */
+    }
+
+    .saran-header {
+        padding-left: 5px; /* Sesuaikan nilai ini untuk menyeimbangkan border */
+    }
+</style>
+
 <?php Flasher::flash() ?>
 
 <div class="container mt-5">
@@ -11,11 +21,11 @@
             </button>
         </h5>
         <div class="table-responsive"> 
-        <table class="table-thick-border">
+        <table class="table-thick-border" style="width: 100%;">
             <tr>
                 <th>No.</th>
-                <th class="col-5">Permasalahan</th>
-                <th class="col-5">Saran</th>
+                <th class="col-5 permasalahan-header">Permasalahan</th>
+                <th class="col-5 saran-header">Saran</th>
                 <th class="col-2">Aksi</th>
             </tr>
             <?php
@@ -32,11 +42,11 @@
                             <h2 class="accordion-header" id="heading<?= $index ?>">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $index ?>" aria-expanded="<?= $index === 0 ? 'true' : 'false' ?>" aria-controls="collapse<?= $index ?>">
                                     <div class="row w-100">
-                                        <div class="col-6" style="border-right: 1px solid;">
-                                            <?= $permasalahan['permasalahan'] ?>
+                                        <div class="col-6" style="text-align: justify;">
+                                            <?= !empty($permasalahan['permasalahan']) ? $permasalahan['permasalahan'] : '-' ?>
                                         </div>
-                                        <div class="col-6">
-                                            <?= $permasalahan['saran'] ?>
+                                        <div class="col-6" style="padding-left: 20px;">
+                                            <?= !empty($permasalahan['saran']) ? $permasalahan['saran'] : '-' ?>
                                         </div>
                                     </div>
                                 </button>

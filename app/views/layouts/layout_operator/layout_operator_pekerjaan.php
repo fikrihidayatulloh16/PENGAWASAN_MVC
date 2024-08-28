@@ -3,20 +3,22 @@ $navBrands = '<a class="navbar-brand" href=" ' . PUBLICURL . '/operator/laporan_
 
 $navItems = '
     <li class="nav-item">
-        <a class="nav-link nav-head" aria-current="page" href=" ' . PUBLICURL . '/operator/rekap/' . $data['id_laporan_harian'] . '/' . $data['id_projek'] . '" style="font-size: 2;">LAPORAN HARIAN</a>
+        <a class="nav-link nav-head text-center" aria-current="page" href=" ' . PUBLICURL . '/operator/rekap/' . $data['id_laporan_harian'] . '/' . $data['id_projek'] . '" style="font-size: 2;">
+            LAPORAN HARIAN
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+        <a class="nav-link nav-head ms-lg-5 text-center" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
         LAPORAN MINGGUAN
     </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+        <a class="nav-link nav-head ms-lg-5 text-center" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
         LAPORAN BULANAN
     </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+        <a class="nav-link nav-head ms-lg-5 text-center" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
         LAPORAN EKSEKUTIF
     </a>
     </li>

@@ -17,12 +17,12 @@
                             <br>
                             <div class="form-group">
                                 <label for="permasalahan">Permasalahan:</label>
-                                <textarea type="text" id="permasalahan" name="permasalahan" class="form-control"  rows="3" maxlength="255" placeholder="Masukkan Permasalahan" required></textarea>
+                                <textarea type="text" id="permasalahan" name="permasalahan" class="form-control"  rows="3" maxlength="255" placeholder="Masukkan Permasalahan"></textarea>
                             </div>
                             <br>
                             <div class="form-group">
                                 <label for="saran">Saran :</label>
-                                <textarea type="text" id="saran" name="saran" class="form-control"  rows="3"    maxlength="255" placeholder="Masukkan Saran" required></textarea>
+                                <textarea type="text" id="saran" name="saran" class="form-control"  rows="3"    maxlength="255" placeholder="Masukkan Saran"></textarea>
                             </div>
                             <br>
                         </div>

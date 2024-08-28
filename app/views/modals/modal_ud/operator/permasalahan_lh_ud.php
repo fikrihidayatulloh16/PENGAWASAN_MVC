@@ -18,12 +18,12 @@
 
                         <div class="form-group">
                             <label for="permasalahan">Permasalahan:</label>
-                            <textarea type="text" id="permasalahan" name="permasalahan" class="form-control"  rows="3" placeholder="Masukkan Permasalahan" required><?= $permasalahan['permasalahan']?></textarea>
+                            <textarea type="text" id="permasalahan" name="permasalahan" class="form-control"  rows="3" placeholder="Masukkan Permasalahan"><?= $permasalahan['permasalahan']?></textarea>
                         </div>
                         <br>
                         <div class="form-group">
                             <label for="saran">Saran :</label>
-                            <textarea type="text" id="saran" name="saran" class="form-control"  rows="3" maxlength="255" placeholder="Masukkan Saran" required><?= $permasalahan['saran']?></textarea>
+                            <textarea type="text" id="saran" name="saran" class="form-control"  rows="3" maxlength="255" placeholder="Masukkan Saran"><?= $permasalahan['saran']?></textarea>
                         </div>
                     </div>
                 </div>

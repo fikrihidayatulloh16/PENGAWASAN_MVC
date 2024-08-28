@@ -83,14 +83,14 @@ class Admin extends Controller {
         $this->view('layouts/layout_admin/footer_admin');
     }
 
-    public function user($id_projek)
+    public function user_admin($id_projek)
     {
         $data['id_projek'] = $id_projek;
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
-        $data['tim_pengawas'] = $this->model('Rekap_db_model')->getTimPengawasByProjekId($id_projek);
+        $data['user'] = $this->model('Admin_db_model')->getAllUserByIdProjek($id_projek);
 
         $this->view('layouts/layout_admin/header_admin', $data);
-        $this->view('admin/tim_pengawas_admin', $data);
+        $this->view('admin/user_admin', $data);
         $this->view('layouts/layout_admin/footer_admin');
     }
 

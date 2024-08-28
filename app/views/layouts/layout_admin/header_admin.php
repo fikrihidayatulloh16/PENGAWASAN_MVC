@@ -318,7 +318,7 @@
       </li><!-- End User Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="<?= PUBLICURL ?>/admin/user_admin/<?= $data['id_projek'] ?>">
           <i class="bi bi-person"></i>
           <span>User</span>
         </a>
