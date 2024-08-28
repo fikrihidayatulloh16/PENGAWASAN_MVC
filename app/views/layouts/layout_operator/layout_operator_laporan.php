@@ -3,16 +3,28 @@ $navBrands = '<a class="navbar-brand" href="../../page/operator/laporanharian.ph
 
 $navItems = '
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN HARIAN</a>
+        <a class="nav-link nav-head ms-lg-5" href="#" >
+        LAPORAN HARIAN
+    </a>
+
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN MINGGUAN</a>
+        <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+        LAPORAN MINGGUAN
+    </a>
+
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN BULANAN</a>
+        <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+            LAPORAN BULANAN
+        </a>
+
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN EKSEKUTIF</a>
+        <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+        LAPORAN EKSEKUTIF
+    </a>
+
     </li>
     <li class="nav-item">
         <a class="nav-link nav-head ms-lg-5 text-center" href="' . PUBLICURL . '/home/log_out/"><i class="bx bxs-user-circle" style="font-size: 24px;"></i> Logout</a>

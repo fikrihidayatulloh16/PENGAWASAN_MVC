@@ -11,6 +11,7 @@
                     </div>
                 </div>
             </footer>
-        
+            
+            <script src="<?= PUBLICURL ?>/assets/js/operator_user_general.js"></script>
 </body>
 </html>
