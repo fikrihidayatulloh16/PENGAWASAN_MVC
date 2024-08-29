@@ -1,6 +1,24 @@
 <?php
 
 class Operator extends Controller{
+    // Konstruktor untuk validasi sesi
+    public function __construct() {
+        // Pastikan sesi sudah dimulai
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Cek apakah pengguna telah login
+        if (!isset($_SESSION['id_projek'])) {
+            Flasher::setFlash('Gagal', 'Anda belum memiliki izin untuk akses halaman tersebut', 'danger');
+            // Jika tidak ada sesi login, arahkan ke halaman login
+            header('Location: ' . PUBLICURL . '/home/login');
+            exit();
+        } else {
+
+        }
+    }
+
     //function untuk menyimpan data id laporan harian dan id projek
     private function prepareData($id_laporan_harian, $id_projek) {
         return [

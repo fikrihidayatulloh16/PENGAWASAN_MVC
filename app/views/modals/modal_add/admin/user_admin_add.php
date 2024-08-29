@@ -6,8 +6,8 @@
             <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data User</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= PUBLICURL ?>/admin/tambah_m_bahan/<?= $data['id_projek'] ?>" method="POST">
-            <input type="hidden" name="id_projek" value="<?= $data['id_projek']?>">
+            <form action="<?= PUBLICURL ?>/admin/tambah_user_admin/<?= $data['id_projek'] ?>" method="POST">
+            <input type="hidden" name="id_projek" value="<?= $data['id_projek']?>"> 
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
@@ -21,7 +21,6 @@
                         <label for="password" class="form-label">Role</label>
                         <select class="form-control" id="role" name="role">
                             <option value="" disabled selected>Pilih Role</option>
-                            <option value="superadmin">Superadmin</option>
                             <option value="admin">Admin</option>
                             <option value="operator">Operator</option>
                         </select>

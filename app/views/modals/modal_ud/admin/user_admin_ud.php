@@ -9,15 +9,22 @@
 
             <form action="<?= PUBLICURL ?>/admin/ubah_user_admin/<?= $data['id_projek'] ?>" method="POST">
                 <input type="hidden" name="id" value="<?=$user['id']?>">
-                <input type="hidden" name="id_projek" value="<?=$data['id_projek']?>">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="id" class="form-label">ID (Tidak Bisa Diubah)</label>
                         <h5 for="id" class="form-label"><?=$user['id']?></h5>
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" value="<?= $user['username']?>" placeholder="Masukkan Nama Bahan" required><br>
-                        <label for="password" class="form-label">Satuan</label>
-                        <input type="text" class="form-control" id="password" name="password" value="<?= $user['password']?>" placeholder="Masukkan satuan" required><br>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password (Kata Sandi)</label>
+                            <input type="text" class="form-control" id="password" name="password" value="<?= $user['password']?>" placeholder="Masukkan Satuan"required><br>
+                        </div>
+                        <label for="password" class="form-label">Role</label>
+                        <select class="form-control" id="role" name="role">
+                            <option value="<?= $user['role']?>" disabled selected><?= $user['role']?></option>
+                            <option value="admin">Admin</option>
+                            <option value="operator">Operator</option>
+                        </select>
                     </div>
                 </div>
 
@@ -40,10 +47,10 @@
         </div>
         <form action="<?= PUBLICURL ?>/admin/hapus_user_admin/<?= $data['id_projek'] ?>" method="POST">
             <div class="modal-body">
-                
+                <input type="hidden" name="id" value="<?=$user['id']?>">
                 <div class="mb-3">
                     <label for="id" class="form-label">ID</label>
-                    <h5 for="id_m_bahan" class="form-label" id="id" name="id" value="<?= $user['id']?>"><?=$user['id']?></h5>
+                    <h5 for="id" class="form-label" id="id" name="id" value="<?= $user['id']?>"><?=$user['id']?></h5>
                     <label for="username" class="form-label">Username</label>
                     <h5 for="username" class="form-label text-danger"><?=$user['username']?></h5>
                 </div>

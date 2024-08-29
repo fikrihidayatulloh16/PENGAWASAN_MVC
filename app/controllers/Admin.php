@@ -1,6 +1,20 @@
 <?php
 
 class Admin extends Controller {
+    // Konstruktor untuk validasi sesi
+    public function __construct() {
+        // Pastikan sesi sudah dimulai
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Cek apakah pengguna telah login
+        if (!isset($_SESSION['role']) || ($_SESSION['role'] != 'superadmin' && $_SESSION['role'] != 'admin')) {
+            Flasher::setFlash('Gagal', 'Anda tidak memiliki izin untuk akses halaman tersebut', 'danger');
+            header('Location: ' . PUBLICURL . '/home/login');
+            exit();
+        }
+    }
     //function untuk menyimpan data id laporan harian dan id projek
     private function prepareData($id_laporan_harian, $id_projek) 
     {
@@ -12,9 +26,16 @@ class Admin extends Controller {
 
     public function index()
     {
+        $role = $_SESSION['role'];
+        $data['id_projek'] = $_SESSION['id_projek'];
+        if ($role != 'superadmin'){
+            header('Location: ' . PUBLICURL . '/admin/m_pekerjaan/' . $data['id_projek']);
+            exit;
+        }
+
         $data['projek'] = $this->model('Operator_db_model')->getAllProjek();
 
-        $this->view('layouts/layout_admin/header_admin', $data);
+        $this->view('layouts/layout_admin/layout_admin_projek', $data);
         $this->view('admin/index', $data);
         $this->view('layouts/layout_admin/footer_admin');
     }
@@ -30,13 +51,6 @@ class Admin extends Controller {
         
         $this->view('admin/m_pekerjaan', $data);
         $this->view('layouts/layout_admin/footer_admin');
-    
-        /* cadangan untuk accordion tetap terbuka dengan menggunakan session
-        // Hapus session setelah digunakan
-        if (isset($_SESSION['openAccordion'])) {
-            unset($_SESSION['openAccordion']);
-        }
-        */
     }
 
     public function m_pekerja($id_projek)
@@ -256,7 +270,42 @@ class Admin extends Controller {
         exit;
 
     }
+
+    public function tambah_user_admin($id_projek)
+    {
+        $data['id_projek'] = $id_projek;
+        if ($this->model('Admin_crud_model')->tambahUserAdmin($_POST) > 0) {
+            header('Location: ' . PUBLICURL . '/admin/user_admin/' . $data['id_projek']);
+            exit;
+        }
+    }
+
+    public function ubah_user_admin($id_projek)
+    {
+        $data['id_projek'] = $id_projek;
+        $this->model('Admin_crud_model')->ubahUserAdmin($_POST);
+        header('Location: ' . PUBLICURL . '/admin/user_admin/' . $data['id_projek']);
+        exit;
+
+    }
+
+    public function hapus_user_admin($id_projek)
+    {
+        $data['id_projek'] = $id_projek;
+        $this->model('Admin_crud_model')->hapusUserAdmin($_POST);
+        header('Location: ' . PUBLICURL . '/admin/user_admin/' . $data['id_projek']);
+        exit;
+
+    }
 }
+
+/* Cadangan Kode
+cadangan untuk accordion tetap terbuka dengan menggunakan session
+        // Hapus session setelah digunakan
+        if (isset($_SESSION['openAccordion'])) {
+            unset($_SESSION['openAccordion']);
+        }
+*/
 
 
 ?>

@@ -517,7 +517,71 @@ class Admin_crud_model {
 
         return;
     }
+
+    public function tambahUserAdmin()
+    {
+        // Menyimpan data baru
+        $id_projek = $_POST['id_projek'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        //$password = password_hash($oldpassword, PASSWORD_BCRYPT); // Hash password dengan algoritma Bcrypt
+        $role = $_POST['role'];
+        
+        // SQL untuk memasukkan data ke dalam tabel m_peralatan
+        $simpan = "INSERT INTO user (username, password, id_projek, role) VALUES (:username, :password, :id_projek, :role)";
+
+        $this->db->query($simpan);
+
+        $this->db->bind('username', $username);
+        $this->db->bind('password', $password);
+        $this->db->bind('id_projek', $id_projek);
+        $this->db->bind('role', $role);
+
+        $this->db->execute();
+
+        return $this->db->rowCount();
+    }
+
+    public function ubahUserAdmin()
+    {
+        // Menyimpan data baru
+        $id = $_POST['id'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $role = $_POST['role'];
+
+        $ubah = ("UPDATE user SET username = :username, password = :password, role = :role WHERE id = :id"); 
+
+        $this->db->query($ubah);
+
+        $this->db->bind('id', $id);
+        $this->db->bind('username', $username);
+        $this->db->bind('password', $password);
+        $this->db->bind('role', $role);
+
+        $this->db->execute();
+
+        return;
+    }
+
+    public function hapusUserAdmin()
+    {
+        // Menyimpan data baru
+        $id = $_POST['id'];
+
+        $hapus = ("DELETE FROM user WHERE id = :id");
+
+        $this->db->query($hapus);
+
+        $this->db->bind('id', $id);
+
+        $this->db->execute();
+
+        return;
+    }
 }
+
+
 
 
 

@@ -73,11 +73,30 @@ class Home extends Controller {
 
         // Cek jika autentikasi berhasil
         if ($userModel->userAuth()) {
-            // Ambil id_projek dari session
-            $id_projek = $_SESSION['id_projek_op'];
+            // Ambil peran pengguna dari session
+            $role = $_SESSION['role']; // Sesuaikan dengan variabel session yang digunakan
+        
+            // Ambil id_projek dari session jika diperlukan
+            $id_projek = $_SESSION['id_projek'] ?? ''; // Gunakan nilai default jika tidak ada
 
-            // Redirect ke halaman tertentu setelah login berhasil
-            header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $id_projek); // Ganti '/dashboard' dengan URL tujuan setelah login berhasil
+            // Redirect berdasarkan peran
+            switch ($role) {
+                case 'superadmin':
+                    header('Location: ' . PUBLICURL . '/admin/index');
+                    break;
+                case 'admin':
+                    header('Location: ' . PUBLICURL . '/admin/dashboard');
+                    break;
+                case 'operator':
+                    header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $id_projek);
+                    break;
+                case 'user':
+                    header('Location: ' . PUBLICURL . '/user/home');
+                    break;
+                default:
+                    header('Location: ' . PUBLICURL . '/login'); // Redirect default jika role tidak dikenali
+                    break;
+            }
             exit;
         } else {
             // Jika autentikasi gagal, arahkan kembali ke halaman login dengan pesan kesalahan

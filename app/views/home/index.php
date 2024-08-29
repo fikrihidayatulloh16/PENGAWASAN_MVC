@@ -27,7 +27,7 @@
                     <th>Hari Ke- <i id="icon1" class="fas fa-sort sort-icon" onclick="sortTable(1)"></i></th>
                     <th>Tanggal <i id="icon2" class="fas fa-sort sort-icon" onclick="sortTable(2)"></i></th>
                     <th class="col-1">Progres Harian <i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(3)"></i></th>
-                    <th class="col-2">Progres Kumulatif <i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(3)"></i></th>
+                    <th class="col-2">Progres Kumulatif <i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(4)"></i></th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -53,7 +53,7 @@
                     <td class="text-center align-middle" style="color: #464F60;"><?= $laporan['total_progres'] ?>%</td>
                     <td>
                         <form action="../../script/projek_pilih.php" method="POST">
-                            <a href="<?= PUBLICURL ?>/printpdf/print_laporan_harian/<?= $data['projek']['id_projek'] ?>/<?= $laporan['id_laporan_harian'] ?>/<?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>
+                            <a href="<?= PUBLICURL ?>/printpdf/mpdf/<?= $data['projek']['id_projek'] ?>/<?= $laporan['id_laporan_harian'] ?>/<?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>
                             <input type="hidden" name="id_laporan" value="<?= $laporan['id_laporan_harian'] ?>">
                         </form>
                     </td>
