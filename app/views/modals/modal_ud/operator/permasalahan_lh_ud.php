@@ -46,7 +46,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="<?= PUBLICURL ?>/operator/hapus_permasalahan/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>" method="POST">
+            <form action="<?= PUBLICURL ?>/operator/hapus_permasalahan/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>/<?=$permasalahan['id_permasalahan']?>" method="POST">
                 <input type="hidden" name="id_permasalahan" value="<?=$permasalahan['id_permasalahan']?>">
 
                 <div class="modal-body">

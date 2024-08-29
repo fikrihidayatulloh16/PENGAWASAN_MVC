@@ -361,9 +361,16 @@ class Operator extends Controller{
         header('Location: ' . PUBLICURL . '/operator/permasalahan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
     }
 
-    public function hapus_permasalahan($id_laporan_harian, $id_projek)
+    public function hapus_permasalahan($id_laporan_harian, $id_projek, $id_permasalahan)
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $data['foto_masalah'] = $this->model('Operator_db_model')->getAllFotoMasalahByIDMasalah($id_permasalahan);
+
+        foreach ($data['foto_masalah'] as $foto_masalah) {
+            $_POST['id'] = $foto_masalah['id'];
+            $this->model('Operator_crud_model')->hapusFotoMasalah($_POST);
+        }
 
         $this->model('Operator_crud_model')->hapusPermasalahan($_POST);
         header('Location: ' . PUBLICURL . '/operator/permasalahan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);

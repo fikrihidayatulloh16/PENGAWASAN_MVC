@@ -187,9 +187,14 @@ class Operator_crud_model {
 
     public function hapusLaporanHarian()
     {
-        $hapus = ("DELETE FROM laporan_harian WHERE id_laporan_harian = '$_POST[id_laporan_harian]'" );
+        $id_laporan_harian = $_POST['id_laporan_harian'];
+
+        $hapus = ("DELETE FROM laporan_harian WHERE id_laporan_harian = :id_laporan_harian" );
 
         $this->db->query($hapus);
+
+        $this->db->bind('id_laporan_harian', $id_laporan_harian);
+
         $this->db->execute();
 
         return TRUE;
@@ -325,17 +330,29 @@ class Operator_crud_model {
 
     public function ubahPekerjaLH()
     {
-        $ubah = ("UPDATE pekerja SET id_m_pekerja = '$_POST[id_m_pekerja]', jumlah_pekerja = '$_POST[jumlah_pekerja]' WHERE id_pekerja = '$_POST[id_pekerja]'");
+        $id_m_pekerja = $_POST['id_m_pekerja'];
+        $id_pekerja = $_POST['id_pekerja'];
+        $jumlah_pekerja = $_POST['jumlah_pekerja'];
+
+        $ubah = ("UPDATE pekerja SET id_m_pekerja = :id_m_pekerja, jumlah_pekerja = :jumlah_pekerja WHERE id_pekerja = :id_pekerja");
 
         $this->db->query($ubah);
+
+        $this->db->bind('id_m_pekerja', $id_m_pekerja);
+        $this->db->bind('jumlah_pekerja', $jumlah_pekerja);
+        $this->db->bind('id_pekerja', $id_pekerja);
+
         $this->db->execute();
     }
 
     public function hapusPekerjaLH()
     {
-        $hapus = ("DELETE FROM pekerja WHERE id_pekerja = '$_POST[id_pekerja]'");
+        $id_pekerja = $_POST['id_pekerja'];
+
+        $hapus = ("DELETE FROM pekerja WHERE id_pekerja = :id_pekerja");
 
         $this->db->query($hapus);
+        $this->db->bind('id_pekerja',$id_pekerja);
         $this->db->execute();
     }
 
@@ -371,17 +388,29 @@ class Operator_crud_model {
 
     public function ubahPeralatanLH()
     {
-        $ubah = ("UPDATE peralatan SET id_m_peralatan = '$_POST[id_m_peralatan]', jumlah_peralatan = '$_POST[jumlah_peralatan]' WHERE id_peralatan = '$_POST[id_peralatan]'" );
+        $id_m_peralatan = $_POST['id_m_peralatan'];
+        $jumlah_peralatan = $_POST['jumlah_peralatan'];
+        $id_peralatan = $_POST['id_peralatan'];
+
+        $ubah = ("UPDATE peralatan SET id_m_peralatan = :id_m_peralatan, jumlah_peralatan = :jumlah_peralatan WHERE id_peralatan = :id_peralatan" );
 
         $this->db->query($ubah);
+
+        $this->db->bind('id_m_peralatan', $id_m_peralatan);
+        $this->db->bind('jumlah_peralatan', $jumlah_peralatan);
+        $this->db->bind('id_peralatan', $id_peralatan);
+
         $this->db->execute();
     }
 
     public function hapusPeralatanLH()
     {
-        $hapus = ("DELETE FROM peralatan WHERE id_peralatan = '$_POST[id_peralatan]'" );
+        $id_peralatan = $_POST['id_peralatan'];
+
+        $hapus = ("DELETE FROM peralatan WHERE id_peralatan = :id_peralatan" );
 
         $this->db->query($hapus);
+        $this->db->bind('id_peralatan', $id_peralatan);
         $this->db->execute();
     }
 
@@ -417,17 +446,27 @@ class Operator_crud_model {
 
     public function ubahBahanLH()
     {
-        $ubah = ("UPDATE bahan SET id_m_bahan = '$_POST[id_m_bahan]', jumlah_bahan = '$_POST[jumlah_bahan]' WHERE id_bahan = '$_POST[id_bahan]'" );
+        $id_m_bahan = $_POST['id_m_bahan'];
+        $jumlah_bahan = $_POST['jumlah_bahan'];
+        $id_bahan = $_POST['id_bahan'];
+
+        $ubah = ("UPDATE bahan SET id_m_bahan = :id_m_bahan, jumlah_bahan = :jumlah_bahan WHERE id_bahan = :id_bahan" );
 
         $this->db->query($ubah);
+        $this->db->bind('id_m_bahan', $id_m_bahan);
+        $this->db->bind('jumlah_bahan', $jumlah_bahan);
+        $this->db->bind('id_bahan', $id_bahan);
         $this->db->execute();
     }
 
     public function hapusBahanLH()
     {
-        $hapus = ("DELETE FROM bahan WHERE id_bahan = '$_POST[id_bahan]'" );
+        $id_bahan = $_POST['id_bahan'];
+
+        $hapus = ("DELETE FROM bahan WHERE id_bahan = :id_bahan" );
 
         $this->db->query($hapus);
+        $this->db->bind('id_bahan', $id_bahan);
         $this->db->execute();
     }
 
@@ -459,18 +498,30 @@ class Operator_crud_model {
 
     public function ubahPermasalahan()
     {
-        $ubah = ("UPDATE permasalahan SET permasalahan = '$_POST[permasalahan]', saran = '$_POST[saran]' WHERE id_permasalahan = '$_POST[id_permasalahan]'" );
+        $permasalahan = $_POST['permasalahan'];
+        $saran = $_POST['saran'];
+        $id_permasalahan = $_POST['id_permasalahan'];
+
+        $ubah = ("UPDATE permasalahan SET permasalahan = :permasalahan, saran = :saran WHERE id_permasalahan = :id_permasalahan" );
 
         $this->db->query($ubah);
+
+        $this->db->bind('permasalahan', $permasalahan);
+        $this->db->bind('saran', $saran);
+        $this->db->bind('id_permasalahan', $id_permasalahan);
+
         $this->db->execute();
 
     }
 
     public function hapusPermasalahan()
     {
-        $hapus = ("DELETE FROM permasalahan WHERE id_permasalahan = '$_POST[id_permasalahan]'" );
+        $id_permasalahan = $_POST['id_permasalahan'];
+
+        $hapus = ("DELETE FROM permasalahan WHERE id_permasalahan = :id_permasalahan" );
 
         $this->db->query($hapus);
+        $this->db->bind('id_permasalahan', $id_permasalahan);
         $this->db->execute();
     }
 
@@ -931,18 +982,30 @@ class Operator_crud_model {
 
     public function ubahTimPengawas()
     {
-        $ubah = ("UPDATE tim_pengawas SET tim_pengawas = '$_POST[tim_pengawas]', tim_leader = '$_POST[tim_leader]' WHERE id_tim_pengawas = '$_POST[id_tim_pengawas]'" );
+        $timpengawas = $_POST['timpengawas'];
+        $timleader = $_POST['timleader'];
+        $id_tim_pengawas = $_POST['id_tim_pengawas'];
+
+        $ubah = ("UPDATE tim_pengawas SET tim_pengawas = :tim_pengawas, tim_leader = :tim_leader WHERE id_tim_pengawas = :id_tim_pengawas" );
 
         $this->db->query($ubah);
+
+        $this->db->bind('timpengawas', $timpengawas);  
+        $this->db->bind('timleader', $timleader); 
+        $this->db->bind('id_tim_pengawas', $id_tim_pengawas); 
+
         $this->db->execute();
 
     }
 
     public function hapusTimPengawas()
     {
-        $hapus = ("DELETE FROM tim_pengawas WHERE id_tim_pengawas = '$_POST[id_tim_pengawas]'" );
+        $id_tim_pengawas = $_POST['id_tim_pengawas'];
+
+        $hapus = ("DELETE FROM tim_pengawas WHERE id_tim_pengawas = :id_tim_pengawas" );
 
         $this->db->query($hapus);
+        $this->db->bind('id_tim_pengawas', $id_tim_pengawas); 
         $this->db->execute();
 
     }
