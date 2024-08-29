@@ -38,7 +38,7 @@
           </div>
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="card-title">Data User</h5>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#mbahan-tambah">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#user-admin-tambah">
               <i class='bx bx-plus-medical'></i> Add
             </button>
           </div>
@@ -51,7 +51,7 @@
                     <th>ID User</th>
                     <th>Username</th>
                     <th>Password</th>
-                    <th>Projek</th>
+                    <th>Role</th>
                     <th class="col-2">Aksi</th>
                 </tr>
               </thead>
@@ -64,10 +64,10 @@
                         <td><?= $user['id']?></td>
                         <td><?= $user['username']?></td>
                         <td><?= $user['password']?></td>
-                        <td><?= $user['id_projek']?></td>
+                        <td><?= $user['role']?></td>
                         <td>
-                            <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#modalHapus<?=$user['id']?>"><i class='bx bxs-trash-alt'></i><span class="span-aksi"> Delete</span></a>
-                            <a href="#" class="btn btn-warning text-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#modalUbah<?=$user['id']?>"><i class='bx bxs-edit-alt'></i><span class="span-aksi">Edit</span></a>
+                            <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#user-admin-hapus<?=$user['id']?>"><i class='bx bxs-trash-alt'></i><span class="span-aksi"> Delete</span></a>
+                            <a href="#" class="btn btn-warning text-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#user-admin-ubah<?=$user['id']?>"><i class='bx bxs-edit-alt'></i><span class="span-aksi">Edit</span></a>
                         </td>
                     </tr>
                 <?php 

@@ -48,6 +48,22 @@ $id_sub = array_column($data['pekerjaan_harian'], null);
                 <h2 class="ms-5 mt-5">Sub: <?= $sub['nama_sub_pekerjaan'] ?></h2>
                 <?php include '../app/views/modals/modal_add/operator/pekerjaan_harian_lh_add.php' ?>
 
+                <hr class="separator mt-5">
+
+                <div class="container">
+                    <div class="card mt-3">
+                        <h5 class="card-header">
+                            <div>
+                                Keterangan : <?= !empty($sub['keterangan']) ? $sub['keterangan'] : 'Tidak ada Keterangan!' ?>
+                            </div>
+
+                            <a class="btn btn-edit ms-2 mt-0" data-bs-toggle="modal" data-bs-target="#ph-keterangan-tambah-<?= $index ?>"><i class='bx bxs-edit-alt'></i>EDIT</a>
+                        </h5>
+                    </div>
+                </div>
+
+                <hr class="separator mt-3">
+
                 <!-- Data Pekerja -->
                 <div class="container mt-3">
                     <div class="card mt-3">

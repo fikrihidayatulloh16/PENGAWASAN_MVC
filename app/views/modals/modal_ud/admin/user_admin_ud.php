@@ -1,5 +1,5 @@
 <!-- Ubah Modal -->
-<div class="modal fade" id="modalUbah<?=$user['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="user-admin-ubah<?=$user['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -31,7 +31,7 @@
 </div>
 
 <!-- Hapus Modal -->
-<div class="modal fade" id="modalHapus<?=$user['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="user-admin-hapus<?=$user['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header bg-danger text-dark">

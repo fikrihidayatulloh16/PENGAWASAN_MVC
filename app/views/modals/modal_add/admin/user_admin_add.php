@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="mbahan-tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="user-admin-tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -16,6 +16,15 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Password (Kata Sandi)</label>
                         <input type="text" class="form-control" id="password" name="password" placeholder="Masukkan Satuan"required><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Role</label>
+                        <select class="form-control" id="role" name="role">
+                            <option value="" disabled selected>Pilih Role</option>
+                            <option value="superadmin">Superadmin</option>
+                            <option value="admin">Admin</option>
+                            <option value="operator">Operator</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

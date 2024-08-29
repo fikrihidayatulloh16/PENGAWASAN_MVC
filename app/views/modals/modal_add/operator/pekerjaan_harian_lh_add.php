@@ -1,3 +1,36 @@
+<!-- Tambah Modal Keterangan-->
+<div class="modal fade" id="ph-keterangan-tambah-<?= $index ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-secondary text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Ubah Data Progres Harian</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form action="<?= PUBLICURL ?>/operator/ubah_keterangan_sp/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>" method="POST">
+                <input type="hidden" name="id_laporan_harian" value="<?= $sub['id_laporan_harian'] ?>">
+                <input type="hidden" name="id_m_sub_pekerjaan" value="<?= $sub['id_m_sub_pekerjaan'] ?>">
+                <div class="modal-body">                    
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="progress_harian">Keterangan:</label>
+                            
+                            <div class="input-group">
+                                <input type="text" id="keterangan" name="keterangan" value="<?= $sub['keterangan'] ?>" class="form-control" placeholder="Masukkan Keterangan">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                    
+                <div class="modal-footer bg-secondary">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success text-light" name="progress_harian_modal">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Tambah Modal Pekerja-->
 <div class="modal fade" id="ph-pekerja-tambah-<?= $sub['id_m_sub_pekerjaan'] ?>" tabindex="-1" aria-labelledby="ph-pekerja-tambah-label-<?=$index?>" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

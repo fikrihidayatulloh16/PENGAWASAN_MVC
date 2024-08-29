@@ -2,15 +2,14 @@
 <?php Flasher::flash() ?>
 
 <div class="container">
-<div class="card mt-3">
-    <h5 class="card-header">
-        <div>
-            Estimasi Progres : <?=$data['laporan']['progress_harian']?>%
+    <div class="card mt-3">
+        <h5 class="card-header">
+            <div>
+                Estimasi Progres : <?=$data['laporan']['progress_harian']?>%
+            </div>
 
-        </div>
-            
-        <a class="btn btn-edit ms-2 mt-0" data-bs-toggle="modal" data-bs-target="#progres-lh-ubah"><i class='bx bxs-edit-alt'></i>EDIT</a>
-    </h5>
+            <a class="btn btn-edit ms-2 mt-0" data-bs-toggle="modal" data-bs-target="#progres-lh-ubah"><i class='bx bxs-edit-alt'></i>EDIT</a>
+        </h5>
     </div>
 
     <hr class="separator">
@@ -33,19 +32,19 @@
                     <div class="mb-3">
                         <div class="form-group">
                             <label for="progress_harian">Estimasi Progres:</label>
+
                             <div class="input-group">
                                 <input type="number" id="progress_harian" name="progress_harian" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
                                 <span class="input-group-text">%</span>
                             </div>
                         </div>
                     </div>
-
                 </div>
                                     
-                    <div class="modal-footer bg-secondary">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success text-light" name="progress_harian_modal">Ubah</button>
-                    </div>
+                <div class="modal-footer bg-secondary">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success text-light" name="progress_harian_modal">Submit</button>
+                </div>
             </form>
         </div>
     </div>

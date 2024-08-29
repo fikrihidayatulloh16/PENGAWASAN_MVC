@@ -100,7 +100,7 @@ class Operator_db_model {
 
     public function getMSPFromPekerjaanHarianByIdLaporan($id_laporan_harian)
     {
-        $this->db->query("SELECT ph.id_laporan_harian, ph.id_m_sub_pekerjaan, ms.nama_sub_pekerjaan
+        $this->db->query("SELECT ph.id_laporan_harian, ph.id_m_sub_pekerjaan, ms.nama_sub_pekerjaan, ph.keterangan
                                           FROM pekerjaan_harian AS ph
                                           JOIN m_sub_pekerjaan AS ms ON ph.id_m_sub_pekerjaan = ms.id_m_sub_pekerjaan
                                           JOIN laporan_harian AS lh ON lh.id_laporan_harian = ph.id_laporan_harian

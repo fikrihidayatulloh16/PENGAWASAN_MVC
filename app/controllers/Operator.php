@@ -236,6 +236,17 @@ class Operator extends Controller{
         header('Location: ' . PUBLICURL . '/operator/rekap/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
     }
 
+    public function ubah_keterangan_sp($id_laporan_harian, $id_projek)
+    {
+        $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $this->model('Operator_crud_model')->ubahKeteranganSPLH($_POST);
+
+        header('Location: ' . PUBLICURL . '/operator/pekerjaan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+        exit;
+
+    }
+
     public function tambah_pekerja_harian($id_laporan_harian, $id_projek)
     {
         $data = $this->prepareData($id_laporan_harian, $id_projek);

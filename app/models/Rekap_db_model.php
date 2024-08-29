@@ -40,7 +40,7 @@ class Rekap_db_model{
     
     public function getSubPekerjaanByLaporanId($id_laporan_harian){
         // Mengambil data sub pekerjaan
-        $this->db->query("SELECT msp.id_m_sub_pekerjaan, msp.nama_sub_pekerjaan
+        $this->db->query("SELECT msp.id_m_sub_pekerjaan, msp.nama_sub_pekerjaan, ph.keterangan
                                                     FROM m_sub_pekerjaan AS msp
                                                     JOIN pekerjaan_harian AS ph ON ph.id_m_sub_pekerjaan = msp.id_m_sub_pekerjaan
                                                     WHERE ph.id_laporan_harian = :id_laporan_harian");

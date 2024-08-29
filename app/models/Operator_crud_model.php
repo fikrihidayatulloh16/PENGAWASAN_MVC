@@ -275,6 +275,25 @@ class Operator_crud_model {
         return TRUE;
     }
 
+    public function ubahKeteranganSPLH()
+    {
+        //mengambil data dari input
+        $id_m_sub_pekerjaan = $_POST['id_m_sub_pekerjaan'];
+        $id_laporan_harian = $_POST['id_laporan_harian'];
+        $keterangan = $_POST['keterangan'];
+
+        //membuat kueri
+        $this->db->query("UPDATE pekerjaan_harian SET keterangan = :keterangan WHERE id_laporan_harian = :id_laporan_harian AND id_m_sub_pekerjaan = :id_m_sub_pekerjaan");
+
+        $this->db->bind('keterangan', $keterangan);
+        $this->db->bind('id_laporan_harian', $id_laporan_harian);
+        $this->db->bind('id_m_sub_pekerjaan', $id_m_sub_pekerjaan);
+
+        $this->db->execute();
+
+        return TRUE;
+    }
+
     public function tambahPekerjaLH()
     {
         //generate id baru
