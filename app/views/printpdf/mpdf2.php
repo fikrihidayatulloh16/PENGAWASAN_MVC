@@ -56,6 +56,7 @@ body {
 
 .section-title {
     font-size: 12px;
+    font-weight: bold;
     color: #333;
     text-transform: uppercase;
     padding: 10px;
@@ -166,6 +167,17 @@ h3 {
     border-right: 1px solid #333;
 }
 
+.progres-title {
+    font-size: 12px;
+    color: #333;
+    text-transform: uppercase;
+    padding: 10px;
+    background-color: #f4f4f4;
+    margin-bottom: 0; /* Remove extra margin */
+    border-left: 1px solid #333; /* Uniform border thickness */
+    border-right: 1px solid #333;
+}
+
 </style>
 
 <body>
@@ -215,9 +227,10 @@ h3 {
         </tr>
     </table>
 
-    <div class="cuaca-title text-center" style="border-bottom: 1px solid #333;">Laporan Harian PENGAWAS</div>
+    <div class="cuaca-title text-center" style="border-bottom: 1px solid #333; font-weight: bold;">Laporan Harian PENGAWAS</div>
 
-    <div class="section-title text-center" style="border-bottom: 1px solid #333;">Progres : ' . $data['laporan']['progress_harian'] .'%</div>
+    <div class="progres-title" style="border-bottom: 1px solid #333;">Progres Harian: ' . $data['laporan']['progress_harian'] .'%</div>
+    <div class="progres-title" style="border-bottom: 1px solid #333;">Progres Kumulatif: ' . $data['laporan']['total_progres'] .'%</div>
     
     <div class="section-title">A. Cuaca</div>
     <div class="table-container">

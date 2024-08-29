@@ -15,6 +15,9 @@ class Operator extends Controller{
     */
 
     public function index() {
+        $data['id_projek'] = 'PRJ001';
+        header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek']);
+        exit;
         $data['judul'] = '(temp) Pilih projek untuk operator';
         $data['projek'] = $this->model('Operator_db_model')->getAllProjek();
         $this->view('layouts/layout_admin/layout_admin_projek', $data);
@@ -68,8 +71,9 @@ class Operator extends Controller{
         $this->view('operator/l_harian/rekap/cuaca_rekap', $data);
         $this->view('operator/l_harian/rekap/pekerjaan_rekap', $data);
         $this->view('operator/l_harian/rekap/permasalahan_rekap', $data);
-        $this->view('operator/l_harian/rekap/foto_kegiatan_rekap', $data);
         $this->view('operator/l_harian/rekap/foto_masalah_rekap', $data);
+        $this->view('operator/l_harian/rekap/foto_kegiatan_rekap', $data);
+        
         
         $this->view('layouts/footer_a');
     }

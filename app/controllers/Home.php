@@ -46,14 +46,18 @@ class Home extends Controller {
         $data['tim_pengawas'] = $this->model('Rekap_db_model')->getTimPengawasByProjekId($id_projek);
         $data['hari_ke'] = $this->model('Operator_db_model')->getHariKeByLaporanId($id_laporan_harian, $id_projek);
         $data['pekerjaan_rekap'] = $this->model('Rekap_db_model')->rekapPekerjaan($id_laporan_harian);
+        $data['foto_masalah'] = $this->model('Operator_db_model')->getAllFotoMasalahByIDLaporan($id_laporan_harian);
         
 
         $this->view('layouts/layout_user/layout_user_pekerjaan', $data);
         $this->view('home/user_lh_rekap/logo_rekap', $data);
+        $this->view('home/user_lh_rekap/progres_lh_rekap', $data);
         $this->view('home/user_lh_rekap/cuaca_rekap', $data);
         $this->view('home/user_lh_rekap/pekerjaan_rekap', $data);
         $this->view('home/user_lh_rekap/permasalahan_rekap', $data);
+        $this->view('home/user_lh_rekap/foto_masalah_rekap', $data);
         $this->view('home/user_lh_rekap/foto_kegiatan_rekap', $data);
+        
         
         $this->view('layouts/footer_a');
     }
