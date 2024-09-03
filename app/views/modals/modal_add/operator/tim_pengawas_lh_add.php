@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Laporan Permasalahan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= PUBLICURL ?>/operator/tambah_tim_pengawas/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>" method="POST">
+            <form action="<?= PUBLICURL ?>/admin/tambah_tim_pengawas/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>" method="POST">
                 <input type="hidden" name="id_projek" value="<?= $data['id_projek'] ?>">
                 <div class="modal-body">
                     <div class="mb-3">

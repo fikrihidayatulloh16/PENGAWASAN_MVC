@@ -982,16 +982,16 @@ class Operator_crud_model {
 
     public function ubahTimPengawas()
     {
-        $timpengawas = $_POST['timpengawas'];
-        $timleader = $_POST['timleader'];
+        $tim_pengawas = $_POST['tim_pengawas'];
+        $tim_leader = $_POST['tim_leader'];
         $id_tim_pengawas = $_POST['id_tim_pengawas'];
 
         $ubah = ("UPDATE tim_pengawas SET tim_pengawas = :tim_pengawas, tim_leader = :tim_leader WHERE id_tim_pengawas = :id_tim_pengawas" );
 
         $this->db->query($ubah);
 
-        $this->db->bind('timpengawas', $timpengawas);  
-        $this->db->bind('timleader', $timleader); 
+        $this->db->bind('tim_pengawas', $tim_pengawas);  
+        $this->db->bind('tim_leader', $tim_leader); 
         $this->db->bind('id_tim_pengawas', $id_tim_pengawas); 
 
         $this->db->execute();

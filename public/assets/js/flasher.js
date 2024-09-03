@@ -6,6 +6,6 @@
             // Using Bootstrap's alert('close') method to close it
             flashMessage.classList.remove('show');
             flashMessage.classList.add('fade');
-            setTimeout(() => flashMessage.remove(), 150); // Remove from DOM after fade out
+            setTimeout(() => flashMessage.remove(), 250); // Remove from DOM after fade out
         }
     }, 2000);

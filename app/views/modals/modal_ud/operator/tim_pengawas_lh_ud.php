@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="<?= PUBLICURL ?>/operator/ubah_tim_pengawas/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>" method="POST">
+            <form action="<?= PUBLICURL ?>/admin/ubah_tim_pengawas/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>" method="POST">
                 <input type="hidden" name="id_tim_pengawas" value="<?=$tim_pengawas['id_tim_pengawas']?>">
                 <div class="modal-body">
                     <div class="mb-3">
@@ -50,12 +50,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="<?= PUBLICURL ?>/operator/hapus_tim_pengawas/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>" method="POST">
+            <form action="<?= PUBLICURL ?>/admin/hapus_tim_pengawas/<?= $data['id_laporan_harian']?>/<?= $data['id_projek'] ?>" method="POST">
                 <input type="hidden" name="id_tim_pengawas" value="<?=$tim_pengawas['id_tim_pengawas']?>">
 
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="id_tim_pengawas" class="form-label">ID</label>
+                        <label for="id_tim_pengawas" class="form-label">IDu</label>
                         <h5 for="id_tim_pengawas" class="form-label" id="id_tim_pengawas" name="id_tim_pengawas" value="<?= $tim_pengawas['id_tim_pengawas']?>"><?=$tim_pengawas['id_tim_pengawas']?></h5>
                         <label for="tim_pengawas" class="form-label">Tim Pengawas</label>
                         <h5 for="tim_pengawas" class="form-label text-danger"><?=$tim_pengawas['tim_pengawas']?></h5>

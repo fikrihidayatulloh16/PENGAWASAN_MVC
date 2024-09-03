@@ -90,7 +90,7 @@ class Admin extends Controller {
     {
         $data['id_projek'] = $id_projek;
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
-        $data['tim_pengawas'] = $this->model('Rekap_db_model')->getTimPengawasByProjekId($id_projek);
+        $data['list_tim_pengawas'] = $this->model('Rekap_db_model')->getTimPengawasByProjekId($id_projek);
 
         $this->view('layouts/layout_admin/header_admin', $data);
         $this->view('admin/tim_pengawas_admin', $data);
@@ -294,6 +294,29 @@ class Admin extends Controller {
         $data['id_projek'] = $id_projek;
         $this->model('Admin_crud_model')->hapusUserAdmin($_POST);
         header('Location: ' . PUBLICURL . '/admin/user_admin/' . $data['id_projek']);
+        exit;
+
+    }
+
+    public function tambah_tim_pengawas($id_projek)
+    {
+        if ($this->model('Operator_crud_model')->tambahTimPengawas($_POST) > 0) {
+            header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
+            exit;
+        }
+    }
+
+    public function ubah_tim_pengawas($id_projek)
+    {
+        $this->model('Operator_crud_model')->ubahTimPengawas($_POST);
+        header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
+        exit;
+    }
+
+    public function hapus_tim_pengawas($id_projek)
+    {
+        $this->model('Operator_crud_model')->hapusTimPengawas($_POST);
+        header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
         exit;
 
     }

@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="<?= PUBLICURL ?>/operator/ubah_tim_pengawas/<?= $data['id_projek'] ?>" method="POST">
+            <form action="<?= PUBLICURL ?>/admin/ubah_tim_pengawas/<?= $data['id_projek'] ?>" method="POST">
                 <input type="hidden" name="id_tim_pengawas" value="<?=$tim_pengawas['id_tim_pengawas']?>">
                 <div class="modal-body">
                     <div class="mb-3">
@@ -44,7 +44,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="<?= PUBLICURL ?>/operator/hapus_tim_pengawas/<?= $data['id_projek'] ?>" method="POST">
+            <form action="<?= PUBLICURL ?>/admin/hapus_tim_pengawas/<?= $data['id_projek'] ?>" method="POST">
                 <input type="hidden" name="id_tim_pengawas" value="<?=$tim_pengawas['id_tim_pengawas']?>">
 
                 <div class="modal-body">

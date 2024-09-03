@@ -45,7 +45,7 @@
         
           <!-- Table with stripped rows -->
           <div class="table-responsive">
-            <table class="table datatable">
+            <table class="table">
               <thead>
                 <tr>
                     <th>Tim Pengawas</th>
@@ -56,8 +56,8 @@
               <?php
                   $nomor_masalah = 1;
 
-                  if (count( $data['tim_pengawas']) > 0) {
-                      foreach ( $data['tim_pengawas'] as $tim_pengawas) : 
+                  if (count( $data['list_tim_pengawas']) > 0) {
+                      foreach ( $data['list_tim_pengawas'] as $tim_pengawas) : 
               ?>
               <tbody>
               <tr>
@@ -65,11 +65,13 @@
                   <td class="text-center"><?= $tim_pengawas['tim_leader'] ?></td>
                   <td class="text-center">
                       <form action="../../script/projek_pilih.php" method="POST">
-                          <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#pengawas-hapus-<?= $tim_pengawas['id_tim_pengawas'] ?>">
-                          <i class='bx bx-trash' ></i>
+                          <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#pengawas-hapus-<?= $tim_pengawas['id_tim_pengawas'] ?>">
+                          <i class='bx bxs-trash-alt' ></i>
+                          <span class="span-aksi"> Delete</span>
                           </a>
-                          <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#pengawas-ubah-<?= $tim_pengawas['id_tim_pengawas'] ?>">
+                          <a href="#" class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#pengawas-ubah-<?= $tim_pengawas['id_tim_pengawas'] ?>">
                               <i class='bx bxs-edit-alt'></i>
+                              <span class="span-aksi"> Edit</span>
                           </a>
                           <input type="hidden" name="id_laporan" value="<?= $tim_pengawas['id_tim_pengawas'] ?>">
                       </form>

@@ -3,13 +3,13 @@ $navBrands = '<a class="navbar-brand" href="../../page/operator/laporanharian.ph
 
 $navItems = '
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#" >
+        <a class="nav-link nav-head ms-lg-5" href="' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek'] . '" >
         LAPORAN HARIAN
     </a>
 
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+        <a class="nav-link nav-head ms-lg-5" href="' . PUBLICURL . '/laporanmingguan/laporan_mingguan_list/' . $data['id_projek'] . '">
         LAPORAN MINGGUAN
     </a>
 
@@ -37,7 +37,7 @@ include '../app/views/layouts/header.php';
 <!-- Content of Page -->
 <div class="container">
     <div class="container header-laporan text-center mt-3">
-        <h3 style="color : #818181;">LAPORAN HARIAN</h3>
+        <h3 style="color : #818181;"><?= $data['judul_laporan'] ?></h3>
         <h4 class="roboto-text">PENGAWASAN <?= $data['projek']['nama_projek'] ?></h4>
         <h4 class="roboto-text">Waktu Pelaksanaan : <?= $data['tanggal_mulai_projek'] ?> - <?= $data['tanggal_selesai_projek'] ?></h4>
         <h4 class="roboto-text">Tambahan Waktu : <?= $data['tambahan_waktu_projek'] ?></h4>

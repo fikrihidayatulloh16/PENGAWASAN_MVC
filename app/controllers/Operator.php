@@ -33,6 +33,7 @@ class Operator extends Controller{
     */
 
     public function index() {
+        $data['judul_laporan'] = 'LAPORAN HARIAN';
         $data['id_projek'] = 'PRJ001';
         header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek']);
         exit;
@@ -46,6 +47,7 @@ class Operator extends Controller{
     public function laporan_harian_list($id_projek) {
         
         //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
+        $data['judul_laporan'] = 'LAPORAN HARIAN';
         $data['id_projek'] = $id_projek;
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
         $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
@@ -66,6 +68,8 @@ class Operator extends Controller{
     }
 
     public function rekap($id_laporan_harian, $id_projek) {
+        //inisiasi data untuk header
+        $data['judul_laporan'] = 'LAPORAN HARIAN';
         $data = $this->prepareData($id_laporan_harian, $id_projek);
 
         $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
@@ -98,7 +102,8 @@ class Operator extends Controller{
 
     public function cuaca_l_harian($id_laporan_harian, $id_projek)
     {
-        
+        //inisiasi data untuk header
+        $data['judul_laporan'] = 'LAPORAN HARIAN';
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
@@ -113,6 +118,8 @@ class Operator extends Controller{
 
     public function pekerjaan_l_harian($id_laporan_harian, $id_projek)
     {
+        //inisiasi data untuk header
+        $data['judul_laporan'] = 'LAPORAN HARIAN';
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
@@ -133,6 +140,8 @@ class Operator extends Controller{
     public function permasalahan_l_harian($id_laporan_harian, $id_projek)
     {
         //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
+        //inisiasi data untuk header
+        $data['judul_laporan'] = 'LAPORAN HARIAN';
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
@@ -150,6 +159,8 @@ class Operator extends Controller{
     public function foto_kegiatan($id_laporan_harian, $id_projek)
     {
         //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
+        //inisiasi data untuk header
+        $data['judul_laporan'] = 'LAPORAN HARIAN';
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
@@ -164,6 +175,8 @@ class Operator extends Controller{
 
     public function tim_pengawas($id_laporan_harian, $id_projek)
     {
+        //inisiasi data untuk header
+        $data['judul_laporan'] = 'LAPORAN HARIAN';
         $data = $this->prepareData($id_laporan_harian, $id_projek);
         $data['laporan'] = $this->model('Operator_db_model')->getLaporanById($id_laporan_harian);
         $data['tanggal'] = $this->model('Operator_crud_model')->dateConverter($data['laporan']['tanggal']);
@@ -437,28 +450,5 @@ class Operator extends Controller{
         $this->model('Operator_crud_model')->hapusFotoKegiatan($_POST);
         header('Location: ' . PUBLICURL . '/operator/foto_kegiatan/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
         exit;
-    }
-
-    public function tambah_tim_pengawas($id_projek)
-    {
-        if ($this->model('Operator_crud_model')->tambahTimPengawas($_POST) > 0) {
-            header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
-            exit;
-        }
-    }
-
-    public function ubah_tim_pengawas($id_projek)
-    {
-        $this->model('Operator_crud_model')->ubahTimPengawas($_POST);
-        header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
-        exit;
-    }
-
-    public function hapus_tim_pengawas($id_projek)
-    {
-        $this->model('Operator_crud_model')->hapusTimPengawas($_POST);
-        header('Location: ' . PUBLICURL . '/admin/tim_pengawas/'. $id_projek);
-        exit;
-
     }
 }

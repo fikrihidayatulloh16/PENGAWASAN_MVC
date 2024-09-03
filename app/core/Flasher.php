@@ -12,7 +12,6 @@ class Flasher {
 
     public static function flash()
     {
-
         if (isset($_SESSION['flash'])): 
             echo '  <div id="flashMessage" class="alert alert-' . $_SESSION['flash']['type']. ' alert-dismissible fade show fixed-top" role="alert">
                         <strong>' . $_SESSION['flash']['action'] . '!</strong>  ' . $_SESSION['flash']['message'] . 

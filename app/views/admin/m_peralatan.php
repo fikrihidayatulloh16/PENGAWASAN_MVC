@@ -64,7 +64,7 @@
                                 <td><?= $data_m_peralatan['nama_alat']?></td>
                                 <td><?= $data_m_peralatan['satuan']?></td>
                                 <td>
-                                    <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#malat-hapus-<?=$data_m_peralatan['id_m_peralatan']?>"><i class='bx bxs-trash-alt' ></i><span class="span-aksi"> Delete</span></a>
+                                    <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#malat-hapus-<?=$data_m_peralatan['id_m_peralatan']?>"><i class='bx bxs-trash-alt' ></i><span class="span-aksi">Delete</span></a>
                                     <a href="#" class="btn btn-warning text-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#malat-ubah-<?=$data_m_peralatan['id_m_peralatan']?>"><i class='bx bxs-edit-alt' ></i><span class="span-aksi"> Edit</span></a>
                                 </td>
                             </tr>
