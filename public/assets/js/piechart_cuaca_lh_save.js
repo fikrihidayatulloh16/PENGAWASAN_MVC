@@ -64,4 +64,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // Buat chart
     const chart1 = createChart('chart1', dataPointsJson1);
     const chart2 = createChart('chart2', dataPointsJson2);
+
+    // Tunggu hingga chart dirender sepenuhnya
+    setTimeout(async () => {
+        // Pastikan chart sudah dirender
+        if (chart1 && chart2) {
+            const image1 = chart1.toBase64Image();
+            const image2 = chart2.toBase64Image();
+            
+            // Kirim gambar ke server
+            const response = await fetch(`${PUBLICURL}/operator/save_piechart/${ID_LAPORAN_HARIAN}/${ID_PROJEK}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `image1=${encodeURIComponent(image1)}&image2=${encodeURIComponent(image2)}`
+            });
+
+            // Tampilkan hasil respon
+            const result = await response.text();
+            console.log(result);
+        } else {
+            console.error('One or both charts are not defined.');
+        }
+    }, 1000); // Menunggu 1 detik
 });

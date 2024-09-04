@@ -188,11 +188,6 @@
             </div>
         </div>
 </div>
-    
-        <script>
-        z
-    </script>
-
 </div>
 
 <div class="container d-flex justify-content-end">

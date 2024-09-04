@@ -280,6 +280,48 @@ class Operator_crud_model {
         return TRUE;
     }
 
+    public function savePieChart()
+    {
+        if (isset($_POST['image1']) && isset($_POST['image2'])) {
+            // Mendapatkan data gambar dari POST request
+            $id_laporan_harian = $_POST['id_laporan_harian'];
+            $id_projek = $_POST['id_projek'];
+            $data1 = $_POST['image1'];
+            $data2 = $_POST['image2'];
+        
+            // Menghapus header data URL
+            $data1 = str_replace('data:image/png;base64,', '', $data1);
+            $data1 = str_replace(' ', '+', $data1);
+        
+            $data2 = str_replace('data:image/png;base64,', '', $data2);
+            $data2 = str_replace(' ', '+', $data2);
+        
+            // Decode base64 data
+            $data1 = base64_decode($data1);
+            $data2 = base64_decode($data2);
+        
+            // Tentukan path folder penyimpanan
+            $folderPath = '../public/assets/img/operator/laporan_harian/piechart_cuaca/';
+            
+            // Pastikan folder ada
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath, 0777, true);
+            }
+        
+            // Tentukan nama file
+            $fileName1 = 'piechart_AM_'. $id_projek .'_'. $id_laporan_harian .'.png'; // Nama file untuk chart1
+            $fileName2 = 'piechart_PM_'. $id_projek .'_'. $id_laporan_harian .'.png'; // Nama file untuk chart2
+        
+            // Simpan gambar ke file
+            file_put_contents($folderPath . $fileName1, $data1);
+            file_put_contents($folderPath . $fileName2, $data2);
+        
+            echo "Gambar berhasil disimpan sebagai $fileName1 dan $fileName2";
+        } else {
+            echo "Tidak ada data gambar yang diterima.";
+        }
+    }
+
     public function ubahKeteranganSPLH()
     {
         //mengambil data dari input

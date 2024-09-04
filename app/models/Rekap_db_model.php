@@ -133,10 +133,9 @@ class Rekap_db_model{
         return $this->db->resultSet();
     }
 
-    public function prepareChartCuaca($dataCuaca)
+    public function prepareChartCuaca($data)
     {
-        $data['cuaca'] = $dataCuaca;
-
+        
         $timeIntervals = [
             '11:00          ', '00:00        01:00', ' ', '02:00
             
@@ -230,6 +229,11 @@ class Rekap_db_model{
         <script>
             const dataPointsJson1 = <?= $dataPointsJson1 ?>;
             const dataPointsJson2 = <?= $dataPointsJson2 ?>;
+
+            //url untuk js
+            const PUBLICURL = '<?= PUBLICURL ?>';
+            const ID_PROJEK = '<?= $data['id_projek'] ?>';
+            const ID_LAPORAN_HARIAN = '<?= $data['id_laporan_harian'] ?>';
         </script>
         <?php
     }

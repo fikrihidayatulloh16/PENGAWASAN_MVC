@@ -77,7 +77,7 @@ class Operator extends Controller{
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
         $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
         $data['cuaca'] = $this->model('Rekap_db_model')->getCuacaByLaporanId($id_laporan_harian);
-        $this->model('Rekap_db_model')->prepareChartCuaca($data['cuaca']);
+        $this->model('Rekap_db_model')->prepareChartCuaca($data);
         //$data['m_pekerjaan'] = $this->model('Operator_db_model')->getMPekerjaanByIdLaporanProjek($id_laporan_harian);
         $data['sub_pekerjaan'] = $this->model('Rekap_db_model')->getSubPekerjaanByLaporanId($id_laporan_harian);
         $data['permasalahan'] = $this->model('Rekap_db_model')->getPermasalahanByLaporanId($id_laporan_harian);
@@ -266,6 +266,20 @@ class Operator extends Controller{
         }
         
         header('Location: ' . PUBLICURL . '/operator/rekap/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+    }
+
+    public function save_piechart($id_laporan_harian, $id_projek)
+    {
+        $_POST['id_laporan_harian'] = $id_laporan_harian;
+        $_POST['id_projek'] = $id_projek;
+        $result = $this->model('Operator_crud_model')->savePieChart($_POST);
+
+        if ($result === TRUE) {
+            
+
+        } else {
+            
+        }
     }
 
     public function ubah_keterangan_sp($id_laporan_harian, $id_projek)

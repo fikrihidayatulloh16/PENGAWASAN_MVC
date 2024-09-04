@@ -32,12 +32,14 @@ class Printpdf extends Controller {
         $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
         $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
         $data['cuaca'] = $this->model('Rekap_db_model')->getCuacaByLaporanId($id_laporan_harian);
+        $this->model('Rekap_db_model')->prepareChartCuaca($data);
         $data['sub_pekerjaan'] = $this->model('Rekap_db_model')->getSubPekerjaanByLaporanId($id_laporan_harian);
         $data['permasalahan'] = $this->model('Rekap_db_model')->getPermasalahanByLaporanId($id_laporan_harian);
         $data['foto_kegiatan'] = $this->model('Rekap_db_model')->getFotoKegiatanByLaporanId($id_laporan_harian);
         $data['tim_pengawas'] = $this->model('Rekap_db_model')->getTimPengawasByProjekId($id_projek);
         $data['foto_masalah'] = $this->model('Operator_db_model')->getAllFotoMasalahByIDLaporan($id_laporan_harian);
 
+        
         $this->view('printpdf/mpdf2', $data);
     }
 

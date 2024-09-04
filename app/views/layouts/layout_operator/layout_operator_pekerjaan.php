@@ -3,7 +3,7 @@ $navBrands = '<a class="navbar-brand" href="' . PUBLICURL . '/operator/laporan_h
 
 $navItems = '
     <li class="nav-item">
-        <a class="nav-link nav-head text-center" aria-current="page" href=" ' . PUBLICURL . '/operator/rekap/' . $data['id_laporan_harian'] . '/' . $data['id_projek'] . '" style="font-size: 2;">
+        <a class="nav-link nav-head text-center" aria-current="page" href=" ' . PUBLICURL . '/operator/rekap/' . $data['id_laporan_harian'] . '/' . $data['id_projek'] . '">
             LAPORAN HARIAN
         </a>
     </li>
