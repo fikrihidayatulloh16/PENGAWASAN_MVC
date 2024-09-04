@@ -119,14 +119,10 @@ class LaporanMingguan extends Controller {
         $result = $this->model('Laporan_mingguan_crud_model')->saveLineChart($_POST);
 
         if ($result === TRUE) {
-            Flasher::setFlash('Sukses', 'Linechart Berhasil Dibuat dan simpan', 'success');
-
-            header('Location: ' . PUBLICURL . '/laporanmingguan/laporan_mingguan_list/'. $id_projek);
-            exit;
+            
 
         } else {
-            header('Location: ' . PUBLICURL . '/laporanmingguan/laporan_mingguan_list/'. $id_projek);
-            exit;
+            
         }
     }
 }

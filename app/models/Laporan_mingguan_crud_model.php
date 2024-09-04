@@ -130,9 +130,13 @@
         // Iterasi melalui setiap laporan mingguan dan update progres kumulatif
         foreach ($laporanMingguan as $laporan) {
             // Tambahkan progres minggu ini ke dalam kumulatif
+            if ($laporan['realisasi_progres'] == 0) {
+                $realisasiKumulatif = NULL;
+            } else {
+                $realisasiKumulatif += $laporan['realisasi_progres'];
+            }
             $rencanaKumulatif += $laporan['rencana_progres'];
-            $realisasiKumulatif += $laporan['realisasi_progres'];
-
+            
             // Update progres kumulatif dalam tabel
             $this->db->query("UPDATE laporan_mingguan SET 
                 rencana_progres_kumulatif = :rencana_kumulatif, 
@@ -151,28 +155,35 @@
 
     public function saveLineChart($data)
     {
-        // Ambil data dari body request
-        $input = json_decode(file_get_contents('php://input'), true);
-        $imageData = $input['image'];
-
-        // Hapus prefix 'data:image/png;base64,' dari data base64
-        $imageData = str_replace('data:image/png;base64,', '', $imageData);
-        $imageData = str_replace(' ', '+', $imageData);
-
-        // Decode base64 menjadi binary
-        $imageBinary = base64_decode($imageData);
-
-        // Tentukan path penyimpanan
-        $filename = 'chart_' . $data['id_projek'] . '.png';
-        $filepath = __DIR__ . '../public/assets/img/operator/laporan_mingguan/' . $filename;
-
-        // Simpan file
-        if (file_put_contents($filepath, $imageBinary)) {
-            // Gambar berhasil disimpan
-            return true;
+        if (isset($_POST['image'])) {
+            // Proses penyimpanan gambar
+            $data = $_POST['image'];
+            $id_projek = $_POST['id_projek'];
+            $data = str_replace('data:image/png;base64,', '', $data);
+            $data = str_replace(' ', '+', $data);
+            $data = base64_decode($data);
+        
+            $folderPath = '../public/assets/img/operator/laporan_mingguan/';
+            $fileName = 'Linechart_LM_'. $id_projek . '.png';
+            $filePath = $folderPath . $fileName;
+        
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath, 0777, true);
+            }
+        
+            if (file_put_contents($filePath, $data)) {
+                // Jika berhasil menyimpan, set flasher dan kirim respons JSON
+                Flasher::setFlash('Sukses', 'Linechart Berhasil Dibuat dan Disimpan', 'success');
+                echo json_encode(['status' => 'success', 'message' => 'Linechart Berhasil Dibuat dan Disimpan']);
+            } else {
+                // Jika gagal menyimpan, set flasher dan kirim respons JSON
+                Flasher::setFlash('Gagal', 'Linechart Gagal Disimpan', 'danger');
+                echo json_encode(['status' => 'error', 'message' => 'Linechart Gagal Disimpan']);
+            }
         } else {
-            // Gagal menyimpan gambar
-            return false;
+            // Jika tidak ada data gambar, set flasher dan kirim respons JSON
+            Flasher::setFlash('Gagal', 'Tidak Ada Data Gambar yang Diterima', 'danger');
+            echo json_encode(['status' => 'error', 'message' => 'Tidak Ada Data Gambar yang Diterima']);
         }
     }
  }

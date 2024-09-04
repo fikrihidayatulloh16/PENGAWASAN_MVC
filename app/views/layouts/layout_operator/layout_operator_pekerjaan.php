@@ -1,5 +1,5 @@
 <?php
-$navBrands = '<a class="navbar-brand" href=" ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek'] . '">OPERATOR</a>';
+$navBrands = '<a class="navbar-brand" href="' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek'] . '">OPERATOR</a>';
 
 $navItems = '
     <li class="nav-item">
@@ -8,7 +8,7 @@ $navItems = '
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5 text-center" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+        <a class="nav-link nav-head ms-lg-5 text-center" href="' . PUBLICURL . '/laporanmingguan/laporan_mingguan_list/' . $data['id_projek'] . '">
         LAPORAN MINGGUAN
     </a>
     </li>

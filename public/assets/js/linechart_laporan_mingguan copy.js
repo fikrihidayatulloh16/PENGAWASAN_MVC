@@ -55,11 +55,9 @@ var ctx = document.getElementById('myChart').getContext('2d');
         // Konversi chart menjadi gambar base64
         setTimeout(async () => {
             const image = myChart.toBase64Image();
-
-            
             
             // Kirim gambar ke server
-            const response = await fetch(`${PUBLICURL}/laporanmingguan/save_linechart/${ID_PROJEK}`, {
+            const response = await fetch(publicUrl + '/laporanmingguan/save_linechart/' + IdProjek, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

@@ -1,5 +1,5 @@
 <?php
-$navBrands = '<a class="navbar-brand" href="../../page/operator/laporanharian.php">OPERATOR</a>';
+$navBrands = '<a class="navbar-brand" href=""' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek'] . '"">OPERATOR</a>';
 
 $navItems = '
     <li class="nav-item">

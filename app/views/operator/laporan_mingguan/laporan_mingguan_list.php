@@ -99,7 +99,17 @@
         </nav>
     </div>
 
-    <canvas id="myChart" width="400" height="200"></canvas>
+    <hr class="container separator">
+
+    <div class="card">
+        <h5 class="card-header">
+            Grafik Progres Kumulatif
+        </h5>
+
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+
+    
 </div>
 
 <?php
@@ -115,6 +125,14 @@ $realisasiKumulatifData = $data['all_laporan_mingguan']['realisasi_progres_kumul
     var labels = <?= json_encode($mingguKeData) ?>; // Data label Minggu ke-
     var rencanaKumulatifData = <?= json_encode($rencanaKumulatifData) ?>; // Data rencana kumulatif
     var realisasiKumulatifData = <?= json_encode($realisasiKumulatifData) ?>; // Data realisasi kumulatif
+    
+    //untuk diubah jadi gambar
+    
+    //var imgData = canvas.toDataURL('image/png');
+
+    //url untuk js
+    const PUBLICURL = '<?= PUBLICURL ?>';
+    const ID_PROJEK = '<?= $data['id_projek'] ?>';
 </script>
 
 <script src="<?= PUBLICURL ?>/assets/js/laporan_harian_list.js"></script>
