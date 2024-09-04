@@ -132,4 +132,105 @@ class Rekap_db_model{
 
         return $this->db->resultSet();
     }
+
+    public function prepareChartCuaca($dataCuaca)
+    {
+        $data['cuaca'] = $dataCuaca;
+
+        $timeIntervals = [
+            '11:00          ', '00:00        01:00', ' ', '02:00
+            
+            
+    03:00',
+            '
+            
+04:00',' ', '        05:00', '07:00      06:00',
+            ' ', ' 
+            
+            08:00', '               10:00
+            
+            
+            09:00 ', ''
+        ];
+
+        $index = 0; // Inisialisasi indeks untuk array timeIntervals
+
+        // Bagi data menjadi 6 kelompok, setiap kelompok berisi 4 baris data
+        $chunks = array_chunk($data['cuaca'], 12);
+
+        // Menyimpan setiap chunk dalam array
+        $chunksArray = [];
+        foreach ($chunks as $index => $chunk) {
+            $chunksArray["chunk_" . ($index + 1)] = $chunk;
+        }
+        // Sekarang Anda bisa menggunakan array $chunksArray['chunk_1'], $chunksArray['chunk_2'], dst.
+
+        // Mengolah chunk untuk dataPoints
+        $dataPoints1 = [];
+        foreach ($chunksArray['chunk_1'] as $row) {
+            if ($row['kondisi'] === 'cerah') {
+                $color = '#FF9705';
+            } elseif ($row['kondisi'] === 'gerimis') {
+                $color = '#B1B1B1';
+            } else { // Asumsikan kondisi ketiga adalah 'mendung'
+                $color = '#7C7C7C';
+            }
+            $dataPoints1[] = [
+                'y' => 100 / count($chunksArray['chunk_1']), // Mengasumsikan distribusi merata
+                'name' => $timeIntervals[$index], // Mengambil interval waktu dari array
+                'color' => $color,
+                'exploded'=> true
+            ];
+
+            $index++; // Increment indeks
+            if ($index >= count($timeIntervals)) { // Reset indeks jika melebihi jumlah interval
+                $index = 0;
+            }
+        }
+
+        $dataPoints2 = [];
+        foreach ($chunksArray['chunk_2'] as $row) {
+            if ($row['kondisi'] === 'cerah') {
+                $color = '#FF9705';
+            } elseif ($row['kondisi'] === 'gerimis') {
+                $color = '#B1B1B1';
+            } else { // Asumsikan kondisi ketiga adalah 'mendung'
+                $color = '#7C7C7C';
+            }
+            $dataPoints2[] = [
+                'y' => 100 / count($chunksArray['chunk_2']), // Mengasumsikan distribusi merata
+                'name' => $timeIntervals[$index], // Mengambil interval waktu dari array
+                'color' => $color,
+                'exploded'=> true
+            ];
+
+            $index++; // Increment indeks
+            if ($index >= count($timeIntervals)) { // Reset indeks jika melebihi jumlah interval
+                $index = 0;
+            }
+        }
+
+        /* 
+        $dataPoints2 = [];
+        foreach ($chunksArray['chunk_2'] as $row) {
+            $color = $row['kondisi'] === 'cerah' ? 'lightblue' : 'lightgrey';
+            $dataPoints2[] = [
+                'y' => 100 / count($chunksArray['chunk_2']), // Mengasumsikan distribusi merata
+                'name' => $row['jam_mulai'] . ' - ' . $row['jam_selesai'],
+                'color' => $color,
+                'exploded'=> true
+            ];
+        */
+
+        // Encode data ke JSON untuk digunakan di JavaScript
+        $dataPointsJson1 = json_encode($dataPoints1);
+        $dataPointsJson2 = json_encode($dataPoints2);
+        ?>
+
+        <script>
+            const dataPointsJson1 = <?= $dataPointsJson1 ?>;
+            const dataPointsJson2 = <?= $dataPointsJson2 ?>;
+        </script>
+        <?php
+    }
 }

@@ -16,97 +16,7 @@
     }
 </style>
 
-<?php
 
-$timeIntervals = [
-    '11:00          ', '00:00        01:00', ' ', '02:00
-    
-    
-    03:00',
-    '
-    
-04:00',' ', '      05:00', '07:00        06:00',
-    ' ', ' 
-    
-    08:00', '      10:00
-    
-    
-    09:00 ', ''
-];
-
-$index = 0; // Inisialisasi indeks untuk array timeIntervals
-
-// Bagi data menjadi 6 kelompok, setiap kelompok berisi 4 baris data
-$chunks = array_chunk($data['cuaca'], 12);
-
-// Menyimpan setiap chunk dalam array
-$chunksArray = [];
-foreach ($chunks as $index => $chunk) {
-    $chunksArray["chunk_" . ($index + 1)] = $chunk;
-}
-// Sekarang Anda bisa menggunakan array $chunksArray['chunk_1'], $chunksArray['chunk_2'], dst.
-
-// Mengolah chunk untuk dataPoints
-$dataPoints1 = [];
-foreach ($chunksArray['chunk_1'] as $row) {
-    if ($row['kondisi'] === 'cerah') {
-        $color = '#FF9705';
-    } elseif ($row['kondisi'] === 'gerimis') {
-        $color = '#B1B1B1';
-    } else { // Asumsikan kondisi ketiga adalah 'mendung'
-        $color = '#7C7C7C';
-    }
-    $dataPoints1[] = [
-        'y' => 100 / count($chunksArray['chunk_1']), // Mengasumsikan distribusi merata
-        'name' => $timeIntervals[$index], // Mengambil interval waktu dari array
-        'color' => $color,
-        'exploded'=> true
-    ];
-
-    $index++; // Increment indeks
-    if ($index >= count($timeIntervals)) { // Reset indeks jika melebihi jumlah interval
-        $index = 0;
-    }
-}
-
-$dataPoints2 = [];
-foreach ($chunksArray['chunk_2'] as $row) {
-    if ($row['kondisi'] === 'cerah') {
-        $color = '#FF9705';
-    } elseif ($row['kondisi'] === 'gerimis') {
-        $color = '#B1B1B1';
-    } else { // Asumsikan kondisi ketiga adalah 'mendung'
-        $color = '#7C7C7C';
-    }
-    $dataPoints2[] = [
-        'y' => 100 / count($chunksArray['chunk_2']), // Mengasumsikan distribusi merata
-        'name' => $timeIntervals[$index], // Mengambil interval waktu dari array
-        'color' => $color,
-        'exploded'=> true
-    ];
-
-    $index++; // Increment indeks
-    if ($index >= count($timeIntervals)) { // Reset indeks jika melebihi jumlah interval
-        $index = 0;
-    }
-}
-
-/* 
-$dataPoints2 = [];
-foreach ($chunksArray['chunk_2'] as $row) {
-    $color = $row['kondisi'] === 'cerah' ? 'lightblue' : 'lightgrey';
-    $dataPoints2[] = [
-        'y' => 100 / count($chunksArray['chunk_2']), // Mengasumsikan distribusi merata
-        'name' => $row['jam_mulai'] . ' - ' . $row['jam_selesai'],
-        'color' => $color,
-        'exploded'=> true
-    ];
-*/
-
-// Encode data ke JSON untuk digunakan di JavaScript
-    $dataPointsJson1 = json_encode($dataPoints1);
-    $dataPointsJson2 = json_encode($dataPoints2);
-?>
 
 <div class="container">
 <div class="card mt-3">
@@ -280,77 +190,7 @@ foreach ($chunksArray['chunk_2'] as $row) {
 </div>
     
         <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            // Fungsi untuk mengonfigurasi dan membuat chart
-            function createChart(chartId, dataPoints) {
-                const canvas = document.getElementById(chartId);
-                if (!canvas) {
-                    console.error(`Canvas with ID ${chartId} not found.`);
-                    return;
-                }
-
-                const labels = dataPoints.map(point => point.name);
-                const data = dataPoints.map(point => point.y);
-                const backgroundColors = dataPoints.map(point => point.color);
-
-                const chartData = {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Data Cuaca Harian',
-                        data: data,
-                        backgroundColor: backgroundColors,
-                        hoverOffset: 4,
-                    }]
-                };
-
-                const config = {
-                    type: 'pie',
-                    data: chartData,
-                    options: {
-                        layout: {
-                            padding: {
-                                top:50,
-                                bottom: 50,
-                                left: 60,
-                                right: 60,
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false,
-                                position: 'top',
-                            },
-                            tooltip: {
-                                enabled: false, // Menonaktifkan tooltip
-                            },
-                            datalabels: {
-                                color: '#000',
-                                anchor: 'end',
-                                align: 'end',
-                                formatter: (value, context) => {
-                                    return context.chart.data.labels[context.dataIndex];
-                                },
-                                font: {
-                                    size: 14 // Ukuran font label datalabels
-                                },
-                                padding: 5, // Menambahkan jarak antara label dan chart
-                            },
-                        }
-                    },
-                    plugins: [ChartDataLabels],
-                };
-
-                new Chart(canvas.getContext('2d'), config);
-            }
-
-            // Ambil data dari PHP
-            const dataPoints1 = <?php echo $dataPointsJson1; ?>;
-            const dataPoints2 = <?php echo $dataPointsJson2; ?>;
-
-            // Buat chart
-            createChart('chart1', dataPoints1);
-            createChart('chart2', dataPoints2);
-        });
+        z
     </script>
 
 </div>
@@ -360,3 +200,5 @@ foreach ($chunksArray['chunk_2'] as $row) {
         <i class='bx bxs-chevrons-left'></i>Kembali
     </a>
 </div>
+
+<script src="<?= PUBLICURL ?>/assets/js/piechart_cuaca_lh.js"></script>
