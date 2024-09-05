@@ -84,8 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Tampilkan hasil respon
             const result = await response.text();
             console.log(result);
+            
         } else {
             console.error('One or both charts are not defined.');
         }
+        /*
+        // Bersihkan chart untuk menghemat memori
+        myChart1.destroy();
+        myChart2.destroy();
+
+        // Bersihkan variabel dan objek
+        delete window.dataPointsJson1;
+        delete window.dataPointsJson2;
+        delete window.PUBLICURL;
+        delete window.ID_PROJEK;
+        */
     }, 1000); // Menunggu 1 detik
 });

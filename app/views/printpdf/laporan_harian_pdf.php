@@ -32,9 +32,19 @@ body {
         height: 50px;
     }
 
-.image-rekap {
+.cuaca-img {
         width: 200px; /* Sesuaikan dengan ukuran yang diinginkan */
-        height: 100px;
+        height: 200px;
+    }
+
+.legend-img {
+        width: 271px; /* Sesuaikan dengan ukuran yang diinginkan */
+        height: 20px;
+    }
+
+.image-rekap {
+        width: 400px; /* Sesuaikan dengan ukuran yang diinginkan */
+        height: 200px;
     }
 
 .image-caption {
@@ -103,20 +113,19 @@ th {
 .legend-container {
     text-align: center;
     margin-top: 50px;
+    display: inline-block;
 }
+
 .legend-item {
-    display: inline-flex;
-    align-items: center;
+    display: flex; /* Menggunakan flexbox untuk menyelaraskan gambar dan teks secara vertikal */
+    vertical-align: middle;
     margin-right: 20px;
 }
-.legend-color {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    border-radius: 50%;
-}
+
 .legend-label {
-    font-size: 14px;
+    font-size: 11px;
+    vertical-align: middle;
+    padding-botom: 5px; /* Menambahkan padding atas untuk sedikit menyesuaikan posisi teks jika diperlukan */
 }
 
 .card-header{
@@ -171,10 +180,10 @@ h3 {
 <body>
     <table>
         <tr>
-            <td class="text-center" style="border-right: 0px;">
+            <td class="text-center" style="border-right: 0px;" style="border-right: none;">
                 <img src="' . PUBLICURL . '/assets/img/uploads/logo/'.  $data['logo']['logo_pemilik'] . '" alt="logo_pemilik" class="img-fluid custom-img">
             </td>
-            <td class="text-center">
+            <td class="text-center" style="border-left: none;">
                 ' . $data['logo']['pemilik_pekerjaan'] . '
             </td>
             <td class="text-center">
@@ -222,6 +231,31 @@ h3 {
     
     <div class="section-title">A. Cuaca</div>
     
+    <div>
+        <table style="width: 100%;">
+            <tr>
+                <td class="text-center col-6" style="border-right: none; border-bottom: none;">
+                    AM (Malam s/d Siang)
+                    <br>
+                    <img src="' . PUBLICURL . '/assets/img/operator/laporan_harian/piechart_cuaca/piechart_AM_'. $data['id_projek'] .'_'. $data['id_laporan_harian'] .'.png" alt="logo_kontrakor" class="img-fluid cuaca-img">
+                </td>
+                <td class="text-center col-6" style="border-left: none; border-bottom: none;">
+                    PM (Siang s/d Malam)
+                    <br>
+                    <img src="' . PUBLICURL . '/assets/img/operator/laporan_harian/piechart_cuaca/piechart_PM_'. $data['id_projek'] .'_'. $data['id_laporan_harian'] .'.png" alt="logo_kontrakor" class="img-fluid cuaca-img">
+                </td>
+            </tr>
+            <tr style="vertical-align: middle;">
+                <td colspan="2" class="text-center" style="border-top: none; vertical-align: middle;">
+                    <div class="legend-container">
+                        <div class="legend-item">
+                            <img src="' . PUBLICURL . '/assets/img/operator/laporan_harian/piechart_cuaca/legend.png" alt="Cerah" class="img-fluid legend-img">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
         
     <div class="section-title">B. Rincian Pekerjaan</div>
     <div>
@@ -480,5 +514,7 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_right' => 10,
 ]);
 
+$filename = 'dailyreport_'. $data['id_laporan_harian'] .'_'. $data['id_projek'] .'.pdf';
+
 $mpdf->WriteHTML($html);
-$mpdf->Output('output.pdf', 'I');
+$mpdf->Output($filename, 'I');

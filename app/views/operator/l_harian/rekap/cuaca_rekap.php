@@ -196,4 +196,4 @@
     </a>
 </div>
 
-<script src="<?= PUBLICURL ?>/assets/js/piechart_cuaca_lh.js"></script>
+<script src="<?= PUBLICURL ?>/assets/js/piechart_cuaca_lh_save.js"></script>
