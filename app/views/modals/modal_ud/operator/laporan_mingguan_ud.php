@@ -12,20 +12,15 @@
                         <div class="container-fluid px-4">
                             <div class="form-group">
                                 <h5 for="id_projek">Minggu Ke-<?= $minggu_ke?></h5>
-                                <label for="tanggal_laporan" class="form-label">Tanggal Awal Minggu :</label>
+                                <label for="tanggal_laporan" class="form-label">Tanggal Awal Minggu  :</label>
                                 <strong><?= $laporan['tanggal_mulai'] ?></strong><br>
                                 <label for="tanggal_laporan" class="form-label">Tanggal Akhir Minggu :</label>
-                                <strong><?= $laporan['tanggal_selesai'] ?></strong>
+                                <strong><?= $laporan['tanggal_selesai'] ?></strong><br>
                             </div>
                             <br>
-                            <div class="form-group">
-                                <label for="rencana_progres">Rencana Progres:</label>
-
-                                <div class="input-group">
-                                    <input type="number" id="rencana_progres" name="rencana_progres" class="form-control" value="<?= $laporan['rencana_progres'] ?>" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
-                                    <span class="input-group-text">%</span>
-                                </div>
-                            </div>
+                            <label for="jumlah_bahan" class="form-label">Rencana Progres      :</label>
+                            <h6 for="jumlah_bahan" class="form-label text-dark"><strong><?=$laporan['rencana_progres'] ?>%</strong></h6>
+                            <input type="hidden" id="realisasi_progres" name="rencana_progres" class="form-control" value="<?= $laporan['rencana_progres'] ?>">
                             <br>
                             <div class="form-group">
                                 <label for="realisasi_progres">Realisasi Progres:</label>

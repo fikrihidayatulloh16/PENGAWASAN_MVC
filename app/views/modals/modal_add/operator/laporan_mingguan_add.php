@@ -45,28 +45,6 @@
                                 </select>
                             </div>
                             <br>
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="rencana_progres">Rencana Progres:</label>
-
-                                    <div class="input-group">
-                                        <input type="number" id="rencana_progres" name="rencana_progres" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="realisasi_progres">Realisasi Progres:</label>
-
-                                    <div class="input-group">
-                                        <input type="number" id="realisasi_progres" name="realisasi_progres" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
                             <div class="form-group">
                                 <label for="tanggal_mulai">Tanggal Mulai:</label>
                                 <h5 id="tanggal_mulai">-</h5>
@@ -78,6 +56,32 @@
                                 <h5 id="tanggal_selesai">-</h5>
                                 <input type="hidden" name="tanggal_selesai" id="hidden_tanggal_selesai">
                             </div>
+                            <br>
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <label for="rencana_progres">Rencana Progres:</label>
+
+                                    <div class="input-group">
+                                        <input type="number" id="rencana_progres" name="rencana_progres" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <!--
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <label for="realisasi_progres">Realisasi Progres:</label>
+
+                                    <div class="input-group">
+                                        <input type="number" id="realisasi_progres" name="realisasi_progres" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                                        -->
+                            
+                            
 
                             
                         </div>

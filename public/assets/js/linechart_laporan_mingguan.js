@@ -14,7 +14,7 @@ var ctx = document.getElementById('myChart').getContext('2d');
                 {
                     label: 'Realisasi Progres Kumulatif',
                     data: realisasiKumulatifData,  // Pastikan variabel 'realisasiKumulatifData' didefinisikan
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderColor: 'darkblue',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     fill: false,
                     tension: 0.1
