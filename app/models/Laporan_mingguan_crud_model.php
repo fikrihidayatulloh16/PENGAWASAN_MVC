@@ -93,6 +93,10 @@
         $rencana_progres = $_POST['rencana_progres'];
         $realisasi_progres = $_POST['realisasi_progres'];
 
+        if ($realisasi_progres == 0){
+            $realisasi_progres = NULL;
+        }
+
         $this->db->query("UPDATE laporan_mingguan SET rencana_progres = :rencana_progres, realisasi_progres = :realisasi_progres WHERE id_laporan_mingguan = :id_laporan_mingguan");
         
         $this->db->bind(':rencana_progres', $rencana_progres);

@@ -1,7 +1,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
-<?php include "../app/views/modals/modal_add/operator/laporan_mingguan_add.php"; ?>
+<?php
+
+use Mpdf\Tag\Em;
+
+ include "../app/views/modals/modal_add/operator/laporan_mingguan_add.php"; ?>
 
 <!-- Menampilkan flash -->
 <?php Flasher::flash() ?>
@@ -66,8 +70,8 @@
                     </td>
                     <td class="text-center align-middle"><?= $laporan['rencana_progres'] ?>%</td>
                     <td class="text-center align-middle"><?= $laporan['rencana_progres_kumulatif'] ?>%</td>
-                    <td class="text-center align-middle"><?= $laporan['realisasi_progres'] ?>%</td>
-                    <td class="text-center align-middle"><?= $laporan['realisasi_progres_kumulatif'] ?>%</td>
+                    <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres']) ? $laporan['realisasi_progres'] . '%' : '-' ?></td>
+                    <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_kumulatif']) ? $laporan['realisasi_progres_kumulatif'] . '%' : '-' ?></td>
                     <td>
                         <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#lm-hapus-<?=$laporan['id_laporan_mingguan']?>">
                             <i class='bx bx-trash'></i>

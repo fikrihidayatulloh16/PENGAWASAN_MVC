@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-secondary text-white">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Laporan Harian</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Ubah Laporan Mingguan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= PUBLICURL ?>/laporanmingguan/ubah_laporan_mingguan/<?= $data['id_projek'] ?>" method="POST">
@@ -18,15 +18,22 @@
                                 <strong><?= $laporan['tanggal_selesai'] ?></strong><br>
                             </div>
                             <br>
-                            <label for="jumlah_bahan" class="form-label">Rencana Progres      :</label>
-                            <h6 for="jumlah_bahan" class="form-label text-dark"><strong><?=$laporan['rencana_progres'] ?>%</strong></h6>
-                            <input type="hidden" id="realisasi_progres" name="rencana_progres" class="form-control" value="<?= $laporan['rencana_progres'] ?>">
+                            <div class="form-group">
+                                <label for="jumlah_bahan" class="form-label">Rencana Progres      :</label>
+                                <h6 for="jumlah_bahan" class="form-label text-dark"><strong><?=$laporan['rencana_progres'] ?>%</strong></h6>
+                                <input type="hidden" id="realisasi_progres" name="rencana_progres" class="form-control" value="<?= $laporan['rencana_progres'] ?>">
+                                <!--
+                                <label for="jumlah_bahan" class="form-label">Laporan harian Tanggal : ?=$laporan['tanggal'] ?></label>
+                                <label for="jumlah_bahan" class="form-label">Progres Kumulatif  : </label>
+                                <h6 for="jumlah_bahan" class="form-label text-dark"><strong> ?=$laporan['total_progres'] ?>%</strong></h6>
+                                -->
+                            </div>
                             <br>
                             <div class="form-group">
                                 <label for="realisasi_progres">Realisasi Progres:</label>
 
                                 <div class="input-group">
-                                    <input type="number" id="realisasi_progres" name="realisasi_progres" class="form-control" value="<?= $laporan['realisasi_progres'] ?>" placeholder="Masukkan Persentase" step="0.1" min="0" max="100">
+                                    <input type="number" id="realisasi_progres" name="realisasi_progres" class="form-control" value="<?= !empty($laporan['realisasi_progres']) ? $laporan['realisasi_progres'] : $laporan['total_progres'] ?>" placeholder="Masukkan Persentase" step="0.1" min="0" max="100">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>

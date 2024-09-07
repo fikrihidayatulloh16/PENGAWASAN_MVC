@@ -42,9 +42,11 @@
     {
         $id_projek = $data['id_projek'];
 
-        $this->db->query("SELECT * 
-                            FROM laporan_mingguan
-                            WHERE id_projek = :id_projek
+        $this->db->query("SELECT lm.id_laporan_mingguan, lm.id_projek, lm.tanggal_mulai, lm.tanggal_selesai, lh.tanggal, lm.rencana_progres, lm.rencana_progres_kumulatif, lm.realisasi_progres, lh.total_progres, lm.realisasi_progres_kumulatif
+                            FROM laporan_mingguan AS lm
+                            LEFT JOIN laporan_harian AS lh ON lh.tanggal = lm.tanggal_selesai
+                            AND lh.id_projek = lm.id_projek
+                            WHERE lm.id_projek = :id_projek
                             ORDER BY id_laporan_mingguan ASC");
 
         $this->db->bind('id_projek', $id_projek);
