@@ -66,7 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const chart2 = createChart('chart2', dataPointsJson2);
 
     // Tunggu hingga chart dirender sepenuhnya
+    console.log('Waiting for chart rendering...');
+
     setTimeout(async () => {
+        console.log('Timeout reached, starting pie chart save process...');
         // Pastikan chart sudah dirender
         if (chart1 && chart2) {
             const image1 = chart1.toBase64Image();
@@ -84,20 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Tampilkan hasil respon
             const result = await response.text();
             console.log(result);
-            
+            //console.log(document.getElementById("pdf"));  // Memastikan elemen ditemukan
+
+            // Jika penyimpanan berhasil, tampilkan elemen dengan id="pdf"
+            if (response.ok) {
+                document.getElementById("pdf").style.display = "block";
+            } else {
+                console.error('Error saving pie chart');
+            }
         } else {
             console.error('One or both charts are not defined.');
         }
-        /*
-        // Bersihkan chart untuk menghemat memori
-        myChart1.destroy();
-        myChart2.destroy();
-
-        // Bersihkan variabel dan objek
-        delete window.dataPointsJson1;
-        delete window.dataPointsJson2;
-        delete window.PUBLICURL;
-        delete window.ID_PROJEK;
-        */
     }, 1000); // Menunggu 1 detik
 });

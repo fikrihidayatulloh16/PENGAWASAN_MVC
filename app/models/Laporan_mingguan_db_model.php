@@ -38,8 +38,10 @@
         return $weeks;
     }
 
-    public function getAllLMByIdProjek($id_projek)
+    public function getAllLMByIdProjek($data)
     {
+        $id_projek = $data['id_projek'];
+
         $this->db->query("SELECT * 
                             FROM laporan_mingguan
                             WHERE id_projek = :id_projek

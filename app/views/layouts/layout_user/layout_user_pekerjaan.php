@@ -7,24 +7,29 @@ $navItems = '
             LAPORAN HARIAN
         </a>
     </li>
+    
     <li class="nav-item">
         <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
         LAPORAN MINGGUAN
     </a>
     </li>
+
     <li class="nav-item">
         <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
         LAPORAN BULANAN
     </a>
     </li>
+
     <li class="nav-item">
         <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
         LAPORAN EKSEKUTIF
     </a>
     </li> 
+
     <li class="nav-item">
-          <a class="nav-link nav-head ms-lg-3 text-center" aria-current="page" href="' . PUBLICURL . '/printpdf/mpdf/' . $data['id_projek'] . '/' . $data['id_laporan_harian'] . '/' . $data['laporan']['tanggal'] . '" target="_blank">UNDUH
-          <i class="bx bx-download"></i>
+          <a class="nav-link nav-head ms-lg-3 text-center" id="pdf" aria-current="page" href="' . PUBLICURL . '/printpdf/mpdf/' . $data['id_projek'] . '/' . $data['id_laporan_harian'] . '/' . $data['laporan']['tanggal'] . '" target="_blank" style="display: none;">
+            UNDUH
+            <i class="bx bx-download"></i>
           </a>
     </li>
     <li class="nav-item">

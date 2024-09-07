@@ -23,7 +23,8 @@ $navItems = '
     </a>
     </li>
         <li class="nav-item">
-          <a class="nav-link nav-head ms-lg-3 text-center" aria-current="page" href="' . PUBLICURL . '/printpdf/mpdf/' . $data['id_projek'] . '/' . $data['id_laporan_harian'] . '/' . $data['laporan']['tanggal'] . '" target="_blank">UNDUH
+          <a class="nav-link nav-head ms-lg-3 text-center" aria-current="page" id="pdf" href="' . PUBLICURL . '/printpdf/mpdf/' . $data['id_projek'] . '/' . $data['id_laporan_harian'] . '/' . $data['laporan']['tanggal'] . '" target="_blank" style="display: none;">
+          UNDUH
           <i class="bx bx-download"></i>
           </a>
       </li>
