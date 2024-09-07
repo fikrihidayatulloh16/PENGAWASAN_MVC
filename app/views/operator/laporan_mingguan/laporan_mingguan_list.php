@@ -3,8 +3,6 @@
 
 <?php
 
-use Mpdf\Tag\Em;
-
  include "../app/views/modals/modal_add/operator/laporan_mingguan_add.php"; ?>
 
 <!-- Menampilkan flash -->
