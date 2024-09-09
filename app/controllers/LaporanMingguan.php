@@ -60,6 +60,32 @@ class LaporanMingguan extends Controller {
             $this->view('layouts/footer_b');
         }
 
+        public function weekly_laporan_harian($id_projek, $tanggal_mulai, $tanggal_selesai, $minggu_ke)
+        {
+            //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
+        $data['judul_laporan'] = 'LAPORAN MINGGUAN';
+        $data['id_projek'] = $id_projek;
+        $data['tanggal_mulai'] = $tanggal_mulai;
+        $data['tanggal_selesai'] = $tanggal_selesai;
+        $data['minggu_ke'] = $minggu_ke;
+        $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
+        $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
+
+        // Memanggil fungsi dateConverter
+        $data['tanggal_mulai_projek'] = $this->model('Operator_crud_model')->dateConverter($data['projek']['tanggal_mulai']);
+        $data['tanggal_selesai_projek'] = $this->model('Operator_crud_model')->dateConverter($data['projek']['tanggal_selesai']);
+        $data['tambahan_waktu_projek'] = !empty($data['projek']['tambahan_waktu']) ? $this->model('Operator_crud_model')->dateConverter($data['projek']['tambahan_waktu']) : '-';
+
+        $data['laporan'] = $this->model('Laporan_mingguan_db_model')->get7LHByLMDate($data);
+        $data['all_tanggal_laporan'] = $this->model('Operator_db_model')->getAllTanggalLaporanByIprojek($id_projek);
+        $data['m_pekerjaan'] = $this->model('Operator_db_model')->getMPekerjaanByIdProjek($id_projek);
+        $data['mp_sp'] = $this->model('Operator_db_model')->getMPSPByIdProjek($id_projek);
+        $this->view('layouts/layout_operator/layout_operator_laporan', $data);
+        $this->view('operator/l_harian/rekap/logo_rekap', $data);
+        $this->view('operator/laporan_mingguan/weekly_laporan_harian', $data);
+        $this->view('layouts/footer_b');
+        }
+
     public function tambah_laporan_mingguan($id_projek) {
 
         if ($this->model('Laporan_mingguan_crud_model')->tambahLaporanMinguan($_POST) > 0) {

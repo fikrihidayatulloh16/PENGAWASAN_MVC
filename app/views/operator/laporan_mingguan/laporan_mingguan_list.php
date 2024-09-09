@@ -64,7 +64,7 @@
                 <tr>
                     <td class="text-center align-middle nomor"></td>
                     <td class="text-center align-middle" style="color: #464F60;">
-                        <a href="">Minggu ke-<?= $minggu_ke ?></a>
+                        <a href="<?= PUBLICURL ?>/laporanmingguan/weekly_laporan_harian/<?= $data['projek']['id_projek']?>/<?= $laporan['tanggal_mulai'] ?>/<?= $laporan['tanggal_selesai'] ?>/<?= $minggu_ke?>">Minggu ke-<?= $minggu_ke ?></a>
                     </td>
                     <td class="text-center align-middle"><?= $laporan['rencana_progres'] ?>%</td>
                     <td class="text-center align-middle"><?= $laporan['rencana_progres_kumulatif'] ?>%</td>
