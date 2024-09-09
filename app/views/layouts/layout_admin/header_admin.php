@@ -311,6 +311,31 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person"></i><span>Perencanaan</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="<?= PUBLICURL ?>/admin/m_laporan_mingguan/<?= $data['id_projek'] ?>">
+              <i class="bi bi-circle"></i><span>Laporan Mingguan</span>
+            </a>
+          </li>
+          <!--
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Operator</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>User</span>
+            </a>
+          </li>
+          -->
+        </ul>
+      </li> <!-- End User Nav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="<?= PUBLICURL ?>/admin/tim_pengawas/<?= $data['id_projek'] ?>">
           <i class="bi bi-person"></i>
           <span>Tim Pengawas</span>
@@ -324,28 +349,7 @@
         </a>
       </li><!-- End User Page Nav -->
 
-      <!--<li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-person"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Admin</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Operator</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>User</span>
-            </a>
-          </li>
-        </ul>
-      </li> End User Nav -->
+      
     </ul>
 
   </aside><!-- End Sidebar-->

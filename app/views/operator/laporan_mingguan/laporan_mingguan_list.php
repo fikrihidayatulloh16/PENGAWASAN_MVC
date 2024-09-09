@@ -22,9 +22,11 @@
                 </select>
             </form>
             </div>
+            <!--
             <button type="button" class="btn btn-tambah" data-bs-toggle="modal" data-bs-target="#lm_tambah">
                 <i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>ADD
             </button>
+            -->
         </h5>
 
     <div class="table-responsive">
@@ -71,9 +73,11 @@
                     <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres']) ? $laporan['realisasi_progres'] . '%' : '-' ?></td>
                     <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_kumulatif']) ? $laporan['realisasi_progres_kumulatif'] . '%' : '-' ?></td>
                     <td>
+                        <!--
                         <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#lm-hapus-<?=$laporan['id_laporan_mingguan']?>">
                             <i class='bx bx-trash'></i>
                         </a>
+                        -->
                         <a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lm-ubah-<?=$laporan['id_laporan_mingguan']?>">
                             <i class='bx bx-edit-alt'></i>
                         </a>

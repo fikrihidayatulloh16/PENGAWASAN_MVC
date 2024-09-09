@@ -97,10 +97,10 @@ class LaporanMingguan extends Controller {
             //update progres kumulatif
             $this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
 
-            header('Location: ' . PUBLICURL . '/laporanmingguan/laporan_mingguan_list/'. $id_projek);
+            header('Location: ' . PUBLICURL . '/admin/m_laporan_mingguan/'. $id_projek);
             exit;
         } else {
-            header('Location: ' . PUBLICURL . '/laporanmingguan/laporan_mingguan_list/'. $id_projek);
+            header('Location: ' . PUBLICURL . '/admin/m_laporan_mingguan/'. $id_projek);
             exit;
         }
     }
@@ -132,10 +132,10 @@ class LaporanMingguan extends Controller {
             //update progres kumulatif
             $this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
 
-            header('Location: ' . PUBLICURL . '/laporanmingguan/laporan_mingguan_list/'. $id_projek);
+            header('Location: ' . PUBLICURL . '/admin/m_laporan_mingguan/'. $id_projek);
             exit;
         } else {
-            header('Location: ' . PUBLICURL . '/laporanmingguan/laporan_mingguan_list/'. $id_projek);
+            header('Location: ' . PUBLICURL . '/admin/m_laporan_mingguan/'. $id_projek);
             exit;
         }
     }

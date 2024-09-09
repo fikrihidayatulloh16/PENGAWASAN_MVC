@@ -86,6 +86,35 @@ class Admin extends Controller {
         $this->view('layouts/layout_admin/footer_admin');
     }
 
+    public function m_laporan_mingguan($id_projek) {
+        
+        //inisiasi data untuk header
+        $data['judul_laporan'] = 'LAPORAN MINGGUAN';
+        $data['id_projek'] = $id_projek;
+        $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
+        $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
+
+        // Memanggil fungsi dateConverter
+        $data['tanggal_mulai_projek'] = $this->model('Operator_crud_model')->dateConverter($data['projek']['tanggal_mulai']);
+        $data['tanggal_selesai_projek'] = $this->model('Operator_crud_model')->dateConverter($data['projek']['tanggal_selesai']);
+        $data['tambahan_waktu_projek'] = !empty($data['projek']['tambahan_waktu']) ? $this->model('Operator_crud_model')->dateConverter($data['projek']['tambahan_waktu']) : '-';
+
+        $data['all_laporan_harian'] = $this->model('Operator_db_model')->getAllLaporanByIdProjek($id_projek);
+        $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
+        $data['all_tanggal_laporan'] = $this->model('Operator_db_model')->getAllTanggalLaporanByIprojek($id_projek);
+        $data['all_minggu'] = $this->model('Laporan_mingguan_crud_model')->getWeeklyRanges($data['projek']);
+
+        $data['m_pekerjaan'] = $this->model('Operator_db_model')->getMPekerjaanByIdProjek($id_projek);
+        $data['mp_sp'] = $this->model('Operator_db_model')->getMPSPByIdProjek($id_projek);
+
+        //update progres kumulatif
+        $this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
+
+        $this->view('layouts/layout_admin/header_admin', $data);
+        $this->view('admin/m_laporan_mingguan', $data);
+        $this->view('layouts/layout_admin/footer_admin');
+    }
+
     public function tim_pengawas($id_projek)
     {
         $data['id_projek'] = $id_projek;
@@ -269,6 +298,23 @@ class Admin extends Controller {
         header('Location: ' . PUBLICURL . '/admin/m_bahan/' . $data['id_projek']);
         exit;
 
+    }
+
+    public function ubah_laporan_mingguan($id_projek) {
+        $result = $this->model('Laporan_mingguan_crud_model')->ubahLaporanMingguan($_POST);
+
+        if ($result === TRUE) {
+            Flasher::setFlash('Sukses', 'Data Laporan Mingguan Berhasil Diubah', 'success');
+
+            //update progres kumulatif
+            $this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
+
+            header('Location: ' . PUBLICURL . '/admin/m_laporan_mingguan/'. $id_projek);
+            exit;
+        } else {
+            header('Location: ' . PUBLICURL . '/admin/m_laporan_mingguan/'. $id_projek);
+            exit;
+        }
     }
 
     public function tambah_user_admin($id_projek)

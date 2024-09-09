@@ -139,6 +139,12 @@
             } else {
                 $realisasiKumulatif += $laporan['realisasi_progres'];
             }
+
+            if ($laporan['rencana_progres'] == 0) {
+                $rencanaKumulatif = NULL;
+            } else {
+                $rencanaKumulatif += $laporan['rencana_progres'];
+            }
             $rencanaKumulatif += $laporan['rencana_progres'];
             
             // Update progres kumulatif dalam tabel
