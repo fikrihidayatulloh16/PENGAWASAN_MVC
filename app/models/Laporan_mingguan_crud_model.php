@@ -145,7 +145,7 @@
             } else {
                 $rencanaKumulatif += $laporan['rencana_progres'];
             }
-            $rencanaKumulatif += $laporan['rencana_progres'];
+            //$rencanaKumulatif += $laporan['rencana_progres'];
             
             // Update progres kumulatif dalam tabel
             $this->db->query("UPDATE laporan_mingguan SET 

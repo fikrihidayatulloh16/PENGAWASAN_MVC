@@ -48,7 +48,7 @@
                             LEFT JOIN laporan_harian AS lh ON lh.tanggal = lm.tanggal_selesai
                             AND lh.id_projek = lm.id_projek
                             WHERE lm.id_projek = :id_projek
-                            ORDER BY tanggal_selesai ASC");
+                            ORDER BY tanggal_mulai ASC");
 
         $this->db->bind('id_projek', $id_projek);
         return $this->db->resultSet();
