@@ -78,12 +78,13 @@ class LaporanMingguan extends Controller {
 
         $data['laporan'] = $this->model('Laporan_mingguan_db_model')->get7LHByLMDate($data);
         $data['all_tanggal_laporan'] = $this->model('Operator_db_model')->getAllTanggalLaporanByIprojek($id_projek);
+        $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
         $data['m_pekerjaan'] = $this->model('Operator_db_model')->getMPekerjaanByIdProjek($id_projek);
         $data['mp_sp'] = $this->model('Operator_db_model')->getMPSPByIdProjek($id_projek);
         $this->view('layouts/layout_operator/layout_operator_laporan', $data);
         $this->view('operator/l_harian/rekap/logo_rekap', $data);
         $this->view('operator/laporan_mingguan/weekly_laporan_harian', $data);
-        $this->view('layouts/footer_b');
+        $this->view('layouts/footer_a');
         }
 
     public function tambah_laporan_mingguan($id_projek) {
