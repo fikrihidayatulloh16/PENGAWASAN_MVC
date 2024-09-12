@@ -25,7 +25,7 @@ var ctx = document.getElementById('myChart').getContext('2d');
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'bottom',
+                        position: 'top',
                     },
                     title: {
                         display: false,
@@ -35,7 +35,8 @@ var ctx = document.getElementById('myChart').getContext('2d');
                     x: {
                         title: {
                             display: true,
-                            text: 'Minggu Ke-'
+                            text: 'Minggu Ke-',
+                            position: 'left',
                         }
                     },
                     y: {

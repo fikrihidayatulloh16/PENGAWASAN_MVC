@@ -73,4 +73,10 @@
         $this->db->bind('id_projek', $id_projek);
         return $this->db->resultSet();
     }
+
+    public function getAllCCO()
+    {
+        $CCO = 1;
+        
+    }
  }

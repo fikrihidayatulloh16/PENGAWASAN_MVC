@@ -22,11 +22,11 @@
                 </select>
             </form>
             </div>
-            <!--
+            
             <button type="button" class="btn btn-tambah" data-bs-toggle="modal" data-bs-target="#lm_tambah">
-                <i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>ADD
+                <i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>CREATE CCO-
             </button>
-            -->
+            
         </h5>
 
     <div class="table-responsive">
@@ -39,6 +39,7 @@
                     <th>Rencana Progres Kumulatif<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(3)"></i></th>
                     <th>Realisasi Progres<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(4)"></i></th>
                     <th>Realisasi Progress Kumulatif<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(5)"></i></th>
+                    <th>Deviasi<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(6)"></i></th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -72,6 +73,13 @@
                     <td class="text-center align-middle"><?= $laporan['rencana_progres_kumulatif'] ?>%</td>
                     <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres']) ? $laporan['realisasi_progres'] . '%' : '-' ?></td>
                     <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_kumulatif']) ? $laporan['realisasi_progres_kumulatif'] . '%' : '-' ?></td>
+                    <td class="text-center align-middle 
+                        <?php 
+                        $deviasi = $laporan['realisasi_progres_kumulatif'] - $laporan['rencana_progres_kumulatif']; 
+                        echo ($deviasi >= 0) ? 'text-bright-green' : 'text-red'; 
+                        ?>">
+                        <?= $deviasi >= 0 ? '+'. $deviasi : $deviasi ?>
+                    </td>
                     <td>
                         <!--
                         <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#lm-hapus-<?=$laporan['id_laporan_mingguan']?>">

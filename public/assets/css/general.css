@@ -99,7 +99,15 @@ h3 {
 h4 {
     font-size: 22px;
     font-weight: bold;
+}
 
+/* warna font untuk kolom deviasi */
+.text-bright-green {
+    color: green; /* Hijau cerah */
+}
+
+.text-red {
+    color: #FF0000; /* Merah */
 }
 
 /* Gaya untuk navbar */
