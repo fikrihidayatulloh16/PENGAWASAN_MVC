@@ -4,34 +4,6 @@ $nomor = 1;
 $id_sub = array_column($data['pekerjaan_harian'], null);
 ?>
 
-<style>
-.nav-tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    white-space: nowrap;
-}
-
-.nav-tabs .nav-link {
-    background-color: white;
-    color: black;
-    border-color: grey;
-}
-
-.nav-tabs .nav-link.active {
-    background-color: grey;
-    color: white;
-}
-
-.nav-tabs::-webkit-scrollbar { 
-    display: none; /* Safari and Chrome */
-}
-
-.nav-tabs .nav-link:not(.active):hover {
-    background-color: grey;
-    color: white;
-}
-</style>
-
 <div class="container">
     <nav>
         <div class="nav nav-tabs mt-3" id="nav-tab" role="tablist">

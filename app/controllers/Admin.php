@@ -100,6 +100,7 @@ class Admin extends Controller {
         $data['tambahan_waktu_projek'] = !empty($data['projek']['tambahan_waktu']) ? $this->model('Operator_crud_model')->dateConverter($data['projek']['tambahan_waktu']) : '-';
 
         $data['all_laporan_harian'] = $this->model('Operator_db_model')->getAllLaporanByIdProjek($id_projek);
+        $data['max_cco'] = $this->model('Laporan_mingguan_db_model')->getMaxCCO($data);
         $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
         $data['all_tanggal_laporan'] = $this->model('Operator_db_model')->getAllTanggalLaporanByIprojek($id_projek);
         $data['all_minggu'] = $this->model('Laporan_mingguan_crud_model')->getWeeklyRanges($data['projek']);
@@ -108,7 +109,7 @@ class Admin extends Controller {
         $data['mp_sp'] = $this->model('Operator_db_model')->getMPSPByIdProjek($id_projek);
 
         //update progres kumulatif
-        $this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
+        $this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($data);
 
         $this->view('layouts/layout_admin/header_admin', $data);
         $this->view('admin/m_laporan_mingguan', $data);
@@ -301,13 +302,15 @@ class Admin extends Controller {
     }
 
     public function ubah_laporan_mingguan($id_projek) {
+        $data['id_projek'] = $id_projek;
+        $data['max_cco'] = $_POST['cco'];
         $result = $this->model('Laporan_mingguan_crud_model')->ubahLaporanMingguan($_POST);
 
         if ($result === TRUE) {
             Flasher::setFlash('Sukses', 'Data Laporan Mingguan Berhasil Diubah', 'success');
 
             //update progres kumulatif
-            $this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
+            $this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($data);
 
             header('Location: ' . PUBLICURL . '/admin/m_laporan_mingguan/'. $id_projek);
             exit;

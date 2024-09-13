@@ -47,15 +47,38 @@
         return $weeks;
     }
 
+    public function getAllWeekData($data)
+    {
+        $mingguKeData = [];
+        $tanggal_mulai_projek = new DateTime($data['projek']['tanggal_mulai']);
+
+        foreach ($data['all_laporan_mingguan'][$data['max_cco']] as $laporan) { 
+            $tanggal_laporan = new DateTime($laporan['tanggal_mulai']);
+
+            // Menghitung selisih hari antara tanggal laporan dan tanggal mulai proyek
+            $selisih_hari = $tanggal_mulai_projek->diff($tanggal_laporan)->days;
+
+            $minggu_ke = floor($selisih_hari / 7) + 1;
+                
+            $mingguKeData[] = $minggu_ke;
+        }
+        return $mingguKeData;
+    }
+
     public function tambahLaporanMinguan()
     {
         //mengambil data dari input
+        $cco = $_POST['cco'];
         $id_projek = $_POST['id_projek'];
         $id_laporan_mingguan = $_POST['id_laporan_mingguan'];
-        $rencana_progres = $_POST['rencana_progres'];
-        $realisasi_progres = $_POST['realisasi_progres'];
+        $rencana_progres = $_POST['rencana_progres_cco'.$cco];
+        $realisasi_progres = $_POST['realisasi_progres_cco'.$cco];
         $tanggal_mulai = $_POST['tanggal_mulai'];
         $tanggal_selesai = $_POST['tanggal_selesai'];
+
+        if ($realisasi_progres == 0){
+            $realisasi_progres = NULL;
+        }
 
         // Cek apakah sudah ada laporan harian dengan tanggal yang sama untuk proyek yang sama
         $cek_tanggal_query = "SELECT COUNT(*) as count FROM laporan_mingguan WHERE id_projek = :id_projek AND tanggal_mulai = :tanggal_mulai";
@@ -72,8 +95,8 @@
         }
 
         // Insert ke tabel mingguan
-        $laporan_mingguan_query = "INSERT INTO laporan_mingguan (id_laporan_mingguan, id_projek, tanggal_mulai, tanggal_selesai, rencana_progres, realisasi_progres) 
-                                    VALUES (:id_laporan_mingguan, :id_projek, :tanggal_mulai, :tanggal_selesai, :rencana_progres, :realisasi_progres)";
+        $laporan_mingguan_query = 'INSERT INTO laporan_mingguan (id_laporan_mingguan, id_projek, tanggal_mulai, tanggal_selesai, rencana_progres_cco'. $cco .', , realisasi_progres_cco'. $cco .') 
+                                    VALUES (:id_laporan_mingguan, :id_projek, :tanggal_mulai, :tanggal_selesai, :rencana_progres, :realisasi_progres)';
 
         $this->db->query($laporan_mingguan_query);
         $this->db->bind(':id_laporan_mingguan', $id_laporan_mingguan);
@@ -90,14 +113,16 @@
     public function ubahLaporanMingguan()
     {
         $id_laporan_mingguan = $_POST['id_laporan_mingguan'];
-        $rencana_progres = $_POST['rencana_progres'];
-        $realisasi_progres = $_POST['realisasi_progres'];
+        $cco = $_POST['cco'];
+        $rencana_progres = $_POST['rencana_progres_cco'.$cco];
+        $realisasi_progres = $_POST['realisasi_progres_cco'.$cco];
 
-        if ($realisasi_progres == 0){
+        if ($realisasi_progres == 0 || $realisasi_progres == NULL){
             $realisasi_progres = NULL;
         }
 
-        $this->db->query("UPDATE laporan_mingguan SET rencana_progres = :rencana_progres, realisasi_progres = :realisasi_progres WHERE id_laporan_mingguan = :id_laporan_mingguan");
+        $this->db->query('UPDATE laporan_mingguan SET rencana_progres_cco'. $cco .' = :rencana_progres, realisasi_progres_cco'. $cco .' = :realisasi_progres 
+                            WHERE id_laporan_mingguan = :id_laporan_mingguan');
         
         $this->db->bind(':rencana_progres', $rencana_progres);
         $this->db->bind(':realisasi_progres', $realisasi_progres);
@@ -121,8 +146,11 @@
         return TRUE;
     }
 
-    public function ubahProgresKumulatifLM($id_projek)
+    public function ubahProgresKumulatifLM($data)
     {
+        $id_projek = $data['id_projek'];
+        $max_cco = $data['max_cco'];
+
         // Ambil semua data laporan mingguan berdasarkan id_projek
         $this->db->query("SELECT * FROM laporan_mingguan WHERE id_projek = :id_projek ORDER BY tanggal_mulai ASC");
         $this->db->bind(':id_projek', $id_projek);
@@ -134,24 +162,23 @@
         // Iterasi melalui setiap laporan mingguan dan update progres kumulatif
         foreach ($laporanMingguan as $laporan) {
             // Tambahkan progres minggu ini ke dalam kumulatif
-            if ($laporan['realisasi_progres'] == 0) {
+            if ($laporan['realisasi_progres_cco'.$max_cco] == 0) {
                 $realisasiKumulatif = NULL;
             } else {
-                $realisasiKumulatif += $laporan['realisasi_progres'];
+                $realisasiKumulatif += $laporan['realisasi_progres_cco'.$max_cco];
             }
 
-            if ($laporan['rencana_progres'] == 0) {
+            if ($laporan['rencana_progres_cco'.$max_cco] == 0) {
                 $rencanaKumulatif = NULL;
             } else {
-                $rencanaKumulatif += $laporan['rencana_progres'];
+                $rencanaKumulatif += $laporan['rencana_progres_cco'.$max_cco];
             }
-            //$rencanaKumulatif += $laporan['rencana_progres'];
             
             // Update progres kumulatif dalam tabel
-            $this->db->query("UPDATE laporan_mingguan SET 
-                rencana_progres_kumulatif = :rencana_kumulatif, 
-                realisasi_progres_kumulatif = :realisasi_kumulatif
-                WHERE id_laporan_mingguan = :id_laporan_mingguan");
+            $this->db->query('UPDATE laporan_mingguan SET 
+                rencana_progres_kumulatif_cco'. $max_cco .' = :rencana_kumulatif, 
+                realisasi_progres_kumulatif_cco'. $max_cco .' = :realisasi_kumulatif
+                WHERE id_laporan_mingguan = :id_laporan_mingguan');
 
             $this->db->bind(':rencana_kumulatif', $rencanaKumulatif);
             $this->db->bind(':realisasi_kumulatif', $realisasiKumulatif);
@@ -162,6 +189,45 @@
 
         return true;
     }
+
+    public function tambahCCO($data)
+{
+    $max_cco = $data['max_cco'];   // Maximum CCO value
+    $new_cco = $max_cco + 1;       // Increment the CCO value
+    $id_projek = $data['id_projek']; // Project ID
+
+    // Ensure that $new_cco does not exceed the limit (assuming 10 is the limit)
+    if ($new_cco <= 10) {
+        // Loop through the weekly reports for the current max_cco
+        foreach ($data['all_laporan_mingguan'][$max_cco] as $laporan) {
+            // Check if the required progress data exists
+            if (!empty($laporan['rencana_progres_cco'.$max_cco]) || !empty($laporan['realisasi_progres_cco'.$max_cco])) {
+                // Update the cumulative progress for the new CCO in the database
+                $this->db->query('UPDATE laporan_mingguan SET 
+                    rencana_progres_cco' . $new_cco . ' = :rencana_progres, 
+                    rencana_progres_kumulatif_cco' . $new_cco . ' = :rencana_kumulatif, 
+                    realisasi_progres_cco' . $new_cco . ' = :realisasi_progres,
+                    realisasi_progres_kumulatif_cco' . $new_cco . ' = :realisasi_kumulatif
+                    WHERE id_laporan_mingguan = :id_laporan_mingguan');
+
+                // Bind parameters using the existing data from the previous CCO
+                $this->db->bind(':rencana_progres', $laporan['rencana_progres_cco' . $max_cco]);
+                $this->db->bind(':rencana_kumulatif', $laporan['rencana_progres_kumulatif_cco' . $max_cco]);
+                $this->db->bind(':realisasi_progres', $laporan['realisasi_progres_cco' . $max_cco]);
+                $this->db->bind(':realisasi_kumulatif', $laporan['realisasi_progres_kumulatif_cco' . $max_cco]);
+                $this->db->bind(':id_laporan_mingguan', $laporan['id_laporan_mingguan']);
+
+                // Execute the query
+                $this->db->execute();
+            }
+        }
+
+        return true;  // Success response
+    }
+
+    return false;  // Return false if CCO exceeds the limit or no data
+}
+
 
     public function saveLineChart($data)
     {

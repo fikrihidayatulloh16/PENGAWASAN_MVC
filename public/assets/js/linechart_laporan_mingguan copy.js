@@ -14,7 +14,7 @@ var ctx = document.getElementById('myChart').getContext('2d');
                 {
                     label: 'Realisasi Progres Kumulatif',
                     data: realisasiKumulatifData,  // Pastikan variabel 'realisasiKumulatifData' didefinisikan
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderColor: 'darkblue',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     fill: false,
                     tension: 0.1
@@ -25,7 +25,7 @@ var ctx = document.getElementById('myChart').getContext('2d');
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'bottom',
+                        position: 'top',
                     },
                     title: {
                         display: false,
@@ -35,7 +35,8 @@ var ctx = document.getElementById('myChart').getContext('2d');
                     x: {
                         title: {
                             display: true,
-                            text: 'Minggu Ke-'
+                            text: 'Minggu Ke-',
+                            position: 'left',
                         }
                     },
                     y: {
@@ -55,9 +56,11 @@ var ctx = document.getElementById('myChart').getContext('2d');
         // Konversi chart menjadi gambar base64
         setTimeout(async () => {
             const image = myChart.toBase64Image();
+
+            
             
             // Kirim gambar ke server
-            const response = await fetch(publicUrl + '/laporanmingguan/save_linechart/' + IdProjek, {
+            const response = await fetch(`${PUBLICURL}/laporanmingguan/save_linechart/${ID_PROJEK}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

@@ -1,4 +1,4 @@
-<div class="modal fade" id="lm-ubah-<?= $laporan['id_laporan_mingguan'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="lm-ubah-<?=$index?>-<?= $laporan['id_laporan_mingguan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -7,6 +7,7 @@
             </div>
             <form action="<?= PUBLICURL ?>/admin/ubah_laporan_mingguan/<?= $data['id_projek'] ?>" method="POST">
                 <input type="hidden" name="id_laporan_mingguan" value="<?=$laporan['id_laporan_mingguan']?>">
+                <input type="hidden" name="cco" value="<?=$data['max_cco']?>">
                 <div class="modal-body">
                     <div class="mb-3">
                         <div class="container-fluid px-4">
@@ -21,7 +22,7 @@
                             <div class="form-group">
                                 <label for="jumlah_bahan" class="form-label">Realisasi Progres      :</label>
                                 <h6 for="jumlah_bahan" class="form-label text-dark"><strong><?= !empty($laporan['realisasi_progres']) ? $laporan['realisasi_progres'] . '%': 'Data Belum Diisi' ?></strong></h6>
-                                <input type="hidden" id="realisasi_progres" name="realisasi_progres" class="form-control" value="<?= !empty($laporan['realisasi_progres']) ? $laporan['realisasi_progres'] : 'Belum Diisi' ?>">
+                                <input type="hidden" id="realisasi_progres" name="realisasi_progres_cco<?= $data['max_cco'] ?>" class="form-control" value="<?= !empty($laporan['realisasi_progres_cco'.$data['max_cco']]) ? $laporan['realisasi_progres_cco'.$data['max_cco']] : NULL ?>">
                                 <!--
                                 <label for="jumlah_bahan" class="form-label">Laporan harian Tanggal : ?=$laporan['tanggal'] ?></label>
                                 <label for="jumlah_bahan" class="form-label">Progres Kumulatif  : </label>
@@ -33,7 +34,7 @@
                                 <label for="rencana_progres">Rencana Progres  :</label>
 
                                 <div class="input-group">
-                                    <input type="number" id="rencana_progres" name="rencana_progres" class="form-control" value="<?= !empty($laporan['rencana_progres']) ? $laporan['rencana_progres'] : 'Belum Diisi' ?>" placeholder="Masukkan Persentase" step="0.1" min="0" max="100">
+                                    <input type="number" id="rencana_progres" name="rencana_progres_cco<?= $data['max_cco'] ?>" class="form-control" value="<?= !empty($laporan['rencana_progres_cco'.$data['max_cco']]) ? $laporan['rencana_progres_cco'.$data['max_cco']] : 'Belum Diisi' ?>" placeholder="Masukkan Persentase" step="0.1" min="0" max="100">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>
@@ -50,7 +51,7 @@
 </div>
 
 <!-- Hapus laporan harian-->
-<div class="modal fade" id="lm-hapus-<?=$laporan['id_laporan_mingguan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="lm-hapus-<?=$index?>-<?= $laporan['id_laporan_mingguan']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-danger text-light">
@@ -59,7 +60,7 @@
             </div>
 
             <form action="<?= PUBLICURL ?>/laporanmingguan/hapus_laporan_mingguan/<?= $data['id_projek'] ?>" method="POST">
-                <input type="hidden" name="id_laporan_mingguan" value="<?=$laporan['id_laporan_mingguan']?>">
+                <input type="hidden" name="id_laporan_mingguan" value="<?= $laporan['id_laporan_mingguan']?>">
 
                 <div class="modal-body">
                     <div class="mb-3">
@@ -81,4 +82,3 @@
         </div>
     </div>
 </div>
-                            

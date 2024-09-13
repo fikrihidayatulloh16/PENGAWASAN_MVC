@@ -45,7 +45,7 @@
         
           <!-- Table with stripped rows -->
           <div class="table-responsive">
-            <table class="table datatable ">
+            <table class="table datatable">
               <thead>
                 <tr>
                     <th>ID</th>

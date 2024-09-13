@@ -12,11 +12,13 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Laporan Mingguan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= PUBLICURL ?>/laporanmingguan/tambah_laporan_mingguan/<?= $data['id_projek'] ?>" method="POST">
+
+            <form action="<?= PUBLICURL ?>/laporanmingguan/tambah_laporan_mingguan/<?= $data['id_projek'] ?>/<?= $data['max_cco'] ?>" method="POST">
                 <!-- membuat id baru -->
                 <?php $new_id = $this->model('Admin_crud_model')->newIdGenerator('id_laporan_mingguan', 'laporan_mingguan', 'LM', 6); ?>
                 <input type="hidden" name="id_projek" value="<?= $data['id_projek'] ?>">
                 <input type="hidden" name="id_laporan_mingguan" value="<?= $new_id ?>">
+                <input type="hidden" name="cco" value="<?= $data['max_cco'] ?>">
                 <div class="modal-body">
                     <div class="mb-3">
                         <div class="container-fluid px-4">
@@ -62,7 +64,7 @@
                                     <label for="rencana_progres">Rencana Progres:</label>
 
                                     <div class="input-group">
-                                        <input type="number" id="rencana_progres" name="rencana_progres" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
+                                        <input type="number" id="rencana_progres" name="rencana_progres_cco<?= $data['max_cco'] ?>" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
                                         <span class="input-group-text">%</span>
                                     </div>
                                 </div>

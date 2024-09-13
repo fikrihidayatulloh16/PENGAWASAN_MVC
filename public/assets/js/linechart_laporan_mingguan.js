@@ -1,74 +1,88 @@
-var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
+document.addEventListener('DOMContentLoaded', function () {
+    let myChart;
+
+    // Pastikan data tersedia
+    if (typeof labels !== 'undefined' && typeof rencanaKumulatifData !== 'undefined' && typeof realisasiKumulatifData !== 'undefined') {
+        // Function to create datasets from provided data and labels
+        function createDataset(label, data, color) {
+            return {
+                label: label,
+                data: data,
+                borderColor: color,
+                backgroundColor: color + '0.2',
+                fill: false
+            };
+        }
+
+        // Prepare datasets for Chart.js
+        const datasets = [];
+        
+        // Create datasets for rencana kumulatif
+        Object.keys(rencanaKumulatifData).forEach((key) => {
+            datasets.push(createDataset('Rencana Kumulatif - ' + key, rencanaKumulatifData[key], `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`));
+        });
+
+        // Create datasets for realisasi kumulatif
+        Object.keys(realisasiKumulatifData).forEach((key) => {
+            datasets.push(createDataset('Realisasi Kumulatif - ' + key, realisasiKumulatifData[key], `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`));
+        });
+
+        // Data untuk chart
+        const data = {
+            labels: labels, // Gunakan label dari PHP
+            datasets: datasets
+        };
+
+        // Konfigurasi chart
+        const config = {
             type: 'line',
-            data: {
-                labels: labels,  // Pastikan variabel 'labels' didefinisikan
-                datasets: [{
-                    label: 'Rencana Progres Kumulatif',
-                    data: rencanaKumulatifData,  // Pastikan variabel 'rencanaKumulatifData' didefinisikan
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                    tension: 0.1
-                },
-                {
-                    label: 'Realisasi Progres Kumulatif',
-                    data: realisasiKumulatifData,  // Pastikan variabel 'realisasiKumulatifData' didefinisikan
-                    borderColor: 'darkblue',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: false,
-                    tension: 0.1
-                }]
-            },
+            data: data,
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    },
-                    title: {
-                        display: false,
-                    }
-                },
                 scales: {
                     x: {
                         title: {
                             display: true,
-                            text: 'Minggu Ke-',
-                            position: 'left',
+                            text: 'Minggu ke-'
                         }
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'Progres Kumulatif (%)'
+                            text: 'Nilai'
                         },
                         beginAtZero: true
                     }
                 }
             }
-        });
+        };
 
-        // Tunggu hingga chart dirender sepenuhnya
-        myChart.update();
+        // Buat chart
+        myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
 
         // Konversi chart menjadi gambar base64
         setTimeout(async () => {
-            const image = myChart.toBase64Image();
+            if (myChart) {
+                const image = myChart.toBase64Image();
 
-            
-            
-            // Kirim gambar ke server
-            const response = await fetch(`${PUBLICURL}/laporanmingguan/save_linechart/${ID_PROJEK}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `image=${encodeURIComponent(image)}`
-            });
+                // Kirim gambar ke server
+                const response = await fetch(`${PUBLICURL}/laporanmingguan/save_linechart/${ID_PROJEK}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `image=${encodeURIComponent(image)}`
+                });
 
-            // Tampilkan hasil respon
-            const result = await response.text();
-            console.log(result);
+                // Tampilkan hasil respon
+                const result = await response.text();
+                console.log(result);
+            }
         }, 1000); // Menunggu 1 detik
+    } else {
+        console.error('Data untuk chart tidak tersedia.');
+    }
+});

@@ -1,3 +1,12 @@
+/* warna font untuk kolom deviasi */
+.text-bright-green {
+    color: rgb(5, 185, 14) !important; /* Hijau cerah */ 
+}
+
+.text-red {
+    color: #FF0000 !important; /* Merah */
+}
+
 @media (min-width: 1024px) {
     .kolom-aksi {
         columns: 5;

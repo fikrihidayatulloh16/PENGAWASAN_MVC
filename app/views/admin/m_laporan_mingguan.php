@@ -25,7 +25,10 @@
   </nav>
 </div><!-- End Page Title -->
 
-<?php include "../app/views/modals/modal_add/operator/laporan_mingguan_add.php"; ?>
+<?php 
+$next_cco = $data['max_cco'] + 1;
+include "../app/views/modals/modal_add/operator/laporan_mingguan_add.php"; 
+?>
 
 <section class="section dashboard">
   <div class="row">
@@ -36,6 +39,7 @@
             <h4 class="project-title mt-3">Projek :</h4>
             <h4 class="project-title"><?= $data['projek']['nama_projek'] ?></h4>
           </div>
+
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="card-title">Data Master Laporan Mingguan</h5>
             <button type="button" class="btn btn-success btn-tambah" data-bs-toggle="modal" data-bs-target="#lm_tambah">
@@ -43,76 +47,132 @@
             </button>
           </div>
         
-          <!-- Table with stripped rows -->
-          <div class="table-responsive">
-            <table class="table datatable ">
-              <thead>
-                <tr>
-                    <!--<th>No.</th>-->
-                    <th>Minggu Ke-</th>
-                    <th>Rencana Progres</th>
-                    <th>Rencana Progres Kumulatif</th>
-                    <th>Realisasi Progres</th>
-                    <th>Realisasi Progress Kumulatif</th>
-                    <th class="col-2">Aksi</th>
-                </tr>
-              </thead>
+          <!-- Tab -->
+          <nav>
+              <div class="nav nav-tabs mt-3" id="nav-tab" role="tablist">
+                  <?php foreach ($data['all_laporan_mingguan'] as $index => $laporan): ?>
+                      <button class="nav-link <?= $index === 0 ? 'active' : '' ?>" 
+                          id="nav-cco<?= $index ?>-tab" 
+                          data-bs-toggle="tab" 
+                          data-bs-target="#nav-cco<?= $index ?>" 
+                          type="button" 
+                          role="tab" 
+                          aria-controls="nav-cco<?= $index ?>" 
+                          aria-selected="<?= $index === 0 ? 'true' : 'false' ?>">
+                          <?= $index == 0 ? 'Kontrak Awal' : 'CCO' . $index ?>
+                      </button>
+                  <?php endforeach; ?>
+              </div>
+          </nav>
 
-              <tbody>
-                <?php
-                $nomor = 1;
-                if (!empty($data['all_laporan_mingguan'])):
-                    $tanggal_mulai_projek = new DateTime($data['projek']['tanggal_mulai']);
-                    $mingguKeData = [];
-                    $rencanaKumulatifData = [];
-                    $realisasiKumulatifData = [];
-                    foreach ($data['all_laporan_mingguan'] as $laporan) :    
-                        $tanggal_laporan = new DateTime($laporan['tanggal_mulai']);
+          <div class="tab-content background-color-dark" id="nav-tabContent">
+        <?php 
+        $mingguKeData = [];
+        $rencanaKumulatifData = [];
+        $realisasiKumulatifData = [];
+        
+        foreach ($data['all_laporan_mingguan'] as $index => $laporan): ?>
+            <div class="tab-pane fade <?= $index === 0 ? 'show active' : '' ?>" id="nav-cco<?= $index ?>" role="tabpanel" aria-labelledby="nav-cco<?= $index ?>-tab">
+                <h4 class="ms-5 mt-5"><?= $index == 0 ? 'Kontrak Awal' : 'CCO' . $index ?></h4>
+                <?php //include '../app/views/modals/modal_add/operator/pekerjaan_harian_lh_add.php' ?>
 
-                        // Menghitung selisih hari antara tanggal laporan dan tanggal mulai proyek
-                        $selisih_hari = $tanggal_mulai_projek->diff($tanggal_laporan)->days;
+                <!--
+                <hr class="separator mt-5">
 
-                        $minggu_ke = floor($selisih_hari / 7) + 1;
+                <div class="container">
+                    <div class="card mt-3">
+                        <h5 class="card-header">
+                            <div>
+                                Keterangan : ?= !empty($sub['keterangan']) ? $sub['keterangan'] : 'Tidak ada Keterangan!' ?>
+                            </div>
 
-                        // Mengumpulkan data untuk chart
-                        $mingguKeData[] = "$minggu_ke";
-                        $rencanaKumulatifData[] = $laporan['rencana_progres_kumulatif'];
-                        $realisasiKumulatifData[] = $laporan['realisasi_progres_kumulatif'];
-                ?>
-                <tr>
-                     <!--<td class="text-center align-middle nomor"></td>-->
-                    <td class="text-center align-middle" style="color: #464F60;">
-                        <a>Minggu ke-<?= $minggu_ke ?></a>
-                    </td>
-                    <td class="text-center align-middle"><?= $laporan['rencana_progres'] ?>%</td>
-                    <td class="text-center align-middle"><?= $laporan['rencana_progres_kumulatif'] ?>%</td>
-                    <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres']) ? $laporan['realisasi_progres'] . '%' : '-' ?></td>
-                    <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_kumulatif']) ? $laporan['realisasi_progres_kumulatif'] . '%' : '-' ?></td>
-                    <td>
-                        <a href="#" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#lm-hapus-<?=$laporan['id_laporan_mingguan']?>">
-                            <i class='bx bxs-trash-alt' ></i><span class="span-aksi"> Delete</span>
-                        </a>
-                        <a href="#" class="btn btn-warning text-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#lm-ubah-<?=$laporan['id_laporan_mingguan']?>">
-                            <i class='bx bxs-edit-alt' > </i><span class="span-aksi">Edit</span>
-                        </a>
-                        <!--<a href=" ?= PUBLICURL ?>/printpdf/mpdf/ ?= $data['projek']['id_projek'] ?>/ ?= $laporan['id_laporan_mingguan'] ?>/ ?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>-->
-                    </td>
-                </tr>
-                <?php 
-                include "../app/views/modals/modal_ud/admin/laporan_mingguan_ud.php";
-                $nomor++; 
-                endforeach; 
-                else:
-                ?>
-                <tr>
-                    <td colspan="7" class="text-center">Tidak ada data Laporan Mingguan!</td>
-                </tr>
-                <?php endif; ?>
-            </tbody>
-            </table>
+                            <a class="btn btn-edit ms-2 mt-0" data-bs-toggle="modal" data-bs-target="#ph-keterangan-tambah- ?= $index ?>"><i class='bx bxs-edit-alt'></i>EDIT</a>
+                        </h5>
+                    </div>
+                </div>
+                -->
+                <hr class="separator mt-3">
+
+                <div class="card mt-100">
+                    <div class="table-responsive">
+                      <table class="table datatable" style="width: 100%;">
+                          <thead>
+                              <tr>
+                                  <th>No. </th>
+                                  <th>Minggu Ke-</th>
+                                  <th>Rencana Progres</th>
+                                  <th>Rencana Progres Kumulatif</th>
+                                  <th>Realisasi Progres</th>
+                                  <th>Realisasi Progress Kumulatif</th>
+                                  <th>Deviasi</th>
+                                  <th>Aksi</th>
+                              </tr>
+                          </thead>
+                          <tbody id="table-body">
+                              <?php
+                              $nomor = 1;
+                              if (!empty($data['all_laporan_mingguan'])):
+                                  $tanggal_mulai_projek = new DateTime($data['projek']['tanggal_mulai']);
+                                  foreach ($laporan as $laporan) :    
+                                      $tanggal_laporan = new DateTime($laporan['tanggal_mulai']);
+
+                                      // Menghitung selisih hari antara tanggal laporan dan tanggal mulai proyek
+                                      $selisih_hari = $tanggal_mulai_projek->diff($tanggal_laporan)->days;
+
+                                      $minggu_ke = floor($selisih_hari / 7) + 1;
+
+                                      // Mengumpulkan data untuk setiap CCO
+                                      // Simpan data dalam array
+                                      $ccoKey = 'cco' . $index;
+                                      $mingguKeData[$ccoKey][] = $minggu_ke;
+                                      $rencanaKumulatifData[$ccoKey][] = $laporan['rencana_progres_kumulatif_cco' . $index];
+                                      $realisasiKumulatifData[$ccoKey][] = $laporan['realisasi_progres_kumulatif_cco' . $index];
+                                      
+                              ?>
+                              <tr>
+                                  <td class="text-center align-middle"><?= $nomor ?></td>
+                                  <td class="text-center align-middle" style="color: #464F60;">
+                                      <a href="<?= PUBLICURL ?>/laporanmingguan/weekly_laporan_harian/<?= $data['projek']['id_projek']?>/<?= $laporan['tanggal_mulai'] ?>/<?= $laporan['tanggal_selesai'] ?>/<?= $minggu_ke?>">Minggu ke-<?= $minggu_ke ?></a>
+                                  </td>
+                                  <td class="text-center align-middle"><?= $laporan['rencana_progres_cco'. $index] ?>%</td>
+                                  <td class="text-center align-middle"><?= $laporan['rencana_progres_kumulatif_cco'. $index] ?>%</td>
+                                  <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_cco'. $index]) ? $laporan['realisasi_progres_cco'. $index] . '%' : '-' ?></td>
+                                  <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_kumulatif_cco'. $index]) ? $laporan['realisasi_progres_kumulatif_cco'. $index] . '%' : '-' ?></td>
+                                  <td class="text-center align-middle 
+                                      <?php 
+                                      $deviasi = $laporan['realisasi_progres_kumulatif_cco'. $index] - $laporan['rencana_progres_kumulatif_cco'. $index]; 
+                                      echo ($deviasi >= 0) ? 'text-bright-green' : 'text-red'; 
+                                      ?>">
+                                      <?= $deviasi >= 0 ? '+'. $deviasi : $deviasi ?>
+                                  </td>
+                                  <td>
+                                      <a href="#" class="btn btn-danger rounded-pill btn-aksi" data-bs-toggle="modal" data-bs-target="#lm-hapus-<?=$index?>-<?= $laporan['id_laporan_mingguan']?>">
+                                          <i class='bx bxs-trash-alt' ></i>
+                                      </a>
+                                      <a href="#" class="btn btn-warning btn-aksi rounded-pill mt-1" data-bs-toggle="modal" data-bs-target="#lm-ubah-<?=$index?>-<?= $laporan['id_laporan_mingguan']?>">
+                                      <i class='bx bxs-edit-alt'></i>
+                                      </a>
+                                      <!--<a href=" ?= PUBLICURL ?>/printpdf/mpdf/ ?= $data['projek']['id_projek'] ?>/ ?= $laporan['id_laporan_mingguan'] ?>/ ?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>-->
+                                  </td>
+                              </tr>
+                              <?php 
+                              include "../app/views/modals/modal_ud/admin/laporan_mingguan_ud.php";
+                              $nomor++; 
+                              endforeach; 
+                              else:
+                              ?>
+                              <tr>
+                                  <td colspan="7" class="text-center">Tidak ada data Laporan Mingguan!</td>
+                              </tr>
+                              <?php endif; ?>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+
           </div>
-          <!-- End Table with stripped rows -->
-
+      <?php endforeach; ?>
+  </div>
         </div>
       </div>
     </div>
