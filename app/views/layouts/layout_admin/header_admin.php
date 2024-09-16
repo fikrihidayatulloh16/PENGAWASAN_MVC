@@ -306,6 +306,12 @@
               <i class="bi bi-circle"></i><span>Bahan</span>
             </a>
           </li>
+
+          <li>
+            <a href="<?= PUBLICURL ?>/admin/m_cco/<?= $data['id_projek'] ?>">
+              <i class="bi bi-circle"></i><span>CCO Laporan Mingguan</span>
+            </a>
+          </li>
           
         </ul>
       </li><!-- End Components Nav -->
@@ -334,6 +340,13 @@
           -->
         </ul>
       </li> <!-- End User Nav -->
+
+      <li class="nav-item">
+        <a  class="nav-link collapsed" href="<?= PUBLICURL ?>/admin/m_cco/<?= $data['id_projek'] ?>">
+          <i class="bi bi-person"></i>
+          <span>CCO</span>
+        </a>
+      </li><!-- End User Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?= PUBLICURL ?>/admin/tim_pengawas/<?= $data['id_projek'] ?>">

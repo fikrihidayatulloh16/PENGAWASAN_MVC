@@ -116,6 +116,18 @@ class Admin extends Controller {
         $this->view('layouts/layout_admin/footer_admin');
     }
 
+    public function m_cco($id_projek)
+    {
+        $data['id_projek'] = $id_projek;
+        $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
+        $data['max_cco'] = $this->model('Laporan_mingguan_db_model')->getMaxCCO($data);
+        $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
+
+        $this->view('layouts/layout_admin/header_admin', $data);
+        $this->view('admin/m_cco', $data);
+        $this->view('layouts/layout_admin/footer_admin');
+    }
+
     public function tim_pengawas($id_projek)
     {
         $data['id_projek'] = $id_projek;
@@ -316,6 +328,27 @@ class Admin extends Controller {
             exit;
         } else {
             header('Location: ' . PUBLICURL . '/admin/m_laporan_mingguan/'. $id_projek);
+            exit;
+        }
+    }
+
+    public function hapus_cco($id_projek, $cco)
+    {
+        $data['max_cco'] = $cco;
+        $data['id_projek'] = $id_projek;
+        $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
+        $result = $this->model('Laporan_mingguan_crud_model')->hapusCCO($data);
+
+        if ($result === TRUE) {
+            Flasher::setFlash('Sukses', 'Data COO Terbaru Berhasil Dibuat', 'success');
+
+            //update progres kumulatif
+            //$this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
+
+            header('Location: ' . PUBLICURL . '/admin/m_cco/'. $id_projek);
+            exit;
+        } else {
+            header('Location: ' . PUBLICURL . '/admin/m_cco/'. $id_projek);
             exit;
         }
     }

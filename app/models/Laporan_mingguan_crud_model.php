@@ -191,42 +191,77 @@
     }
 
     public function tambahCCO($data)
-{
-    $max_cco = $data['max_cco'];   // Maximum CCO value
-    $new_cco = $max_cco + 1;       // Increment the CCO value
-    $id_projek = $data['id_projek']; // Project ID
+    {
+        $max_cco = $data['max_cco'];   // Maximum CCO value
+        $new_cco = $max_cco + 1;       // Increment the CCO value
+        $id_projek = $data['id_projek']; // Project ID
 
-    // Ensure that $new_cco does not exceed the limit (assuming 10 is the limit)
-    if ($new_cco <= 10) {
-        // Loop through the weekly reports for the current max_cco
-        foreach ($data['all_laporan_mingguan'][$max_cco] as $laporan) {
-            // Check if the required progress data exists
-            if (!empty($laporan['rencana_progres_cco'.$max_cco]) || !empty($laporan['realisasi_progres_cco'.$max_cco])) {
-                // Update the cumulative progress for the new CCO in the database
-                $this->db->query('UPDATE laporan_mingguan SET 
-                    rencana_progres_cco' . $new_cco . ' = :rencana_progres, 
-                    rencana_progres_kumulatif_cco' . $new_cco . ' = :rencana_kumulatif, 
-                    realisasi_progres_cco' . $new_cco . ' = :realisasi_progres,
-                    realisasi_progres_kumulatif_cco' . $new_cco . ' = :realisasi_kumulatif
-                    WHERE id_laporan_mingguan = :id_laporan_mingguan');
+        // Ensure that $new_cco does not exceed the limit (assuming 10 is the limit)
+        if ($new_cco <= 10) {
+            // Loop through the weekly reports for the current max_cco
+            foreach ($data['all_laporan_mingguan'][$max_cco] as $laporan) {
+                // Check if the required progress data exists
+                if (!empty($laporan['rencana_progres_cco'.$max_cco]) || !empty($laporan['realisasi_progres_cco'.$max_cco])) {
+                    // Update the cumulative progress for the new CCO in the database
+                    $this->db->query('UPDATE laporan_mingguan SET 
+                        rencana_progres_cco' . $new_cco . ' = :rencana_progres, 
+                        rencana_progres_kumulatif_cco' . $new_cco . ' = :rencana_kumulatif, 
+                        realisasi_progres_cco' . $new_cco . ' = :realisasi_progres,
+                        realisasi_progres_kumulatif_cco' . $new_cco . ' = :realisasi_kumulatif
+                        WHERE id_laporan_mingguan = :id_laporan_mingguan');
 
-                // Bind parameters using the existing data from the previous CCO
-                $this->db->bind(':rencana_progres', $laporan['rencana_progres_cco' . $max_cco]);
-                $this->db->bind(':rencana_kumulatif', $laporan['rencana_progres_kumulatif_cco' . $max_cco]);
-                $this->db->bind(':realisasi_progres', $laporan['realisasi_progres_cco' . $max_cco]);
-                $this->db->bind(':realisasi_kumulatif', $laporan['realisasi_progres_kumulatif_cco' . $max_cco]);
-                $this->db->bind(':id_laporan_mingguan', $laporan['id_laporan_mingguan']);
+                    // Bind parameters using the existing data from the previous CCO
+                    $this->db->bind(':rencana_progres', $laporan['rencana_progres_cco' . $max_cco]);
+                    $this->db->bind(':rencana_kumulatif', $laporan['rencana_progres_kumulatif_cco' . $max_cco]);
+                    $this->db->bind(':realisasi_progres', $laporan['realisasi_progres_cco' . $max_cco]);
+                    $this->db->bind(':realisasi_kumulatif', $laporan['realisasi_progres_kumulatif_cco' . $max_cco]);
+                    $this->db->bind(':id_laporan_mingguan', $laporan['id_laporan_mingguan']);
 
-                // Execute the query
-                $this->db->execute();
+                    // Execute the query
+                    $this->db->execute();
+                }
             }
+
+            return true;  // Success response
         }
 
-        return true;  // Success response
+        return false;  // Return false if CCO exceeds the limit or no data
     }
 
-    return false;  // Return false if CCO exceeds the limit or no data
-}
+    public function hapusCCO($data)
+    {
+        $cco = $data['max_cco'];   // Maximum CCO value
+        $null_value = NULL;   // Maximum CCO value
+        $id_projek = $data['id_projek']; // Project ID
+
+        // Ensure that $new_cco does not exceed the limit (assuming 10 is the limit)
+        if ($cco <= 10) {
+            // Loop through the weekly reports for the current max_cco
+            foreach ($data['all_laporan_mingguan'][$cco] as $laporan) {
+                // Check if the required progress data exists
+                if (!empty($laporan['rencana_progres_cco'.$cco]) || !empty($laporan['realisasi_progres_cco'.$cco])) {
+                    // Update the cumulative progress for the new CCO in the database
+                    $this->db->query('UPDATE laporan_mingguan SET 
+                        rencana_progres_cco' . $cco . ' = :null_value, 
+                        rencana_progres_kumulatif_cco' . $cco . ' = :null_value, 
+                        realisasi_progres_cco' . $cco . ' = :null_value,
+                        realisasi_progres_kumulatif_cco' . $cco . ' = :null_value
+                        WHERE id_laporan_mingguan = :id_laporan_mingguan');
+
+                    // Bind parameters using the existing data from the previous CCO
+                    $this->db->bind(':null_value', $null_value);
+                    $this->db->bind(':id_laporan_mingguan', $laporan['id_laporan_mingguan']);
+
+                    // Execute the query
+                    $this->db->execute();
+                }
+            }
+
+            return true;  // Success response
+        }
+
+        return false;  // Return false if CCO exceeds the limit or no data
+    }
 
 
     public function saveLineChart($data)
