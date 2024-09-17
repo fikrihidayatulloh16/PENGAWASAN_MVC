@@ -124,6 +124,14 @@ h4 {
     border-top: 4px solid #000000; /* Gunakan kode hex untuk hitam pekat */
 }
 
+.hidden-column {
+    display: none; /* Sembunyikan secara default */
+}
+
+.visible-column {
+    display: block; /* Tampilkan sebagai blok */
+}
+
 /*  */
 .nav-tabs {
     flex-wrap: nowrap;

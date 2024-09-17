@@ -72,7 +72,8 @@
         $id_projek = $_POST['id_projek'];
         $id_laporan_mingguan = $_POST['id_laporan_mingguan'];
         $rencana_progres = $_POST['rencana_progres_cco'.$cco];
-        $realisasi_progres = $_POST['realisasi_progres_cco'.$cco];
+        //$realisasi_progres = $_POST['realisasi_progres_cco'.$cco];
+        $realisasi_progres = NULL;
         $tanggal_mulai = $_POST['tanggal_mulai'];
         $tanggal_selesai = $_POST['tanggal_selesai'];
 
@@ -95,7 +96,7 @@
         }
 
         // Insert ke tabel mingguan
-        $laporan_mingguan_query = 'INSERT INTO laporan_mingguan (id_laporan_mingguan, id_projek, tanggal_mulai, tanggal_selesai, rencana_progres_cco'. $cco .', , realisasi_progres_cco'. $cco .') 
+        $laporan_mingguan_query = 'INSERT INTO laporan_mingguan (id_laporan_mingguan, id_projek, tanggal_mulai, tanggal_selesai, rencana_progres_cco'. $cco .', realisasi_progres_cco'. $cco .') 
                                     VALUES (:id_laporan_mingguan, :id_projek, :tanggal_mulai, :tanggal_selesai, :rencana_progres, :realisasi_progres)';
 
         $this->db->query($laporan_mingguan_query);
