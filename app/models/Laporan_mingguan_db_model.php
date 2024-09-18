@@ -51,7 +51,7 @@
         for ($cco = 0; $cco <= $max_cco; $cco++) {
             // Query untuk mendapatkan data laporan mingguan berdasarkan CCO yang berbeda
             $this->db->query('SELECT lm.id_laporan_mingguan, lm.id_projek, lm.tanggal_mulai, lm.tanggal_selesai, 
-                                    lh.tanggal, lm.rencana_progres_cco'. $cco .', lm.rencana_progres_kumulatif_cco'. $cco .', 
+                                    lh.tanggal, lm.tanggal_rubah_cco'. $cco .' ,lm.rencana_progres_cco'. $cco .', lm.rencana_progres_kumulatif_cco'. $cco .', 
                                     lm.realisasi_progres_cco'. $cco .', lm.realisasi_progres_kumulatif_cco'. $cco .', 
                                     lh.total_progres
                                     FROM laporan_mingguan AS lm

@@ -1,39 +1,52 @@
 document.addEventListener('DOMContentLoaded', function () {
     let myChart;
 
-    // Pastikan data tersedia
     if (typeof labels !== 'undefined' && typeof rencanaKumulatifData !== 'undefined' && typeof realisasiKumulatifData !== 'undefined') {
-        // Function to create datasets from provided data and labels
         function createDataset(label, data, color) {
             return {
                 label: label,
                 data: data,
                 borderColor: color,
-                backgroundColor: color + '0.2',
+                backgroundColor: color,
                 fill: false
             };
         }
 
-        // Prepare datasets for Chart.js
         const datasets = [];
-        
-        // Create datasets for rencana kumulatif
+
         Object.keys(rencanaKumulatifData).forEach((key) => {
-            datasets.push(createDataset('Rencana Kumulatif - ' + key, rencanaKumulatifData[key], `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`));
+            if (key == 'cco0') {
+                datasets.push(createDataset(
+                    'Rencana Kumulatif - Kontrak Awal',
+                    rencanaKumulatifData[key],
+                    `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`
+                ));
+            } else {
+                datasets.push(createDataset(
+                    'Rencana Kumulatif - ' + key,
+                    rencanaKumulatifData[key],
+                    `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`
+                ));
+            }
         });
 
-        // Create datasets for realisasi kumulatif
         Object.keys(realisasiKumulatifData).forEach((key) => {
-            datasets.push(createDataset('Realisasi Kumulatif - ' + key, realisasiKumulatifData[key], `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`));
+            if (key == 'cco0') {
+                datasets.push(createDataset(
+                    'Realisasi Kumulatif - Kontrak Awal',
+                    realisasiKumulatifData[key],
+                    `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`
+                ));
+            } else {
+                datasets.push(createDataset('Realisasi Kumulatif - ' + key, realisasiKumulatifData[key], `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`));
+            }
         });
 
-        // Data untuk chart
         const data = {
-            labels: labels, // Gunakan label dari PHP
+            labels: labels,
             datasets: datasets
         };
 
-        // Konfigurasi chart
         const config = {
             type: 'line',
             data: data,
@@ -53,22 +66,48 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'xy', 
+                        },
+                        zoom: {
+                            wheel: {
+                                enabled: true // Disable zoom with the mouse wheel
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'xy'
+                        }
+                    }
                 }
             }
         };
 
-        // Buat chart
-        myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
+        myChart = new Chart(document.getElementById('myChart'), config);
 
-        // Konversi chart menjadi gambar base64
+        // Zoom In Button
+        document.getElementById('zoomIn').addEventListener('click', function() {
+            myChart.zoom(1.2); // Zoom in by 20%
+        });
+
+        // Zoom Out Button
+        document.getElementById('zoomOut').addEventListener('click', function() {
+            myChart.zoom(0.8); // Zoom out by 20%
+        });
+
+        // Reset Zoom Button
+        document.getElementById('resetZoom').addEventListener('click', function() {
+            myChart.resetZoom(); // Reset the chart to original zoom level
+        });
+
         setTimeout(async () => {
             if (myChart) {
                 const image = myChart.toBase64Image();
 
-                // Kirim gambar ke server
                 const response = await fetch(`${PUBLICURL}/laporanmingguan/save_linechart/${ID_PROJEK}`, {
                     method: 'POST',
                     headers: {
@@ -77,11 +116,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     body: `image=${encodeURIComponent(image)}`
                 });
 
-                // Tampilkan hasil respon
                 const result = await response.text();
                 console.log(result);
             }
-        }, 1000); // Menunggu 1 detik
+        }, 1000);
     } else {
         console.error('Data untuk chart tidak tersedia.');
     }

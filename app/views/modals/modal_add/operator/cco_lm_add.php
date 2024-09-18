@@ -13,7 +13,12 @@
                         <strong>Peringatan!!</strong><br>
                         <p>Semua data yang di dalam <strong><?= $data['max_cco'] == 0 ? 'Kontrak Awal' : 'CCO' . $data['max_cco'] ?></strong> akan ditambahkan ke <strong>CCO<?= $next_cco ?></strong>
                         dan data pada <strong><?= $data['max_cco'] == 0 ? 'Kontrak Awal' : 'CCO' . $data['max_cco'] ?> tidak akan bisa diubah lagi!.</strong></p>
-                        <p>Apakah anda yakin ingin menambahkan data? </p><br>
+                        <p>Apakah anda yakin ingin menambahkan data? </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pekerjaan">Pilih Tanggal Pengesahan CCO :</label><br><br>
+                        <input type="date" id="tanggal" name="tanggal_selesai" class="form-control" required>
                     </div>
                 </div>
 
@@ -25,3 +30,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('dropdown').addEventListener('change', function () {
+        var selectedValue = this.value;
+        if (selectedValue) {
+            var dates = JSON.parse(selectedValue);
+            document.getElementById('tanggal_mulai').innerText = new Date(dates.start).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+            document.getElementById('tanggal_selesai').innerText = new Date(dates.end).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            // Set the hidden input values
+            document.getElementById('hidden_tanggal_mulai').value = dates.start;
+            document.getElementById('hidden_tanggal_selesai').value = dates.end;
+        }
+    });
+</script>

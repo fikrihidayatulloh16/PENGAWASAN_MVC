@@ -196,6 +196,7 @@
         $max_cco = $data['max_cco'];   // Maximum CCO value
         $new_cco = $max_cco + 1;       // Increment the CCO value
         $id_projek = $data['id_projek']; // Project ID
+        $tanggal_rubah = $data['tanggal_rubah']; // Project ID
 
         // Ensure that $new_cco does not exceed the limit (assuming 10 is the limit)
         if ($new_cco <= 10) {
@@ -205,13 +206,15 @@
                 if (!empty($laporan['rencana_progres_cco'.$max_cco]) || !empty($laporan['realisasi_progres_cco'.$max_cco])) {
                     // Update the cumulative progress for the new CCO in the database
                     $this->db->query('UPDATE laporan_mingguan SET 
-                        rencana_progres_cco' . $new_cco . ' = :rencana_progres, 
+                        tanggal_rubah_cco' . $new_cco . ' = :tanggal_rubah,
+                        rencana_progres_cco' . $new_cco . ' = :rencana_progres,
                         rencana_progres_kumulatif_cco' . $new_cco . ' = :rencana_kumulatif, 
                         realisasi_progres_cco' . $new_cco . ' = :realisasi_progres,
                         realisasi_progres_kumulatif_cco' . $new_cco . ' = :realisasi_kumulatif
                         WHERE id_laporan_mingguan = :id_laporan_mingguan');
 
                     // Bind parameters using the existing data from the previous CCO
+                    $this->db->bind(':tanggal_rubah', $tanggal_rubah);
                     $this->db->bind(':rencana_progres', $laporan['rencana_progres_cco' . $max_cco]);
                     $this->db->bind(':rencana_kumulatif', $laporan['rencana_progres_kumulatif_cco' . $max_cco]);
                     $this->db->bind(':realisasi_progres', $laporan['realisasi_progres_cco' . $max_cco]);
@@ -262,6 +265,72 @@
         }
 
         return false;  // Return false if CCO exceeds the limit or no data
+    }
+
+    public function filterLM($data)
+    {
+        // Loop through each set of data
+        $tanggalTampil = []; // Array untuk menyimpan tanggal yang sudah ditampilkan
+
+        // Loop through each set of data
+        foreach ($data as $index => $laporanSet) {
+            // Iterasi setiap laporan mingguan
+            foreach ($laporanSet as $laporan) {
+                // Check apakah ada tanggal rubah CCO
+                $tanggalRubahField = 'tanggal_rubah_cco' . $index; // Menggunakan index untuk menentukan field
+                if (!empty($laporan[$tanggalRubahField]) && ($laporan[$tanggalRubahField] >= $laporan['tanggal_mulai'] && $laporan[$tanggalRubahField] <= $laporan['tanggal_selesai'])) {
+                    $tanggalRubah = $laporan['tanggal_selesai'];
+                    
+                    // Cek apakah tanggal ini sudah pernah ditampilkan
+                    if (!in_array($tanggalRubah, $tanggalTampil)) {
+                        // Simpan tanggal yang belum pernah ditampilkan
+                        $tanggalTampil[] = $tanggalRubah;
+                    }
+                }
+            }
+        }
+        
+        foreach ($data as $index => $laporanSet) {
+            // Tentukan batasan untuk indeks CCO
+            // Loop kedua untuk mereset nilai progres jika syarat dipenuhi
+            foreach ($data as $index => &$laporanSet) {
+                foreach ($laporanSet as &$laporan) {
+                    // Logika perbandingan tanggal_selesai dengan tanggalTampil berdasarkan index
+                    
+                    // Jika index 0 dan tanggal_selesai lebih besar dari tanggalTampil[index]
+                    if (($index == 0 && isset($tanggalTampil[$index])) && $laporan['tanggal_selesai'] > $tanggalTampil[$index]) {
+                        // Reset nilai progres
+                        $laporan['rencana_progres_cco'.$index] = NULL;
+                        $laporan['rencana_progres_kumulatif_cco'.$index] = NULL;
+                        $laporan['realisasi_progres_cco'.$index] = NULL;
+                        $laporan['realisasi_progres_kumulatif_cco'.$index] = NULL;
+
+                    // Jika index 9 dan tanggal_selesai lebih kecil dari tanggalTampil[index]
+                    } elseif ($index == 9 && $laporan['tanggal_selesai'] < $tanggalTampil[$index]) {
+                        // Reset nilai progres
+                        $laporan['rencana_progres_cco'.$index] = NULL;
+                        $laporan['rencana_progres_kumulatif_cco'.$index] = NULL;
+                        $laporan['realisasi_progres_cco'.$index] = NULL;
+                        $laporan['realisasi_progres_kumulatif_cco'.$index] = NULL;
+
+                    // Untuk semua index lain, jika tanggal_selesai <= tanggalTampil[$index-1] dan >= tanggalTampil[$index]
+                    } elseif (($index != 0 && $index != 9 && isset($tanggalTampil[$index])) && ($laporan['tanggal_selesai'] < $tanggalTampil[$index-1] || $laporan['tanggal_selesai'] > $tanggalTampil[$index])) {
+                        // Reset nilai progres
+                        $laporan['rencana_progres_cco'.$index] = NULL;
+                        $laporan['rencana_progres_kumulatif_cco'.$index] = NULL;
+                        $laporan['realisasi_progres_cco'.$index] = NULL;
+                        $laporan['realisasi_progres_kumulatif_cco'.$index] = NULL;
+                    } elseif (($index != 0 && $index != 9 ) && ($laporan['tanggal_selesai'] <= $tanggalTampil[$index-1])) {
+                        // Reset nilai progres
+                        $laporan['rencana_progres_cco'.$index] = NULL;
+                        $laporan['rencana_progres_kumulatif_cco'.$index] = NULL;
+                        $laporan['realisasi_progres_cco'.$index] = NULL;
+                        $laporan['realisasi_progres_kumulatif_cco'.$index] = NULL;
+                    }
+                }
+            } 
+        }
+        return $data; // Pastikan data dikembalikan
     }
 
 

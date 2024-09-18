@@ -1,5 +1,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
 
     <?php
 
@@ -77,7 +78,7 @@
                             
                             <button type="button" class="btn btn-tambah" data-bs-toggle="modal" data-bs-target="#ccolm-tambah">
                                 
-                                <i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>CREATE CCO-<?= $next_cco ?>
+                                <i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i><span class="span-aksi">CREATE </span>CCO-<?= $next_cco ?>
                             </button>
                         </h5>
 
@@ -137,9 +138,9 @@
                                             <?= $deviasi >= 0 ? '+'. $deviasi : $deviasi ?>
                                         </td> 
                                         <td class="<?= $index == $data['max_cco'] ? 'visible-column' : 'hidden-column' ?>">
-                                            <a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lm-ubah-<?= $index ?>-<?= $laporan['id_laporan_mingguan'] ?>">
-                                                <i class='bx bx-edit-alt'></i>
-                                            </a>
+                                            <button href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lm-ubah-<?= $index ?>-<?= $laporan['id_laporan_mingguan'] ?>" <?= $laporan['tanggal_mulai'] <= $laporan['tanggal_rubah_cco'.$index] ? 'disabled' : '' ?>>
+                                            <?= $laporan['tanggal_mulai'] <= $laporan['tanggal_rubah_cco'.$index] ? '-' : '<i class="bx bx-edit-alt"></i>' ?>
+                                            </button>
                                         </td>
                                     </tr>
                                     <?php 
@@ -173,6 +174,7 @@
 
                         <h4 class="ms-5 mt-3"><?= $index == 0 ? 'Kontrak Awal' : 'CCO' . $index ?></h4>
 
+                        <div class="card">
                         <h5 class="card-header text-white d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
                                 <form>
@@ -212,7 +214,7 @@
                                             $minggu_ke = floor($selisih_hari / 7) + 1;
                                     ?>
 
-<tr>
+                                    <tr>
                                         <td class="text-center align-middle nomor"></td>
                                         <td class="text-center align-middle" style="color: #464F60;">
                                             <a href="<?= PUBLICURL ?>/laporanmingguan/weekly_laporan_harian/<?= $data['projek']['id_projek']?>/<?= $laporan2['tanggal_mulai'] ?>/<?= $laporan2['tanggal_selesai'] ?>/<?= $minggu_ke?>">Minggu ke-<?= $minggu_ke ?></a>
@@ -245,6 +247,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        </div>
 
                     <?php endif ?>
                 </div>
@@ -257,17 +260,29 @@
         <div class="card">
             <h5 class="card-header">
                 Grafik Progres Kumulatif
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" id="zoomOut" class="btn btn-tambah">
+                        <i class='bx bx-minus'></i>
+                    </button>
+                    <button type="button" id="resetZoom" class="btn btn-tambah ">
+                        <i class='bx bx-refresh' ></i>
+                        <span class="span-aksi">Reset Zoom</span>
+                    </button>
+                    <button type="button" id="zoomIn" class="btn btn-tambah">
+                        <i class='bx bx-plus-medical'  name="lh_tambah"></i>
+                    </button>
+                </div>
             </h5>
 
             <canvas id="myChart" width="400" height="200"></canvas>
 
             <div class="table-responsive">
-                <table class="table table-striped tabel-cuaca">
+                <table class="table-striped" style="width: 100%;">
                     <thead>
                         <!-- Baris Judul Minggu -->
                         <tr class="text-center">
                             <th class="weather-column align-middle" rowspan="2" style="border-left: black solid; border-top: black solid;">Nama</th>
-                            <th class="weather-column align-middle" rowspan="2" style="border-left: black solid; border-top: black solid; border-right: black solid;">CCO-</th>
+                            <th class="weather-column align-middle" rowspan="2" style="border-left: black solid; border-top: black solid; border-right: black solid;">Status</th>
                             <th class="text-center align-middle" colspan="<?= count($data['all_minggu_data']) ?>" style="border-right: black solid; border-top: black solid; border-bottom: black solid;">
                                 Minggu Ke-
                             </th>
@@ -287,56 +302,56 @@
                     </thead>
 
                     <tbody class="table-group-divider">
-                        <?php foreach ($data['all_laporan_mingguan'] as $index => $laporan) : ?>
+                        <?php foreach ($data['filter_laporan_mingguan'] as $index => $laporan) : ?>
 
                             <!-- Baris Rencana Progres -->
                             <tr class="text-center">
-                                <th class="weather-column align-middle" style="border-left: black solid;">Rencana Progres</th>
-                                <th class="weather-column align-middle" rowspan="5" style="border-bottom: black solid; border-left: black solid; border-right: black solid;">
+                                <td class="align-middle" style="border-left: black solid;">Rencana Progres</td>
+                                <td class="align-middle" rowspan="5" style="border-bottom: black solid; border-left: black solid; border-right: black solid;">
                                     <?= $index == 0 ? 'Kontrak Awal' : 'CCO' . $index ?>
-                                </th>
+                                </td>
                                 <?php foreach ($laporan as $week_data) : ?>
-                                    <th class="text-center align-middle" style="border-right: black solid;">
+                                    <td class="text-center align-middle" style="border-right: black solid;">
                                         <?= isset($week_data['rencana_progres_cco' . $index]) ? $week_data['rencana_progres_cco' . $index] . '%' : '-' ?>
-                                    </th>
+                                    </td>
                                 <?php endforeach; ?>
                             </tr>
 
                             <!-- Baris Rencana Progres Kumulatif -->
                             <tr class="text-center">
-                                <th class="weather-column align-middle" style="border-left: black solid;">Rencana Progres Kumulatif</th>
+                                <td class="weather-column align-middle" style="border-left: black solid;">Rencana Progres Kumulatif</td>
                                 <?php foreach ($laporan as $week_data) : ?>
-                                    <th class="text-center align-middle" style="border-right: black solid;">
+                                    <td class="text-center align-middle" style="border-right: black solid;">
                                         <?= isset($week_data['rencana_progres_kumulatif_cco' . $index]) ? $week_data['rencana_progres_kumulatif_cco' . $index] . '%' : '-' ?>
-                                    </th>
+                                    </td>
                                 <?php endforeach; ?>
                             </tr>
 
                             <!-- Baris Realisasi Progres -->
                             <tr class="text-center">
-                                <th class="weather-column align-middle" style="border-left: black solid;">Realisasi Progres</th>
+                                <td class="weather-column align-middle" style="border-left: black solid;">Realisasi Progres</td>
                                 <?php foreach ($laporan as $week_data) : ?>
-                                    <th class="text-center align-middle" style="border-right: black solid;">
+                                    <td class="text-center align-middle" style="border-right: black solid;">
                                         <?= isset($week_data['realisasi_progres_cco' . $index]) ? $week_data['realisasi_progres_cco' . $index] . '%' : '-' ?>
-                                    </th>
+                                    </td>
                                 <?php endforeach; ?>
                             </tr>
 
                             <!-- Baris Realisasi Progres Kumulatif -->
                             <tr class="text-center">
-                                <th class="weather-column align-middle" style="border-left: black solid;">Realisasi Progres Kumulatif</th>
+                                <td class="weather-column align-middle" style="border-left: black solid;">Realisasi Progres Kumulatif</td>
                                 <?php foreach ($laporan as $week_data) : ?>
-                                    <th class="text-center align-middle" style="border-right: black solid;">
+                                    <td class="text-center align-middle" style="border-right: black solid;">
                                         <?= isset($week_data['realisasi_progres_kumulatif_cco' . $index]) ? $week_data['realisasi_progres_kumulatif_cco' . $index] . '%' : '-' ?>
-                                    </th>
+                                    </td>
                                 <?php endforeach; ?>
                             </tr>
 
                             <!-- Baris Deviasi -->
                             <tr class="text-center">
-                                <th class="weather-column align-middle" style="border-bottom: black solid; border-left: black solid">Deviasi</th>
+                                <td class="weather-column align-middle" style="border-bottom: black solid; border-left: black solid">Deviasi</td>
                                 <?php foreach ($laporan as $week_data) : ?>
-                                    <th style="border-right: black solid; border-bottom: black solid;" class="text-center align-middle border-deviasi 
+                                    <td style="border-right: black solid; border-bottom: black solid;" class="text-center align-middle border-deviasi 
                                         <?php 
                                         if (isset($week_data['realisasi_progres_kumulatif_cco'. $index])) {
                                             $deviasi = $week_data['realisasi_progres_kumulatif_cco' . $index] - $week_data['rencana_progres_kumulatif_cco' . $index];
@@ -346,7 +361,7 @@
                                         }
                                         ?>">
                                         <?= is_numeric($deviasi) && $deviasi >= 0 ? '+' . $deviasi : $deviasi ?>
-                                    </th>
+                                    </td>
                                 <?php endforeach; ?>
                             </tr>
 

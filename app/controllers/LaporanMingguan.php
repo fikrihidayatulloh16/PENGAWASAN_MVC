@@ -48,6 +48,7 @@ class LaporanMingguan extends Controller {
             $data['all_laporan_harian'] = $this->model('Operator_db_model')->getAllLaporanByIdProjek($id_projek);
             $data['max_cco'] = $this->model('Laporan_mingguan_db_model')->getMaxCCO($data);
             $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
+            $data['filter_laporan_mingguan'] = $this->model('Laporan_mingguan_crud_model')->filterLM($data['all_laporan_mingguan']);
             $data['all_tanggal_laporan'] = $this->model('Operator_db_model')->getAllTanggalLaporanByIprojek($id_projek);
             $data['all_minggu'] = $this->model('Laporan_mingguan_crud_model')->getWeeklyRanges($data['projek']);
             $data['all_minggu_data'] = $this->model('Laporan_mingguan_crud_model')->getAllWeekData($data);
@@ -162,6 +163,7 @@ class LaporanMingguan extends Controller {
     {
         $data['max_cco'] = $cco;
         $data['id_projek'] = $id_projek;
+        $data['tanggal_rubah'] = $_POST['tanggal_selesai'];
         $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
         $result = $this->model('Laporan_mingguan_crud_model')->tambahCCO($data);
 
