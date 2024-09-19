@@ -14,7 +14,7 @@
                 <ul class="dropdown-menu">
                     <?php
                     $tanggal_mulai_projek = new DateTime($data['projek']['tanggal_mulai']);
-                    foreach ($data['all_laporan_mingguan'] as $laporan) :    
+                    foreach ($data['all_laporan_mingguan'][$data['max_cco']] as $laporan) :    
                         $tanggal_laporan = new DateTime($laporan['tanggal_mulai']);
                         // Menghitung selisih hari antara tanggal laporan dan tanggal mulai proyek
                         $selisih_hari = $tanggal_mulai_projek->diff($tanggal_laporan)->days;

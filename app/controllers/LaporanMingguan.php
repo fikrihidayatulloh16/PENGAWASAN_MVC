@@ -82,8 +82,6 @@ class LaporanMingguan extends Controller {
         $data['all_tanggal_laporan'] = $this->model('Operator_db_model')->getAllTanggalLaporanByIprojek($id_projek);
         $data['max_cco'] = $this->model('Laporan_mingguan_db_model')->getMaxCCO($data);
         $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
-        $data['m_pekerjaan'] = $this->model('Operator_db_model')->getMPekerjaanByIdProjek($id_projek);
-        $data['mp_sp'] = $this->model('Operator_db_model')->getMPSPByIdProjek($id_projek);
         $this->view('layouts/layout_operator/layout_operator_laporan', $data);
         $this->view('operator/l_harian/rekap/logo_rekap', $data);
         $this->view('operator/laporan_mingguan/weekly_laporan_harian', $data);

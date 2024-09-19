@@ -178,6 +178,39 @@ h4 {
     z-index: 1050; /* Ensure it appears above other elements */
 }
 
+/* Gaya untuk tabel cco */
+/* Tabel Responsif */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Header Tabel Tetap */
+.sticky-header th {
+    position: sticky;
+    top: 0;
+
+    z-index: 10; /* Agar header tetap di atas konten saat digulir */
+}
+
+/* Kolom Tabel Tetap */
+.sticky-column {
+    position: sticky;
+    left: 0;
+    background: white; /* Atur latar belakang agar kolom tetap terlihat jelas */
+    z-index: 9; /* Agar kolom tetap di atas konten saat digulir */
+}
+
+/* Tambahan styling untuk border */
+.sticky-header th, .sticky-column td {
+    border: black solid 1px;
+}
+
+/* Gaya untuk dropdown menu */
+.dropdown-menu {
+    max-height: 200px; /* Sesuaikan tinggi maksimum sesuai kebutuhan */
+    overflow-y: auto; /* Tambahkan scrollbar jika konten melebihi max-height */
+}
+
 @media (max-width: 576px) {
     .kolom-aksi {
         width: 50%; /* 4 dari 12 kolom */

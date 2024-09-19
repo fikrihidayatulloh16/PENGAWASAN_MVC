@@ -227,6 +227,9 @@
             }
 
             return true;  // Success response
+        } else {
+            Flasher::setFlash('Gagal', 'Data CCO Sudah Melebihi Batas', 'danger');
+            return false;
         }
 
         return false;  // Return false if CCO exceeds the limit or no data

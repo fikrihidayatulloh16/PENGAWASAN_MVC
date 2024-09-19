@@ -1051,4 +1051,22 @@ class Operator_crud_model {
         $this->db->execute();
 
     }
+    
+    public function lastreport($id_projek, $tabel, $kolom_tanggal)
+    {
+        $select_tanggal = $this->db->query('SELECT '. $kolom_tanggal .
+                        ' FROM '. $tabel .
+                        ' WHERE id_projek = :id_projek');
+
+        $this->db->query($select_tanggal);
+
+        $this->db->bind('id_projek', $id_projek); 
+
+        $list_tanggal = $this->db->resultSet();
+
+        echo '<pre>';
+    print_r($list_tanggal);
+    echo '</pre>';
+    }
 }
+

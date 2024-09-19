@@ -70,10 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 plugins: {
                     zoom: {
                         pan: {
-                            enabled: true,    // Mengaktifkan fitur pan
-                            mode: 'xy',       // Bisa geser secara horizontal dan vertikal
-                            speed: 10,        // Kecepatan pan
-                            threshold: 5      // Berapa jauh pan harus terjadi sebelum mulai
+                            enabled: true,
+                            mode: 'xy', 
                         },
                         zoom: {
                             wheel: {
@@ -86,7 +84,45 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 }
-            }
+            },
+            plugins: [{
+                id: 'custom-tooltip-plugin',
+                afterDatasetsDraw: (chart) => {
+                    const { ctx, data } = chart;
+                    ctx.save();
+
+                    // Draw custom tooltips for each active element
+                    chart.data.datasets.forEach((dataset, datasetIndex) => {
+                        dataset.data.forEach((dataPoint, index) => {
+                            if (dataPoint !== null) {  // Avoid null data points
+                                const meta = chart.getDatasetMeta(datasetIndex);
+                                const model = meta.data[index].getProps(['x', 'y'], true);
+
+                                const tooltipText = `(${index + 1}, ${dataPoint})`;
+
+                                // Adjust the vertical position to avoid overlap
+                                const tooltipModel = {
+                                    x: model.x,
+                                    y: model.y - 30 - (datasetIndex * 10), // Offset each tooltip by dataset index to prevent overlap
+                                    label: tooltipText
+                                };
+
+                                // Draw tooltip background
+                                ctx.fillStyle = 'rgba(0,0,0,0.7)';
+                                ctx.fillRect(tooltipModel.x - 25, tooltipModel.y - 10, 50, 20);
+
+                                // Draw tooltip text
+                                ctx.fillStyle = '#fff';
+                                ctx.font = '12px Arial';
+                                ctx.textAlign = 'center';
+                                ctx.fillText(tooltipModel.label, tooltipModel.x, tooltipModel.y);
+                            }
+                        });
+                    });
+
+                    ctx.restore();
+                }
+            }]
         };
 
         myChart = new Chart(document.getElementById('myChart'), config);
