@@ -93,7 +93,7 @@
                                         <th>Realisasi Progres<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(4)"></i></th>
                                         <th>Realisasi Progress Kumulatif<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(5)"></i></th>
                                         <th>Deviasi<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(6)"></i></th>
-                                        <th class="<?= $index == $data['max_cco'] ? 'visible-column' : 'hidden-column' ?>">Aksi</th>
+                                        <th class="<?= $index == $data['max_cco'] ? 'visible-column' : 'hidden-column' ?>" style="height:auto">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="table-body">
