@@ -15,6 +15,9 @@
     }
 </style>
 
+<!-- Menampilkan flash -->
+<?php Flasher::flash() ?>
+
 <div class="pagetitle">
   <h1>Dashboard</h1>
   <nav>
@@ -27,7 +30,7 @@
 
 <?php 
 $next_cco = $data['max_cco'] + 1;
-include "../app/views/modals/modal_add/operator/laporan_mingguan_add.php"; 
+
 ?>
 
 <section class="section dashboard">
@@ -171,7 +174,11 @@ include "../app/views/modals/modal_add/operator/laporan_mingguan_add.php";
               </div>
 
           </div>
-      <?php endforeach; ?>
+      <?php 
+      endforeach; 
+      
+      include "../app/views/modals/modal_add/operator/laporan_mingguan_add.php"; 
+      ?>
   </div>
         </div>
       </div>

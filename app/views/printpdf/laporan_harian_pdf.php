@@ -2,6 +2,18 @@
 
 require_once __DIR__ . '../../../../public/assets/vendor/autoload.php';
 
+use Mpdf\Mpdf;
+
+// Inisialisasi mPDF di awal
+$mpdf = new \Mpdf\Mpdf([
+    'mode' => 'utf-8',
+    'format' => 'A4',
+    'margin_top' => 10,
+    'margin_bottom' => 10,
+    'margin_left' => 10,
+    'margin_right' => 10,
+]);
+
 $html = '
 <!DOCTYPE html>
 <html lang="en">
@@ -415,9 +427,18 @@ $html .= '
             </tr>';
              } $html .= '
         </table>
-    </div>
+    </div>';
 
-    <div class="section-title text-center">Dokumentasi Harian</div>
+    // Render halaman pertama
+    $mpdf->WriteHTML($html);
+
+    // Tambahkan page break
+    $mpdf->AddPage();  // Pemutusan halaman secara manual
+
+    // Reset atau lanjutkan $html untuk halaman baru
+    $html = ''; // Kosongkan jika perlu memulai ulang dari nol, atau tambahkan konten baru
+
+    $html .= '<div class="section-title text-center">Dokumentasi Harian</div>
     <div >
         <div class="container">';
             if (count($data['foto_kegiatan']) > 0) {
@@ -504,15 +525,6 @@ $html .= '
     </div>
 </body>
 </html>';
-
-$mpdf = new \Mpdf\Mpdf([
-    'mode' => 'utf-8',
-    'format' => 'A4',
-    'margin_top' => 10,
-    'margin_bottom' => 10,
-    'margin_left' => 10,
-    'margin_right' => 10,
-]);
 
 $filename = 'dailyreport_'. $data['id_laporan_harian'] .'_'. $data['id_projek'] .'.pdf';
 

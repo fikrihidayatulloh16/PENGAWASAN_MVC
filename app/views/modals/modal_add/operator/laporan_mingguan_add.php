@@ -25,6 +25,8 @@
                             <div class="form-group">
                                 <label for="id_projek">Projek:</label>
                                 <h5><?= $data['projek']['nama_projek']?></h5>
+                                <label for="id_projek">Laporan Terakhir :</label>
+                                <h5>Minggu ke-<?= $minggu_ke ?></h5>
                             </div>
                             <br>
                             <div class="form-group">
