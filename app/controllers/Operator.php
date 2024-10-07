@@ -195,15 +195,18 @@ class Operator extends Controller{
         $data['id_projek'] = $id_projek;
         $result = $this->model('Operator_crud_model')->tambahLaporanHarian($_POST);
 
-        if ($result === true) {
+        if ($result != false) {
             Flasher::setFlash('Sukses', 'Tanggal berhasil ditambahkan', 'success');
-        } else {
+            header('Location: ' . PUBLICURL . '/operator/rekap/' . $result. '/'.$data['id_projek']);
+        } elseif ($result === false) {
             Flasher::setFlash('Gagal', 'Tanggal yang dipilih sudah ada, pilih tanggal yang berbeda', 'danger');
+            header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek']);
+            exit;
         }
 
         
-        header('Location: ' . PUBLICURL . '/operator/laporan_harian_list/' . $data['id_projek']);
-        exit;
+        
+        
 
     }
 
@@ -369,6 +372,43 @@ class Operator extends Controller{
 
         $this->model('Operator_crud_model')->hapusBahanLH($_POST);
         header('Location: ' . PUBLICURL . '/operator/pekerjaan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+    }
+
+    public function tambah_m_pekerja($id_laporan_harian, $id_projek)
+    {
+        $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $data['id_projek'] = $id_projek;
+        if ($this->model('Admin_crud_model')->tambahMPekerja($_POST) > 0) {
+            $this->model('Operator_crud_model')->tambahPekerjaLH($_POST);
+            header('Location: ' . PUBLICURL . '/operator/pekerjaan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+            exit;
+        }
+    }
+
+    public function tambah_m_peralatan($id_laporan_harian, $id_projek)
+    {
+        $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $data['id_projek'] = $id_projek;
+        if ($this->model('Admin_crud_model')->tambahMperalatan($_POST) > 0) {
+            $this->model('Operator_crud_model')->tambahPeralatanLH($_POST);
+            header('Location: ' . PUBLICURL . '/operator/pekerjaan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+            exit;
+        }
+    }
+    
+    
+    public function tambah_m_bahan($id_laporan_harian, $id_projek)
+    {
+        $data = $this->prepareData($id_laporan_harian, $id_projek);
+
+        $data['id_projek'] = $id_projek;
+        if ($this->model('Admin_crud_model')->tambahMBahan($_POST) > 0) {
+            $this->model('Operator_crud_model')->tambahBahanLH($_POST);
+            header('Location: ' . PUBLICURL . '/operator/pekerjaan_l_harian/'. $data['id_laporan_harian'] . '/' . $data['id_projek']);
+            exit;
+        }
     }
 
     public function tambah_permasalahan($id_laporan_harian, $id_projek)

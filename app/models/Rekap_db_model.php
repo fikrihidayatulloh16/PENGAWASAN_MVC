@@ -231,7 +231,7 @@ class Rekap_db_model{
             const dataPointsJson2 = <?= $dataPointsJson2 ?>;
 
             //url untuk js
-            const PUBLICURL = '<?= PUBLICURL ?>';
+            
             const ID_PROJEK = '<?= $data['id_projek'] ?>';
             const ID_LAPORAN_HARIAN = '<?= $data['id_laporan_harian'] ?>';
         </script>

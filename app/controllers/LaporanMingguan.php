@@ -56,7 +56,7 @@ class LaporanMingguan extends Controller {
             //update progres kumulatif
             //$this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
 
-            $this->view('layouts/layout_operator/layout_operator_laporan', $data);
+            $this->view('layouts/layout_operator/layout_operator_lm', $data);
             $this->view('operator/l_harian/rekap/logo_rekap', $data);
             $this->view('operator/laporan_mingguan/laporan_mingguan_list', $data);
             $this->view('layouts/footer_b');

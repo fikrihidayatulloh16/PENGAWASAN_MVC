@@ -9,3 +9,7 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'pengawasan');
 ?>
+
+<script>
+    const PUBLICURL = '<?= PUBLICURL ?>';
+</script>

@@ -187,4 +187,4 @@ $next_cco = $data['max_cco'] + 1;
 </section>
 
 
-<script src="<?= PUBLICURL ?>/assets/js/"></script>
+<script src="<?= PUBLICURL ?>/assets/js/last_tab.js"></script>

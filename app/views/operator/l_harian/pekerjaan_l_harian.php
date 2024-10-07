@@ -5,7 +5,7 @@ $id_sub = array_column($data['pekerjaan_harian'], null);
 ?>
 
 <div class="container">
-    <nav>
+    <nav class="horizontal-scroll">
         <div class="nav nav-tabs mt-3" id="nav-tab" role="tablist">
             <?php foreach ($id_sub as $index => $sub): ?>
                 <button class="nav-link <?= $index === 0 ? 'active' : '' ?>" id="nav-<?= $sub['id_m_sub_pekerjaan'] ?>-tab" data-bs-toggle="tab" data-bs-target="#nav-<?= $sub['id_m_sub_pekerjaan'] ?>" type="button" role="tab" aria-controls="nav-<?= $sub['id_m_sub_pekerjaan'] ?>" aria-selected="<?= $index === 0 ? 'true' : 'false' ?>">
@@ -26,7 +26,7 @@ $id_sub = array_column($data['pekerjaan_harian'], null);
                     <div class="card mt-3">
                         <h5 class="card-header">
                             <div>
-                                Keterangan : <?= !empty($sub['keterangan']) ? $sub['keterangan'] : 'Tidak ada Keterangan!' ?>
+                                Detail Pekerjaan : <?= !empty($sub['keterangan']) ? $sub['keterangan'] : 'Tidak ada Keterangan!' ?>
                             </div>
 
                             <a class="btn btn-edit ms-2 mt-0" data-bs-toggle="modal" data-bs-target="#ph-keterangan-tambah-<?= $index ?>"><i class='bx bxs-edit-alt'></i>EDIT</a>
@@ -138,7 +138,7 @@ $id_sub = array_column($data['pekerjaan_harian'], null);
                             <?php foreach ($data['bahan'][$sub['id_m_sub_pekerjaan']] as $data_bahan): ?>
                                 <tr>
                                     <td class="text-center"><?= htmlspecialchars($data_bahan['nama_bahan']) ?></td>
-                                    <td class="text-center"><?= htmlspecialchars($data_bahan['jumlah_bahan']) ?> <?= htmlspecialchars($data_bahan['satuan']) ?></td>
+                                    <td class="text-center"><?= ($data_bahan['jumlah_bahan'] == (int)$data_bahan['jumlah_bahan']) ? htmlspecialchars((int)$data_bahan['jumlah_bahan']) : $data_bahan['jumlah_bahan'] ?> <?= htmlspecialchars($data_bahan['satuan']) ?></td>
                                     <td class="text-center">
                                         <form action="../../script/projek_pilih.php" method="POST">
                                             <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#ph-bahan-hapus-<?=$data_bahan['id_bahan']?>"><i class='bx bx-trash'></i></a>

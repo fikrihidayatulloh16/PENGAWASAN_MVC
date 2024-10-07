@@ -27,8 +27,9 @@ class Operator_db_model {
                                                                     ORDER BY lp.id_laporan_harian  ASC');
 
         $this->db->bind('id_projek', $id_projek);
-
-        return $this->db->resultSet();
+        $result = $this->db->resultSet();
+        return  $result;
+        
     }
 
     public function getAllTanggalLaporanByIprojek($id_projek)

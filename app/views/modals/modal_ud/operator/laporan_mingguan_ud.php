@@ -34,7 +34,7 @@
                                 <label for="realisasi_progres">Realisasi Progres:</label>
 
                                 <div class="input-group">
-                                    <input type="number" id="realisasi_progres" name="realisasi_progres_cco<?= $data['max_cco'] ?>" class="form-control" value="<?= !empty($laporan['realisasi_progres_cco'.$data['max_cco']]) ? $laporan['realisasi_progres_cco'.$data['max_cco']] : $laporan['total_progres'] ?>" placeholder="Masukkan Persentase" step="0.1" min="0" max="100">
+                                    <input type="number" id="realisasi_progres" name="realisasi_progres_cco<?= $data['max_cco'] ?>" class="form-control" value="<?= !empty($laporan['realisasi_progres_cco'.$data['max_cco']]) ? $laporan['realisasi_progres_cco'.$data['max_cco']] : $laporan['total_progres'] ?>" placeholder="Masukkan Persentase" step="0.01" min="0" max="100">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>

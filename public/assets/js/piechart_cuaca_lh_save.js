@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Tampilkan hasil respon
             const result = await response.text();
-            console.log(result);
+            //console.log(result);
             //console.log(document.getElementById("pdf"));  // Memastikan elemen ditemukan
 
             // Jika penyimpanan berhasil, tampilkan elemen dengan id="pdf"

@@ -28,9 +28,6 @@
                 </ul>
             </div>
         </div>
-            <button type="button" class="btn btn-tambah" data-bs-toggle="modal" data-bs-target="#lh_tambah">
-                <i class='bx bx-plus-medical' style="margin-right: 5px;" name="lh_tambah"></i>ADD
-            </button>
         </h5>
 
     <div class="table-responsive">
@@ -42,7 +39,6 @@
                     <th>Tanggal <i id="icon2" class="fas fa-sort sort-icon" onclick="sortTable(2)"></i></th>
                     <th>Progres Harian<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(3)"></i></th>
                     <th>Progres Kumulatif<i id="icon3" class="fas fa-sort sort-icon" onclick="sortTable(4)"></i></th>
-                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -64,22 +60,8 @@
                     <td class="text-center align-middle" style="color: #464F60;"><?= $tanggal_laporan ?></td>
                     <td class="text-center align-middle"><?= $laporan['progress_harian'] ?>%</td>
                     <td class="text-center align-middle"><?= $laporan['total_progres'] ?>%</td>
-                    <td>
-                        <form action="../../script/projek_pilih.php" method="POST">
-                            <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#lh-hapus-<?= $laporan['id_laporan_harian'] ?>">
-                                <i class='bx bx-trash'></i>
-                            </a>
-                            <!--<a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lh-ubah-?= $laporan['id_laporan_harian'] ?>">
-                                <i class='bx bx-edit-alt'></i>
-                            </a>
-                            <a href="  ?= PUBLICURL ?>/printpdf/mpdf/  ?= $data['projek']['id_projek'] ?>/  ?= $laporan['id_laporan_harian'] ?>/  ?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>
-                            <input type="hidden" name="id_laporan" value="  ?= $laporan['id_laporan_harian'] ?>">
-                            -->
-                        </form>
-                    </td>
                 </tr>
                 <?php 
-                include "../app/views/modals/modal_ud/operator/laporan_harian_ud.php";
                 $nomor++;
                 endforeach;
                 ?>
@@ -101,10 +83,6 @@
         </a>
     </div>
 </div>
-
-<?php
-include "../app/views/modals/modal_add/operator/laporan_harian_add.php";
-?>
 
 <?php if (isset($_SESSION['flash'])): ?>
     <script>

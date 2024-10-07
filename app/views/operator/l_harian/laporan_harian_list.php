@@ -54,21 +54,19 @@
                     <td class="text-center align-middle"><?= $laporan['progress_harian'] ?>%</td>
                     <td class="text-center align-middle"><?= $laporan['total_progres'] ?>%</td>
                     <td>
-                        <form action="../../script/projek_pilih.php" method="POST">
-                            <a href="#" class="btn btn-aksi" data-bs-toggle="modal" data-bs-target="#lh-hapus-<?= $laporan['id_laporan_harian'] ?>">
-                                <i class='bx bx-trash'></i>
-                            </a>
-                            <!--<a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lh-ubah-?= $laporan['id_laporan_harian'] ?>">
-                                <i class='bx bx-edit-alt'></i>
-                            </a>
-                            <a href="  ?= PUBLICURL ?>/printpdf/mpdf/  ?= $data['projek']['id_projek'] ?>/  ?= $laporan['id_laporan_harian'] ?>/  ?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>
-                            <input type="hidden" name="id_laporan" value="  ?= $laporan['id_laporan_harian'] ?>">
-                            -->
-                        </form>
+                        <button class="btn btn-aksi delete-button" data-id="#lh-hapus-<?= $laporan['id_laporan_harian'] ?>">
+                            <i class='bx bx-trash'></i>
+                        </button>
+                        <!--<a href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lh-ubah-?= $laporan['id_laporan_harian'] ?>">
+                            <i class='bx bx-edit-alt'></i>
+                        </a>
+                        <a href="  ?= PUBLICURL ?>/printpdf/mpdf/  ?= $data['projek']['id_projek'] ?>/  ?= $laporan['id_laporan_harian'] ?>/  ?= $laporan['tanggal_laporan'] ?>" target="_blank" class="btn btn-aksi mt-1"><i class="bx bx-download"></i></a>
+                        <input type="hidden" name="id_laporan" value="  ?= $laporan['id_laporan_harian'] ?>">
+                        -->
                     </td>
                 </tr>
                 <?php 
-                include "../app/views/modals/modal_ud/operator/laporan_harian_ud.php";
+                //include "../app/views/modals/modal_ud/operator/laporan_harian_ud.php";
                 $nomor++;
                 endforeach;
                 ?>

@@ -34,7 +34,7 @@
                                 <label for="rencana_progres">Rencana Progres  :</label>
 
                                 <div class="input-group">
-                                    <input type="number" id="rencana_progres" name="rencana_progres_cco<?= $data['max_cco'] ?>" class="form-control" value="<?= !empty($laporan['rencana_progres_cco'.$data['max_cco']]) ? $laporan['rencana_progres_cco'.$data['max_cco']] : 'Belum Diisi' ?>" placeholder="Masukkan Persentase" step="0.1" min="0" max="100">
+                                    <input type="number" id="rencana_progres" name="rencana_progres_cco<?= $data['max_cco'] ?>" class="form-control" value="<?= !empty($laporan['rencana_progres_cco'.$data['max_cco']]) ? $laporan['rencana_progres_cco'.$data['max_cco']] : 'Belum Diisi' ?>" placeholder="Masukkan Persentase" step="0.01" min="0" max="100">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>

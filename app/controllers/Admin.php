@@ -256,7 +256,6 @@ class Admin extends Controller {
         $this->model('Admin_crud_model')->hapusMPekerja($_POST);
         header('Location: ' . PUBLICURL . '/admin/m_pekerja/' . $data['id_projek']);
         exit;
-
     }
 
     public function tambah_m_peralatan($id_projek)

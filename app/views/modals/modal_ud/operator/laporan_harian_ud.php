@@ -106,7 +106,7 @@ Ubah Laporan Harian
 </script>
 
 <!-- Hapus laporan harian-->
-<div class="modal fade" id="lh-hapus-<?=$laporan['id_laporan_harian']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="lh-hapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-secondary text-light">

@@ -84,64 +84,65 @@
                                     </tr>
                                 </thead>
                                 <tbody id="table-body">
-                                    <?php
-                                    if (!empty($data['all_laporan_mingguan'])):
-                                        $nomor = 1;
-                                        $tanggal_mulai_projek = new DateTime($data['projek']['tanggal_mulai']);
-                                        foreach ($laporan as $laporan) :    
-                                            $tanggal_laporan = new DateTime($laporan['tanggal_mulai']);
+                                        <?php
+                                        
+                                        if (!empty(array_filter($data['all_laporan_mingguan']))):
+                                            $nomor = 1;
+                                            $tanggal_mulai_projek = new DateTime($data['projek']['tanggal_mulai']);
+                                            foreach ($laporan as $laporan) :    
+                                                $tanggal_laporan = new DateTime($laporan['tanggal_mulai']);
 
-                                            // Menghitung selisih hari antara tanggal laporan dan tanggal mulai proyek
-                                            $selisih_hari = $tanggal_mulai_projek->diff($tanggal_laporan)->days;
+                                                // Menghitung selisih hari antara tanggal laporan dan tanggal mulai proyek
+                                                $selisih_hari = $tanggal_mulai_projek->diff($tanggal_laporan)->days;
 
-                                            $minggu_ke = floor($selisih_hari / 7) + 1;
+                                                $minggu_ke = floor($selisih_hari / 7) + 1;
 
-                                            // Mengumpulkan data untuk setiap CCO
-                                            // Simpan data dalam array
-                                            $ccoKey = 'cco' . $index;
-                                            
-                                            
-                                            $rencanaKumulatifData[$ccoKey][] = $laporan['rencana_progres_kumulatif_cco' . $index];
-                                            $realisasiKumulatifData[$ccoKey][] = $laporan['realisasi_progres_kumulatif_cco' . $index];
-                                            
-                                    ?>
-                                    <tr>
-                                        <td class="text-center align-middle nomor"><?= $nomor ?></td>
-                                        <td class="text-center align-middle" style="color: #464F60;">
-                                            <a href="<?= PUBLICURL ?>/laporanmingguan/weekly_laporan_harian/<?= $data['projek']['id_projek']?>/<?= $laporan['tanggal_mulai'] ?>/<?= $laporan['tanggal_selesai'] ?>/<?= $minggu_ke?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?= $laporan['tanggal_mulai'] ?> s/d <?= $laporan['tanggal_selesai'] ?>">Minggu ke-<?= $minggu_ke ?></a>
-                                        </td>
-                                        <td class="text-center align-middle"><?= $laporan['rencana_progres_cco'. $index] ?>%</td>
-                                        <td class="text-center align-middle"><?= $laporan['rencana_progres_kumulatif_cco'. $index] ?>%</td>
-                                        <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_cco'. $index]) ? $laporan['realisasi_progres_cco'. $index] . '%' : '-' ?></td>
-                                        <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_kumulatif_cco'. $index]) ? $laporan['realisasi_progres_kumulatif_cco'. $index] . '%' : '-' ?></td>
-                                        <td class="text-center align-middle border-deviasi 
-                                            <?php 
-                                            $deviasi = $laporan['realisasi_progres_kumulatif_cco'. $index] - $laporan['rencana_progres_kumulatif_cco'. $index]; 
-                                            echo ($deviasi >= 0) ? 'text-bright-green' : 'text-red'; 
-                                            ?>">
-                                            <?php if (empty($laporan['realisasi_progres_kumulatif_cco'. $index])) {
-                                                $deviasi = '-';
-                                            } 
-                                            ?>
-                                            <?= $deviasi >= 0 ? '+'. $deviasi : $deviasi ?>
-                                        </td> 
-                                        <td class="<?= $index == $data['max_cco'] ? 'visible-column' : 'hidden-column' ?>">
-                                            <button href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lm-ubah-<?= $index ?>-<?= $laporan['id_laporan_mingguan'] ?>" <?= $laporan['tanggal_mulai'] <= $laporan['tanggal_rubah_cco'.$index] ? 'disabled' : '' ?>>
-                                            <?= $laporan['tanggal_mulai'] <= $laporan['tanggal_rubah_cco'.$index] ? '-' : '<i class="bx bx-edit-alt"></i>' ?>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <?php 
-                                    $nomor++;
-                                    include "../app/views/modals/modal_ud/operator/laporan_mingguan_ud.php";
-                                    endforeach; 
-                                    $ccoData[] = $ccoKey;
-                                    else:
-                                    ?>
-                                    <tr>
-                                        <td colspan="7" class="text-center">Tidak ada data Laporan Mingguan!</td>
-                                    </tr>
-                                    <?php endif; ?>
+                                                // Mengumpulkan data untuk setiap CCO
+                                                // Simpan data dalam array
+                                                $ccoKey = 'cco' . $index;
+                                                
+                                                
+                                                $rencanaKumulatifData[$ccoKey][] = $laporan['rencana_progres_kumulatif_cco' . $index];
+                                                $realisasiKumulatifData[$ccoKey][] = $laporan['realisasi_progres_kumulatif_cco' . $index];
+                                                
+                                        ?>
+                                        <tr>
+                                            <td class="text-center align-middle nomor"><?= $nomor ?></td>
+                                            <td class="text-center align-middle" style="color: #464F60;">
+                                                <a href="<?= PUBLICURL ?>/laporanmingguan/weekly_laporan_harian/<?= $data['projek']['id_projek']?>/<?= $laporan['tanggal_mulai'] ?>/<?= $laporan['tanggal_selesai'] ?>/<?= $minggu_ke?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?= $laporan['tanggal_mulai'] ?> s/d <?= $laporan['tanggal_selesai'] ?>">Minggu ke-<?= $minggu_ke ?></a>
+                                            </td>
+                                            <td class="text-center align-middle"><?= $laporan['rencana_progres_cco'. $index] ?>%</td>
+                                            <td class="text-center align-middle"><?= $laporan['rencana_progres_kumulatif_cco'. $index] ?>%</td>
+                                            <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_cco'. $index]) ? $laporan['realisasi_progres_cco'. $index] . '%' : '-' ?></td>
+                                            <td class="text-center align-middle"><?= !empty($laporan['realisasi_progres_kumulatif_cco'. $index]) ? $laporan['realisasi_progres_kumulatif_cco'. $index] . '%' : '-' ?></td>
+                                            <td class="text-center align-middle border-deviasi 
+                                                <?php 
+                                                $deviasi = $laporan['realisasi_progres_kumulatif_cco'. $index] - $laporan['rencana_progres_kumulatif_cco'. $index]; 
+                                                echo ($deviasi >= 0) ? 'text-bright-green' : 'text-red'; 
+                                                ?>">
+                                                <?php if (empty($laporan['realisasi_progres_kumulatif_cco'. $index])) {
+                                                    $deviasi = '-';
+                                                } 
+                                                ?>
+                                                <?= $deviasi >= 0 ? '+'. $deviasi : $deviasi ?>
+                                            </td> 
+                                            <td class="<?= $index == $data['max_cco'] ? 'visible-column' : 'hidden-column' ?>">
+                                                <button href="#" class="btn btn-aksi mt-1" data-bs-toggle="modal" data-bs-target="#lm-ubah-<?= $index ?>-<?= $laporan['id_laporan_mingguan'] ?>" >
+                                                <?= /*$laporan['tanggal_mulai'] <= $laporan['tanggal_rubah_cco'.$index] ? '-' :*/ '<i class="bx bx-edit-alt"></i>' ?>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <?php 
+                                        $nomor++;
+                                        include "../app/views/modals/modal_ud/operator/laporan_mingguan_ud.php";
+                                        endforeach; 
+                                        $ccoData[] = $ccoKey;
+                                        else:
+                                        ?>
+                                        <tr>
+                                            <td colspan="8" class="text-center">Tidak ada data Laporan Mingguan!</td>
+                                        </tr>
+                                        <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -347,54 +348,27 @@
 
     </div>
 
-    <?php
-    // Konversi array PHP menjadi JSON
-    $jsonlabels = json_encode($data['all_minggu_data']); // Data label Minggu ke-
-    $jsonrencanaKumulatif = json_encode($rencanaKumulatifData); // Data rencana kumulatif
-    $jsonrealisasiKumulatif = json_encode($realisasiKumulatifData); // Data realisasi kumulatif
-    ?>
+<?php
+// Konversi array PHP menjadi JSON
+$jsonlabels = json_encode($data['all_minggu_data']); // Data label Minggu ke-
+$jsonrencanaKumulatif = json_encode($rencanaKumulatifData); // Data rencana kumulatif
+$jsonrealisasiKumulatif = json_encode($realisasiKumulatifData); // Data realisasi kumulatif
+?>
 
 
 
-    <script>
-        // Menggunakan PHP untuk menghasilkan data
+<script>
+    // Menggunakan PHP untuk menghasilkan data
 
-        const labels = <?php echo $jsonlabels ?>; // Data label Minggu ke-
-        const rencanaKumulatifData = <?php echo $jsonrencanaKumulatif ?>; // Data rencana kumulatif
-        const realisasiKumulatifData = <?php echo $jsonrealisasiKumulatif ?>; // Data realisasi kumulatif
+    const labels = <?php echo $jsonlabels ?>; // Data label Minggu ke-
+    const rencanaKumulatifData = <?php echo $jsonrencanaKumulatif ?>; // Data rencana kumulatif
+    const realisasiKumulatifData = <?php echo $jsonrealisasiKumulatif ?>; // Data realisasi kumulatif
 
-        //url untuk js
-        const PUBLICURL = '<?= PUBLICURL ?>';
-        const ID_PROJEK = '<?= $data['id_projek'] ?>';
-    </script>
-
-    <script src="<?= PUBLICURL ?>/assets/js/laporan_mingguan_list.js"></script>
-    <script src="<?= PUBLICURL ?>/assets/js/linechart_laporan_mingguan.js"></script>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var activeTab = localStorage.getItem("activeTab");
-        if (activeTab) {
-            var tabButton = document.querySelector('#' + activeTab + '-tab');
-            var tabPane = document.querySelector('#' + activeTab);
-
-            if (tabButton && tabPane) {
-                var currentlyActiveButton = document.querySelector('.nav-link.active');
-                var currentlyActivePane = document.querySelector('.tab-pane.show.active');
-
-                if (currentlyActiveButton) currentlyActiveButton.classList.remove('active');
-                if (currentlyActivePane) currentlyActivePane.classList.remove('show', 'active');
-
-                tabButton.classList.add('active');
-                tabPane.classList.add('show', 'active');
-            }
-        }
-
-        var tabs = document.querySelectorAll('.nav-link');
-        tabs.forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                localStorage.setItem('activeTab', this.getAttribute('data-bs-target').substring(1));
-            });
-        });
-    });
+    //url untuk js
+    const PUBLICURL = '<?= PUBLICURL ?>';
+    const ID_PROJEK = '<?= $data['id_projek'] ?>';
 </script>
+
+<script src="<?= PUBLICURL ?>/assets/js/laporan_mingguan_list.js"></script>
+<script src="<?= PUBLICURL ?>/assets/js/linechart_laporan_mingguan.js"></script>
+<script src="<?= PUBLICURL ?>/assets/js/last_tab.js"></script>

@@ -3,10 +3,10 @@ $navBrands = '<a class="navbar-brand" href="#">GUEST</a>';
 
 $navItems = '
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#">LAPORAN HARIAN</a>
+        <a class="nav-link nav-head ms-lg-5" href="' . PUBLICURL . '/home/">LAPORAN HARIAN</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link nav-head ms-lg-5" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fitur Belum Tersedia">
+        <a class="nav-link nav-head ms-lg-5" href="' . PUBLICURL . '/home/laporan_mingguan_user/'.$data['id_projek'].'">
             LAPORAN MINGGUAN
         </a>
     </li>

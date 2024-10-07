@@ -150,13 +150,27 @@ h4 {
     color: white;
 }
 
-.nav-tabs::-webkit-scrollbar { 
-    display: none; /* Safari and Chrome */
+/* Atur agar hanya scrollbar vertikal yang disembunyikan */
+.nav-tabs {
+    overflow-x: auto;    /* Scroll secara horizontal */
+    overflow-y: hidden;  /* Sembunyikan scroll secara vertikal */
+    white-space: nowrap; /* Mencegah tombol tab turun ke baris berikutnya */
+}
+
+/* Sembunyikan scrollbar vertikal pada browser yang mendukung Webkit (Chrome, Safari, dll.) */
+.nav-tabs::-webkit-scrollbar:vertical {
+    display: none; /* Hilangkan scrollbar vertikal */
 }
 
 .nav-tabs .nav-link:not(.active):hover {
     background-color: grey;
     color: white;
+}
+
+/* Tambahkan class untuk scroll horizontal */
+.horizontal-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .separator {
@@ -209,6 +223,12 @@ h4 {
 .dropdown-menu {
     max-height: 200px; /* Sesuaikan tinggi maksimum sesuai kebutuhan */
     overflow-y: auto; /* Tambahkan scrollbar jika konten melebihi max-height */
+}
+
+/* Tambahkan CSS untuk membatasi panjang dropdown */
+.dropdown-limited-height {
+    max-height: 150px; /* Batas panjang dropdown */
+    overflow-y: auto;  /* Tambahkan scroll ketika isi lebih dari tinggi maksimum */
 }
 
 @media (max-width: 576px) {

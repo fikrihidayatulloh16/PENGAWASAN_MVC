@@ -63,6 +63,62 @@ class Home extends Controller {
         $this->view('layouts/footer_a');
     }
 
+    public function laporan_mingguan_user($id_projek) {
+        
+        //inisiasi data untuk header
+        $data['judul_laporan'] = 'LAPORAN MINGGUAN';
+        $data['id_projek'] = $id_projek;
+        $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
+        $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
+
+        // Memanggil fungsi dateConverter
+        $data['tanggal_mulai_projek'] = $this->model('Operator_crud_model')->dateConverter($data['projek']['tanggal_mulai']);
+        $data['tanggal_selesai_projek'] = $this->model('Operator_crud_model')->dateConverter($data['projek']['tanggal_selesai']);
+        $data['tambahan_waktu_projek'] = !empty($data['projek']['tambahan_waktu']) ? $this->model('Operator_crud_model')->dateConverter($data['projek']['tambahan_waktu']) : '-';
+
+        $data['all_laporan_harian'] = $this->model('Operator_db_model')->getAllLaporanByIdProjek($id_projek);
+        $data['max_cco'] = $this->model('Laporan_mingguan_db_model')->getMaxCCO($data);
+        $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
+        $data['filter_laporan_mingguan'] = $this->model('Laporan_mingguan_crud_model')->filterLM($data['all_laporan_mingguan']);
+        $data['all_tanggal_laporan'] = $this->model('Operator_db_model')->getAllTanggalLaporanByIprojek($id_projek);
+        $data['all_minggu'] = $this->model('Laporan_mingguan_crud_model')->getWeeklyRanges($data['projek']);
+        $data['all_minggu_data'] = $this->model('Laporan_mingguan_crud_model')->getAllWeekData($data);
+
+        //update progres kumulatif
+        //$this->model('Laporan_mingguan_crud_model')->ubahProgresKumulatifLM($id_projek);
+
+        $this->view('layouts/layout_user/layout_user_pekerjaan', $data);
+        $this->view('operator/l_harian/rekap/logo_rekap', $data);
+        $this->view('home/laporan_mingguan_user', $data);
+        $this->view('layouts/footer_b');
+    }
+
+    public function weekly_lh_home($id_projek, $tanggal_mulai, $tanggal_selesai, $minggu_ke)
+        {
+            //Flasher::setFlash('Pilih Laporan', 'Berhasil', 'success');
+        $data['judul_laporan'] = 'LAPORAN MINGGUAN';
+        $data['id_projek'] = $id_projek;
+        $data['tanggal_mulai'] = $tanggal_mulai;
+        $data['tanggal_selesai'] = $tanggal_selesai;
+        $data['minggu_ke'] = $minggu_ke;
+        $data['projek'] = $this->model('Operator_db_model')->getProjekById($id_projek);
+        $data['logo'] = $this->model('Rekap_db_model')->getLogoById($id_projek);
+
+        // Memanggil fungsi dateConverter
+        $data['tanggal_mulai_projek'] = $this->model('Operator_crud_model')->dateConverter($data['projek']['tanggal_mulai']);
+        $data['tanggal_selesai_projek'] = $this->model('Operator_crud_model')->dateConverter($data['projek']['tanggal_selesai']);
+        $data['tambahan_waktu_projek'] = !empty($data['projek']['tambahan_waktu']) ? $this->model('Operator_crud_model')->dateConverter($data['projek']['tambahan_waktu']) : '-';
+
+        $data['laporan'] = $this->model('Laporan_mingguan_db_model')->get7LHByLMDate($data);
+        $data['all_tanggal_laporan'] = $this->model('Operator_db_model')->getAllTanggalLaporanByIprojek($id_projek);
+        $data['max_cco'] = $this->model('Laporan_mingguan_db_model')->getMaxCCO($data);
+        $data['all_laporan_mingguan'] = $this->model('Laporan_mingguan_db_model')->getAllLMByIdProjek($data);
+        $this->view('layouts/layout_operator/layout_operator_laporan', $data);
+        $this->view('operator/l_harian/rekap/logo_rekap', $data);
+        $this->view('home/weekly_lh_home', $data);
+        $this->view('layouts/footer_a');
+        }
+
     public function login() 
     {
         $this->view('home/login');

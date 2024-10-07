@@ -181,7 +181,7 @@ class Operator_crud_model {
             $this->db->execute();
         }
 
-        return true;
+        return $new_id;
     }
 
 

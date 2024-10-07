@@ -34,13 +34,13 @@
                             <label for="progress_harian">Estimasi Progres:</label>
 
                             <div class="input-group">
-                                <input type="number" id="progress_harian" name="progress_harian" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
+                                <input type="number" id="progress_harian" name="progress_harian" class="form-control" placeholder="Masukkan Persentase" step="0.01" min="0" max="100" required>
                                 <span class="input-group-text">%</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                                    
+
                 <div class="modal-footer bg-secondary">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success text-light" name="progress_harian_modal">Submit</button>

@@ -312,7 +312,7 @@ h3 {
                     $html .= '<tr class="text-center align-middle">';
                     
                     if ($i == 0) {
-                        $html .= '<td rowspan="' . $max_rows . '" class="text-center kolom-sub" style="border-bottom: 1px solid black;">' . htmlspecialchars($sub_pekerjaan['nama_sub_pekerjaan']) . '</td>';
+                        $html .= '<td rowspan="' . $max_rows . '" class="text-center kolom-sub" style="border-bottom: 1px solid black;">' . (!empty($sub_pekerjaan['keterangan']) ? htmlspecialchars($sub_pekerjaan['nama_sub_pekerjaan']) .' - '. $sub_pekerjaan['keterangan'] : $sub_pekerjaan['nama_sub_pekerjaan']) . '</td>';
                     }
                     
                     if ($isEmptyRow) {
@@ -340,7 +340,7 @@ h3 {
                                  (isset($bahan_rekap[$i]['nama_bahan']) ? htmlspecialchars($bahan_rekap[$i]['nama_bahan']) : '-') . 
                                  '</td>';
                         $html .= '<td class="text-center kolom-bahan" style="border-bottom: ' . $bottom_border . ';">' . 
-                                 (isset($bahan_rekap[$i]['jumlah_bahan']) ? htmlspecialchars($bahan_rekap[$i]['jumlah_bahan']) : '-') . 
+                                 (isset($bahan_rekap[$i]['jumlah_bahan']) ? (($bahan_rekap[$i]['jumlah_bahan'] == (int)$bahan_rekap[$i]['jumlah_bahan']) ? htmlspecialchars((int)$bahan_rekap[$i]['jumlah_bahan']) : htmlspecialchars($bahan_rekap[$i]['jumlah_bahan'])) : '-' ) . 
                                  (isset($bahan_rekap[$i]['satuan']) ? ' ' . htmlspecialchars($bahan_rekap[$i]['satuan']) : '') . 
                                  '</td>';
                     }

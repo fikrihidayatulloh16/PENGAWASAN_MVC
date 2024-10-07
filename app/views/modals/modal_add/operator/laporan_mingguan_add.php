@@ -26,7 +26,7 @@
                                 <label for="id_projek">Projek:</label>
                                 <h5><?= $data['projek']['nama_projek']?></h5>
                                 <label for="id_projek">Laporan Terakhir :</label>
-                                <h5>Minggu ke-<?= $minggu_ke ?></h5>
+                                <h5><?= !empty($minggu_ke) ? 'Minggu ke-'.$minggu_ke : 'Belum ada data laporan mingguan' ?></h5>
                             </div>
                             <br>
                             <div class="form-group">
@@ -66,7 +66,7 @@
                                     <label for="rencana_progres">Rencana Progres:</label>
 
                                     <div class="input-group">
-                                        <input type="number" id="rencana_progres" name="rencana_progres_cco<?= $data['max_cco'] ?>" class="form-control" placeholder="Masukkan Persentase" step="0.1" min="0" max="100" required>
+                                        <input type="number" id="rencana_progres" name="rencana_progres_cco<?= $data['max_cco'] ?>" class="form-control" placeholder="Masukkan Persentase" step="0.01" min="0" max="100" required>
                                         <span class="input-group-text">%</span>
                                     </div>
                                 </div>

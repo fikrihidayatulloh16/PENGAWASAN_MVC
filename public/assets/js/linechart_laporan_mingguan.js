@@ -120,6 +120,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const result = await response.text();
                 console.log(result);
+                // Jika penyimpanan berhasil, tampilkan elemen dengan id="pdf"
+            if (response.ok) {
+                document.getElementById("pdf").style.display = "block";
+            } else {
+                console.error('Error saving pie chart');
+            }
             }
         }, 1000);
     } else {
